@@ -4,13 +4,13 @@ import {Link} from 'react-router-dom';
   
 function Navbar(){
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark" style={navColor}>
+        <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: '#333333'}}>
 
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation" style={burger}>
+            <button className="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation" >
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">
+            <button className="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="">...</span>
             </button>
 
@@ -34,15 +34,6 @@ function Navbar(){
 export default Navbar;
 
 
-
-
-const navColor = {
-    backgroundColor: '#333333'
-},
-
-burger = {
-    border: 'none'
-}
 
 
 
