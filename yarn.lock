@@ -2823,16 +2823,24 @@ color@^3.0.0:
     color-string "^1.5.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> f67430e6f42fcb569770c557a730e8e0d9d159f5
 colors@~0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-0.6.2.tgz#2423fe6678ac0c5dae8852e5d0e5be08c997abcc"
   integrity sha1-JCP+ZnisDF2uiFLl0OW+CMmXq8w=
+<<<<<<< HEAD
 =======
 colour@~0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/colour/-/colour-0.7.1.tgz#9cb169917ec5d12c0736d3e8685746df1cadf778"
   integrity sha1-nLFpkX7F0SwHNtPoaFdG3xyt93g=
 >>>>>>> stud-details
+=======
+
+>>>>>>> f67430e6f42fcb569770c557a730e8e0d9d159f5
 
 combined-stream@^1.0.6, combined-stream@~1.0.6:
   version "1.0.7"
@@ -10863,6 +10871,9 @@ xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   integrity sha1-pcbVMr5lbiPbgg77lDofBJmNY68=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f67430e6f42fcb569770c557a730e8e0d9d159f5
 xtend@~2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-2.0.6.tgz#5ea657a6dba447069c2e59c58a1138cb0c5e6cee"
@@ -10870,12 +10881,15 @@ xtend@~2.0.6:
   dependencies:
     is-object "~0.1.2"
     object-keys "~0.2.0"
+<<<<<<< HEAD
 =======
 y18n@^3.2.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
   integrity sha1-bRX7qITAhnnA136I53WegR4H+kE=
 >>>>>>> stud-details
+=======
+>>>>>>> f67430e6f42fcb569770c557a730e8e0d9d159f5
 
 "y18n@^3.2.1 || ^4.0.0", y18n@^4.0.0:
   version "4.0.0"
