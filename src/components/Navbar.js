@@ -21,7 +21,7 @@ function Navbar(){
                         <Link className="nav-link" exact="true" to="/">Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" exact="true" to="/studentDetails">Student details</Link>
+                        <Link className="nav-link" exact="true" to="/guidestudents">Students</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" exact="true" to="/meetings">Meetings</Link>

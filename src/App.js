@@ -1,14 +1,18 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import './style.css'
+import './styles/style.css'
 import Navbar from './components/Navbar';
-import StudDetails from './components/StudDetails';
+import Login from './components/Login';
+import GuideStudents from './components/GuideStudents';
+import Stafprofile from './components/Stafprofile';
+import Meetings from './components/Meetings';
+import ErrorPage from './components/ErrorPage';
 import firebase from 'firebase/app';
 
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
-7
+
 const firebaseConfig = {
     apiKey: "AIzaSyB7pv2G_wvp1Nnb9_Ql48xDsC6nPYTGrvE",
     authDomain: "class-guide-system.firebaseapp.com",
@@ -20,23 +24,29 @@ const firebaseConfig = {
   };
 firebase.initializeApp(firebaseConfig);
 
+export let auth=firebase.auth();
+export let storage=firebase.storage();
 export let db=firebase.firestore();
-
-import Stafprofile from './components/Stafprofile'
 
 
 class App extends React.Component {
+    state = {
+        user : false
+    }
+
     render() {
         return (
             <div>
                 <Router>
+                    <Login />
                     <Navbar />
-                        <Switch>                        
-                            <Route path='/studentDetails' exact component={StudDetails} />
+                        <Switch>                                                  
+                            <Route path='/' exact component={Stafprofile} />  
+                            <Route path='/guidestudents' exact component={GuideStudents} />
+                            <Route path='/meetings' exact component={Meetings} />
+                            <Route path='*' exact component={ErrorPage} />
                         </Switch>
                 </Router>
-
-                <Stafprofile/>
                 
             </div>
         )

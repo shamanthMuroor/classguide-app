@@ -17,4 +17,4 @@ class Stafprofile extends React.Component {
   }
 }
 
-export default Stafprofile
+export default Stafprofile;
