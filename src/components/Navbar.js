@@ -4,21 +4,10 @@ import {Link} from 'react-router-dom';
   
 function Navbar(){
     return (
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> f67430e6f42fcb569770c557a730e8e0d9d159f5
         <nav className="navbar navbar-expand-lg navbar-dark" style={navColor}>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuToggler" aria-controls="menuToggler" aria-expanded="false" aria-label="Toggle navigation" style={burger}>
                 <span class="navbar-toggler-icon"></span>
-<<<<<<< HEAD
-=======
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuToggler" aria-controls="menuToggler" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
->>>>>>> stud-details
-=======
->>>>>>> f67430e6f42fcb569770c557a730e8e0d9d159f5
+
             </button>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionToggler" aria-controls="optionToggler" aria-expanded="false" aria-label="Toggle navigation">

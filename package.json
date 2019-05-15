@@ -3,16 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "node-modules": "^1.0.1",
-=======
     "firebase": "^6.0.2",
->>>>>>> stud-details
-=======
     "firebase": "^6.0.2",
     "node-modules": "^1.0.1",
->>>>>>> f67430e6f42fcb569770c557a730e8e0d9d159f5
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
