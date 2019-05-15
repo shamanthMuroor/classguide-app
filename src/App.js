@@ -1,6 +1,8 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import './style.css'
 import Navbar from './components/Navbar';
+import Stafprofile from './components/Stafprofile'
 
 
 class App extends React.Component {
@@ -9,8 +11,10 @@ class App extends React.Component {
             <div>
                 <Router>
                     <Navbar />
-                    Hello
                 </Router>
+
+                <Stafprofile/>
+                
             </div>
         )
     }
