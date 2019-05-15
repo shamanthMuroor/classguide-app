@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import './style.css'
 import Navbar from './components/Navbar';
 import StudDetails from './components/StudDetails';
 import firebase from 'firebase/app';
@@ -7,7 +8,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
-
+7
 const firebaseConfig = {
     apiKey: "AIzaSyB7pv2G_wvp1Nnb9_Ql48xDsC6nPYTGrvE",
     authDomain: "class-guide-system.firebaseapp.com",
@@ -21,6 +22,7 @@ firebase.initializeApp(firebaseConfig);
 
 export let db=firebase.firestore();
 
+import Stafprofile from './components/Stafprofile'
 
 
 class App extends React.Component {
@@ -33,6 +35,9 @@ class App extends React.Component {
                             <Route path='/studentDetails' exact component={StudDetails} />
                         </Switch>
                 </Router>
+
+                <Stafprofile/>
+                
             </div>
         )
     }
