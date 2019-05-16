@@ -1,33 +1,28 @@
 import React from 'react';
-import '../styles/login.css';
-import {Link} from 'react-router-dom'
+
 
 class Login extends React.Component {
   render() {
-    return ( 
-      <div className="container">
-        <div className="row">
-          <div className="col-md-8 img">
-            <img src="https://www.sac-aimit.in/epitome/images/aloylogo.png" id="logo" alt="" />
-            <img src="http://staloysiuscollege.co.in/newDesign/images/about-aloysius.png" id="bg-img" alt="" />
-          </div>
-          <div className="col-md-4 text-justify"> 
-            <div className="form-login">
-              <h4 className="">Login</h4>
-                <input type="text" id="userName" className="form-control" placeholder="username" />
-                <input type="text" id="userPassword" className="form-control" placeholder="password" />
-                <div className="wrapper text-center">
-                  <span>    
-                    <Link exact="true" to="/" className="btn btn-primary">login <i className="fa fa-sign-in"></i></Link>
-                  </span>
-                </div>
+    return (
+        <div className="login-container">
+            <div className="logo-container">
+                <img src={this.props.logoImg} alt="logo"/>
             </div>
-          </div>
+            <div className="form-container">
+               <form>
+                   <div className="form-group">
+                        <input type="name" className="form-control" placeholder="Username"/>
+                   </div>
+                   <div className="form-group">
+                        <input type="password" className="form-control" placeholder="Password"/>
+                   </div>
+                   <button type="submit" className="btn btn-primary">login</button>
+               </form>
+            </div>
         </div>
-      </div>
-
+      
     )
   }
 }
 
-export default Login;
+export default Login
