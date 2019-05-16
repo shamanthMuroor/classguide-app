@@ -2,8 +2,9 @@ body{
     background: #F5F2F2;
 }
 
+/* Staff Profile */
 .profile {
     width: 18rem;
     margin-top: 100px;
-    border-radius: 50;
 }
+
