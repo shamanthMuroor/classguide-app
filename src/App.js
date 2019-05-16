@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './styles/style.css'
 import Navbar from './components/Navbar';
-import Login from './components/Login';
+// import Login from './components/Login';
 import GuideStudents from './components/GuideStudents';
 import Stafprofile from './components/Stafprofile';
 import Meetings from './components/Meetings';
@@ -13,14 +13,13 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-const firebaseConfig = {
+// const firebaseConfig = {
+//   };
+// firebase.initializeApp(firebaseConfig);
 
-  };
-firebase.initializeApp(firebaseConfig);
-
-export let auth=firebase.auth();
-export let storage=firebase.storage();
-export let db=firebase.firestore();
+// export let auth=firebase.auth();
+// export let storage=firebase.storage();
+// export let db=firebase.firestore();  
 
 
 class App extends React.Component {
@@ -32,7 +31,7 @@ class App extends React.Component {
         return (
             <div>
                 <Router>
-                    <Login />
+                    {/* <Login /> */}
                     <Navbar />
                         <Switch>                                                  
                             <Route path='/' exact component={Stafprofile} />  
