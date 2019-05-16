@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/login.css';
-import {Link} from 'react-router-dom'
 
 class Login extends React.Component {
   render() {
@@ -18,14 +17,14 @@ class Login extends React.Component {
                 <input type="text" id="userPassword" className="form-control" placeholder="password" />
                 <div className="wrapper text-center">
                   <span>    
-                    <Link exact="true" to="/" className="btn btn-primary">login <i className="fa fa-sign-in"></i></Link>
+                    <button className="btn" onClick={this.props.login}>Login<i className="fa fa-sign-in"></i></button>
+                    {/* <Link exact="true" to="/" className="btn btn-primary">login <i className="fa fa-sign-in"></i></> */}
                   </span>
                 </div>
             </div>
           </div>
         </div>
       </div>
-
     )
   }
 }
