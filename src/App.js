@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './styles/style.css'
 import Navbar from './components/Navbar';
-// import Login from './components/Login';
+import Login from './components/Login';
 import GuideStudents from './components/GuideStudents';
 import Stafprofile from './components/Stafprofile';
 import Meetings from './components/Meetings';
@@ -31,8 +31,8 @@ class App extends React.Component {
         return (
             <div>
                 <Router>
-                    {/* <Login /> */}
-                    <Navbar />
+                    <Login />
+                    {/* <Navbar /> */}
                         <Switch>                                                  
                             <Route path='/' exact component={Stafprofile} />  
                             <Route path='/guidestudents' exact component={GuideStudents} />
