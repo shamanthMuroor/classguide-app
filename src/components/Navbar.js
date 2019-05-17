@@ -17,13 +17,13 @@ function Navbar(props) {
             <div className="collapse navbar-collapse" id="menuToggler">
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li className="nav-item active">
-                        <Link className="nav-link" exact="true" to="/">Home <span className="sr-only">(current)</span></Link>
+                        <Link className="nav-link" exact="true" to="/"><i className="fas fa-home"></i> Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" exact="true" to="/guidestudents">Students</Link>
+                        <Link className="nav-link" exact="true" to="/guidestudents">Student Details </Link>
                     </li>
                     <li className="nav-item">
-                            <Link className="nav-link" exact="true" to="/meetings">Meetings</Link>
+                            <Link className="nav-link" exact="true" to="/meetings">Class Meetings</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
@@ -32,21 +32,16 @@ function Navbar(props) {
             </div>
                 
             {/* Action for Option toggler */}
-            <div className="collapse navbar-collapse" id="optionToggler">
-                <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+            
+            <div className="collapse navbar-collapse flex-row-reverse" id="optionToggler">
+                <ul className="navbar-nav mt-2 mt-lg-0">
                     <li className="nav-item">
                         <Link className="nav-link disabled" to="#" aria-disabled="true">Announcements</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link disabled" to="#" aria-disabled="true">Guidelines</Link>
+                        <Link className="nav-link" to="/guidelines" >Guidelines</Link>
                     </li>
-                    <li className="nav-item">
-                        {/* <button className="btn" onClick={props.logout}>Logout</button> */}
-                        
-                    </li>
-                            <div>
-                                <button className="btn btn-white text-white" onClick={props.logout}>Logout</button>
-                            </div>
+                    <button className="btn text-white text-left" onClick={props.logout}>Logout</button>
                 </ul>
             </div>            
         </nav>
