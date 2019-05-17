@@ -9,10 +9,10 @@ body{
 
 
 /* login */
-.login-container {
 
-    display: flex;
-    flex-direction: column;
+#form-desktop {
+
+    display: none;
 }
 
 .form-container {
@@ -60,12 +60,65 @@ body{
 
 
 
-
-
 /* Staff Profile */
 .profile {
     width: 18rem;
     margin-top: 100px;
 }
 /* ------------ */
+
+
+
+
+/* All media queries */
+
+@media (min-width: 540px) {
+
+    .form-container {
+       
+    
+        border-top-left-radius:0; 
+        border-top-right-radius:0; 
+    
+    }
+
+}
+
+@media (min-width: 760px) {
+
+    #form-mobile {
+
+        display: none;
+    }
+
+    
+    #form-desktop {
+
+        display: block;
+    }
+    
+    .logo-container {
+
+        height: 100vh;
+        justify-content: center;
+    
+    }
+
+    .form-container {
+
+        height: auto;
+        background: transparent;
+        
+    }
+
+    .login-desktop-container {
+
+        background-color:black;
+        border-radius: 20px;
+        padding: 50px;
+        opacity: 0.8;
+    }
+
+}
+
 
