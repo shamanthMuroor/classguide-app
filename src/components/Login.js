@@ -31,7 +31,7 @@ class Login extends React.Component {
                         <div className="form-group">
                             <input type="password" className="form-control" placeholder="Password" />
                         </div>
-                        <button type="submit" className="btn btn-primary">login</button>
+                        <button type="submit" className="btn btn-primary" onClick={this.props.login}>login</button>
                     </form>
                 </div>
                 
@@ -47,7 +47,7 @@ class Login extends React.Component {
                     <div className="form-group">
                         <input type="password" className="form-control" placeholder="Password" />
                     </div>
-                    <button type="submit" className="btn btn-primary">login</button>
+                    <button type="submit" className="btn btn-primary" onClick={this.props.login}>login</button>
                 </form>
             </div>
         </div>

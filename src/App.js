@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './styles/style.css'
 import Navbar from './components/Navbar';
-import Login from './components/Login';
 import GuideStudents from './components/GuideStudents';
 import Stafprofile from './components/Stafprofile';
 import Meetings from './components/Meetings';
@@ -13,7 +12,7 @@ import myApp from './config.js';
 import Login from './components/Login';
 import './styles/style.css';
 import logo from './images/logo.png';
-import login from './images/login.png';
+import loginimg from './images/login.png';
 
 
 export let auth=myApp.auth();
@@ -71,7 +70,12 @@ class App extends React.Component {
           )
           :
           (
-            <Login loginImg={login} logoImg={logo} user={this.state.user} login={this.handleAuth}/>
+            <Login 
+              loginImg={loginimg} 
+              logoImg={logo} 
+              user={this.state.user} 
+              login={this.handleAuth}
+            />
           )
         }
       </div>
