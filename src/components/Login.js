@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/login.css';
-import loginimg from '../images/login.png';
 import logo from '../images/logo.png';
 
 class Login extends React.Component {
@@ -34,7 +33,7 @@ class Login extends React.Component {
                 <div className="form-group">
                   <input type="password" className="form-control" placeholder="Password" />
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={loginimg}>login</button>
+                <button type="submit" className="btn btn-primary" onClick={this.props.login}>login</button>
               </form>
             </div>
 
@@ -50,7 +49,7 @@ class Login extends React.Component {
             <div className="form-group">
               <input type="password" className="form-control" placeholder="Password" />
             </div>
-            <button type="submit" className="btn btn-primary" onClick={loginimg}>login</button>
+            <button type="submit" className="btn btn-primary" onClick={this.props.login}>login</button>
           </form>
         </div>
       </div>

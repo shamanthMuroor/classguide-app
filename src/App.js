@@ -52,9 +52,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        { this.state.user
+        {/* { this.state.user
           ?
-          (
+          ( */}
             <Router>
               <Navbar logout={this.handleLogout}/>
               <Switch>
@@ -65,15 +65,15 @@ class App extends React.Component {
                 <Route path='*' exact component={ErrorPage} />
               </Switch>
             </Router>
-          )
-          :
-          (
-            <Login 
-              user={this.state.user} 
-              login={this.handleAuth}
-            />
-          )
-        }
+        {/* //   )
+        //   :
+        //   (
+        //     <Login 
+        //       user={this.state.user} 
+        //       login={this.handleAuth}
+        //     />
+        //   )
+        // } */}
       </div>
     )
   }
