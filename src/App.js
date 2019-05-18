@@ -1,9 +1,7 @@
 import React from 'react';
-<<<<<<< HEAD
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './styles/style.css'
 import Navbar from './components/Navbar';
-import Login from './components/Login';
 import GuideStudents from './components/GuideStudents';
 import Stafprofile from './components/Stafprofile';
 import Meetings from './components/Meetings';
@@ -11,15 +9,10 @@ import Guidelines from './components/Guidelines';
 import ErrorPage from './components/ErrorPage';
 import firebase from 'firebase/app';
 import myApp from './config.js';
-=======
 import Login from './components/Login';
 import './styles/style.css';
-import logo from './images/logo.png';
-import login from './images/login.png';
->>>>>>> login
 
 
-<<<<<<< HEAD
 export let auth=myApp.auth();
 export let storage=myApp.storage();
 export let db=myApp.firestore();
@@ -75,27 +68,14 @@ class App extends React.Component {
           )
           :
           (
-            <Login user={this.state.user} login={this.handleAuth}/>
+            <Login 
+              user={this.state.user} 
+              login={this.handleAuth}
+            />
           )
         }
       </div>
     )
   }
-=======
-
-
-class App extends React.Component {
-   
-    render() {
-        return (
-            <div>
-                    
-                 
-               <Login loginImg={login} logoImg={logo}/>
-                
-            </div>
-        )
-    }
->>>>>>> login
 }
 export default App;
