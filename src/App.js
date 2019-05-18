@@ -11,8 +11,6 @@ import firebase from 'firebase/app';
 import myApp from './config.js';
 import Login from './components/Login';
 import './styles/style.css';
-import logo from './images/logo.png';
-import loginimg from './images/login.png';
 
 
 export let auth=myApp.auth();
@@ -71,8 +69,6 @@ class App extends React.Component {
           :
           (
             <Login 
-              loginImg={loginimg} 
-              logoImg={logo} 
               user={this.state.user} 
               login={this.handleAuth}
             />
