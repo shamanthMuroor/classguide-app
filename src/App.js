@@ -10,10 +10,11 @@ import Guidelines from './components/Guidelines';
 import ErrorPage from './components/ErrorPage';
 import firebase from 'firebase/app';
 import myApp from './config.js';
+import Login from './components/Login';
+import './styles/style.css';
+import logo from './images/logo.png';
+import login from './images/login.png';
 
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/storage';
 
 export let auth=myApp.auth();
 export let storage=myApp.storage();
@@ -70,7 +71,7 @@ class App extends React.Component {
           )
           :
           (
-            <Login user={this.state.user} login={this.handleAuth}/>
+            <Login loginImg={login} logoImg={logo} user={this.state.user} login={this.handleAuth}/>
           )
         }
       </div>
