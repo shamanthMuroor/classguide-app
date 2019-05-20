@@ -1,11 +1,14 @@
 import React from 'react';
+import './ErrorPage.css'
+
 
 class ErrorPage extends React.Component {
-  render() {
-    return (
-      <div className="container card profile">
+  render() {  
+    return ( 
+      <div className="container card profile" style={{backgroundColor:'#333333',color:'darkgray',textAlign:'center',fontFamily:'monospace'}}>
         <div className="card-body">
-            <h1>404</h1>
+            <h1 className="text-flicker-in-glow">404 Error</h1>
+            <p>Sorry, we can’t seem to find what you’re looking for. </p>
         </div>
       </div>
     )
