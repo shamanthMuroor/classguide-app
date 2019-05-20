@@ -1,39 +1,68 @@
+// Meeting --> (AddMeeting + Meet)  --> (MasterForm/MeetingItem) --> Step1/Step2/Step3
 import React from 'react';
 import '../styles/style.css';
+import Meet from './meeting/Meet';
+import AddMeeting from './meeting/AddMeeting';
+import {db} from '../App';
 
 class Meetings extends React.Component {
   state = {
-    meeting : false,
-    date : "12",
-    agenda: 'july meeting',
-    minutes: 'A meeting was conducted'
+    lecturer: "lec1",
+    sec: "3rd bsc Ecsm",
+    meetings: []
   }
 
   componentWillMount = () => {
-    this.setState({meeting: true})
+    db.collection('classMeetings').doc(this.state.lecturer)
+      .collection(this.state.sec).get()
+        .then(res => { res.forEach(val => {
+          let arr = [];
+          arr.push({
+            id: val.id,
+            ...val.data() 
+        })
+        // console.log((val.id))
+        // console.log((val.data().agenda))
+          //  this.setState({meetings: [this.state.meetings, val.data()]} )
+         this.setState({meetings: this.state.meetings.concat(arr)} )
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+  delMeeting = (id) => {
+    // console.log(id)
+    db.collection('classMeetings').doc(this.state.lecturer)
+      .collection(this.state.sec).delete(id)
+        .then(() => {
+          alert('Deleted successfully')
+          console.log("del successful")
+          this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
+        })
+        .catch(err => console.log(err))
+  }
+
+  // Add Meeting
+  addMeeting = (id, agenda, date, minutes) => {
+    const newMeeting = {
+      id,
+      agenda, 
+      date, 
+      minutes
+    }
+    this.setState({meetings: this.state.meetings.concat(newMeeting) })
   }
 
   render() {
-    let html = <div className="row">
-      <div className="box" style={{marginTop: '100px', height: '250px', width: '250px', border: '1px dotted black', borderRadius: '20px'}}>
-        <div> 
-          <i className="fas fa-plus fa-10x"></i>
-        </div>
-      </div>
-    </div>
 
-    // html = if(this.state.meeting) {
-    //   return ( <div>
-    //     <table>
-    //       <tr><th>Date</th><th>Agenda</th><th>Minutes</th></tr>              
-    //       <tr><td>{this.state.date}</td><td>{this.state.agenda}</td><td>{this.state.agenda}</td></tr>
-    //     </table>
-    //   </div>)
-    // }
-
+    // console.log(this.state)
     return (
       <div className="container">
-        {html}
+        <AddMeeting addMeeting={this.addMeeting} />
+        {/* <MasterForm addMeeting={this.addMeeting}/> */}
+        <div style={{marginTop: '10px'}}>
+          <Meet meetings={this.state.meetings} delMeeting = {this.delMeeting} />
+        </div>
       </div>
     )
   }

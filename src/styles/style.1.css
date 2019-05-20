@@ -122,8 +122,7 @@ body{
 }
 
 
-.btn:focus;
-
+.btn:focus,
 .btn:active{
     box-shadow:none !important;
     outline:0px !important;
@@ -132,16 +131,6 @@ body{
 
 
 /* Meetings Masterform component */
-.outerBox {
-    height: 30rem;
-    top: 10px;
-    left: 50%;
-    background: #fff;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0px 0px 4px rgb(202, 200, 200);
-    margin-top: 50px;
-}
 .box {
     width: 65%;
     text-align: center;
@@ -150,41 +139,10 @@ body{
     box-shadow: 0px 2px 3px rgb(100, 99, 99);
 }
 
-
-/* AddMeeting Component */
-.addBox {
-    height: 30rem; 
-    margin-top:40px;
-    margin-bottom:20px;
+.outerBox {
+    background: #fff;
+    border-radius: 20px;
+    padding: 10%;
+    box-shadow: 0px 0px 4px rgb(202, 200, 200);
+    margin-top: 50px;
 }
-
-.btnAdd {
-    color: rgb(90, 86, 86);
-    height: 250px; 
-    width: 250px; 
-    border: 1px dashed rgb(94, 91, 91); 
-    border-radius: 40px;
-}
-
-.addSymbolbtn {
-    margin: 10px;
-    background: #F5F2F2;
-    box-shadow: none;
-    border: none;
-    font-size: 200px;
-
-}
-
-.overlay {
-    width: 90%;
-    position: absolute ;
-    z-index: 1;
-    top: 0;
-    left: 5%;
-    background-color: rgb(0,0,0);
-    background-color: rgba(255, 255, 255, 0.99);
-    overflow-x: hidden;
-    transition: 0.5s;
-    margin-bottom: 10px;
-}
-
