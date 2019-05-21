@@ -64,7 +64,7 @@ class MasterForm extends React.Component {
                     className="btn btn-primary float-right"
                     type="button" onClick={this._next}>
                     Next
-        </button>
+                </button>
             )
         }
         return null;
