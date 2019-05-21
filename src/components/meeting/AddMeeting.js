@@ -1,20 +1,19 @@
 // AddMeeting --> MasterForm --> Step1 + Step2 + Step3
 import React from 'react';
-import PropTypes from 'prop-types';
 import MasterForm from './meetingForm/MasterForm';
 
 class AddMeeting extends React.Component{
     state = {
-        showComponent: false
+        showForm: false
     }
 
     _onButtonClick = () => {
-        this.setState({ showComponent: true })
+        this.setState({ showForm: true })
     }
 
     hideForm = (a) => {
-        this.setState({ showComponent: a })
-        console.log(this.state.showComponent)
+        this.setState({ showForm: a })
+        console.log(this.state.showForm)
     }
 
     render() {
@@ -26,19 +25,14 @@ class AddMeeting extends React.Component{
                         onClick={this._onButtonClick}
                         style={{background: '#F5F2F2'}}
                     > 
-                        <i className="addSymbolbtn fas fa-plus"></i>
+                        <i className="addPlusSymbol fas fa-plus"></i>
                     </button>
                     <h4>Add Meeting!</h4>
                 </div>                                
-                { this.state.showComponent ? <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} />  : null  }
+                { this.state.showForm ? <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} />  : null  }
             </div>
         )
     }
-}
-
-//PropTypes
-AddMeeting.propTypes = {
-    addMeeting: PropTypes.func.isRequired
 }
 
 export default AddMeeting;

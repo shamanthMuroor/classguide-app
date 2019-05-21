@@ -16,6 +16,15 @@ class MasterForm extends React.Component {
         minutes: '',
     }
 
+    componentWillUnmount = () => {
+        this.setState({
+            currentStep: 1,
+            date: '',
+            agenda: '',
+            minutes: ''
+        })
+    }
+
     _next = () => {
         let currentStep = this.state.currentStep
         currentStep = currentStep >= 2 ? 3 : currentStep + 1
@@ -98,7 +107,7 @@ class MasterForm extends React.Component {
                 <h1>React Form</h1>
                 <p>Step {this.state.currentStep} </p>
 
-                <div className="box">
+                <div className="boxForm">
                     <form onSubmit={this.handleSubmit}>
                         <Step1
                             currentStep={this.state.currentStep}

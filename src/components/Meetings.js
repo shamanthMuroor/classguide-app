@@ -1,7 +1,7 @@
-// Meeting --> (AddMeeting + Meet)  --> (MasterForm/MeetingItem) --> Step1/Step2/Step3
+// Meeting --> (AddMeeting + ViewMeeting)  --> (MasterForm/MeetingItem) --> Step1/Step2/Step3
 import React from 'react';
 import '../styles/style.css';
-import Meet from './meeting/Meet';
+import ViewMeeting from './meeting/ViewMeeting';
 import AddMeeting from './meeting/AddMeeting';
 import {db} from '../App';
 
@@ -12,6 +12,7 @@ class Meetings extends React.Component {
     meetings: []
   }
 
+  // Displaying all the meetings from the database
   componentWillMount = () => {
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).get()
@@ -21,22 +22,22 @@ class Meetings extends React.Component {
             id: val.id,
             ...val.data() 
         })
-        // console.log((val.id))
-        // console.log((val.data().agenda))
+          // console.log((val.id))
+          // console.log((val.data().agenda))
           //  this.setState({meetings: [this.state.meetings, val.data()]} )
-         this.setState({meetings: this.state.meetings.concat(arr)} )
+          this.setState({meetings: this.state.meetings.concat(arr)} )
         })
       })
       .catch(err => console.log(err))
   }
 
+  // Delete a meeting
   delMeeting = (id) => {
-    // console.log(id)
     db.collection('classMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).delete(id)
+      .collection(this.state.sec).doc(id).delete()
         .then(() => {
           alert('Deleted successfully')
-          console.log("del successful")
+          console.log(id + " del successful")
           this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
         })
         .catch(err => console.log(err))
@@ -59,9 +60,8 @@ class Meetings extends React.Component {
     return (
       <div className="container">
         <AddMeeting addMeeting={this.addMeeting} />
-        {/* <MasterForm addMeeting={this.addMeeting}/> */}
         <div style={{marginTop: '10px'}}>
-          <Meet meetings={this.state.meetings} delMeeting = {this.delMeeting} />
+          <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} />
         </div>
       </div>
     )
