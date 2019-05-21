@@ -8,16 +8,15 @@ import Stafprofile from './components/Stafprofile';
 import Meetings from './components/Meetings';
 import Guidelines from './components/Guidelines';
 import ErrorPage from './components/ErrorPage';
-// import firebase from 'firebase/app';
-// import myApp from './config.js';
+import firebase from 'firebase/app';
+import myApp from './config.js';
+// import Login from './components/Login';
+import './styles/style.css';
 
-// import 'firebase/auth';
-// import 'firebase/firestore';
-// import 'firebase/storage';
 
 // export let auth=myApp.auth();
 // export let storage=myApp.storage();
-// export let db=myApp.firestore();
+export let db=myApp.firestore();
 // export let googleProvider = new firebase.auth.GoogleAuthProvider();
 
 

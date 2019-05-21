@@ -3,7 +3,7 @@ import React from 'react';
 class Guidelines extends React.Component {
   render() {
     return (
-        <div class="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
             <div id="accordion" className="flex-column" style={{width: '75%', marginTop: '100px'}}>
                 <div className="card">
                     <div className="card-header" id="headingOne">

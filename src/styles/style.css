@@ -1,15 +1,195 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 body{
     background: #F5F2F2;
 }
+
+
+/* login */
+
+#form-desktop {
+
+    display: none;
+}
+
+.form-container {
+    background: white;
+
+    width: auto;
+    height: 100vw;
+
+    padding-top: 40px;
+
+    border-top-left-radius: 30px; 
+    border-top-right-radius: 30px; 
+
+    position: relative;
+    bottom: 30px;
+
+}
+
+.form-container>form{
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+
+
+
+.logo-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 30px; 
+
+    background: url(../images/login.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;    
+     
+    height: 350px;
+}
+
+
+
 
 /* Staff Profile */
 .profile {
     width: 18rem;
     margin-top: 100px;
 }
+/* ------------ */
+
+
+
+
+/* All media queries */
+
+@media (min-width: 540px) {
+
+    .form-container {
+       
+    
+        border-top-left-radius:0; 
+        border-top-right-radius:0; 
+    
+    }
+
+}
+
+@media (min-width: 760px) {
+
+    #form-mobile {
+
+        display: none;
+    }
+
+    
+    #form-desktop {
+
+        display: block;
+    }
+    
+    .logo-container {
+
+        height: 100vh;
+        justify-content: center;
+    
+    }
+
+    .form-container {
+
+        height: auto;
+        background: transparent;
+        
+    }
+
+    .login-desktop-container {
+
+        background-color:black;
+        border-radius: 20px;
+        padding: 50px;
+        opacity: 0.8;
+    }
+
+}
+
 
 .btn:focus,
 .btn:active{
     box-shadow:none !important;
     outline:0px !important;
+}
+
+
+
+/* Meetings Masterform component */
+.overlay {
+    height: 30rem;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0px 0px 4px rgb(202, 200, 200);
+    margin-top: 50px;
+    width: 90%;
+    position: absolute ;
+    z-index: 1;
+    top: 0;
+    left: 5%;
+    background-color: rgba(255, 255, 255, 0.99);
+    transition: 0.5s;
+    margin-bottom: 10px;
+}
+
+.boxForm {
+    width: 65%;
+    text-align: center;
+    border-radius: 20px;
+    padding: 4%;
+    box-shadow: 0px 2px 3px rgb(100, 99, 99);
+}
+
+
+/* AddMeeting Component */
+.addBox {
+    height: 30rem; 
+    margin-top:40px;
+    margin-bottom:20px;
+}
+
+.btnAdd {
+    color: rgb(90, 86, 86);
+    height: 250px; 
+    width: 250px; 
+    border: 1px dashed rgb(94, 91, 91); 
+    border-radius: 40px;
+}
+
+.addPlusSymbol {
+    margin: 10px;
+    background: #F5F2F2;
+    box-shadow: none;
+    border: none;
+    font-size: 200px;
+
+}
+
+
+
+/* MeetingItem Component */
+
+.closeBtn {
+    background: #ff0000;
+    color: #fff;
+    padding: 3px 10px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    float: right;
 }
