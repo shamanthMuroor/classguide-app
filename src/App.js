@@ -1,12 +1,12 @@
 import React from 'react';
-// import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './styles/style.css'
-// import Navbar from './components/Navbar';
-// import GuideStudents from './components/GuideStudents';
-// import Stafprofile from './components/Stafprofile';
+import Navbar from './components/Navbar';
+import GuideStudents from './components/GuideStudents';
+import Stafprofile from './components/Stafprofile';
 import Meetings from './components/Meetings';
-// import Guidelines from './components/Guidelines';
-// import ErrorPage from './components/ErrorPage';
+import Guidelines from './components/Guidelines';
+import ErrorPage from './components/ErrorPage';
 import firebase from 'firebase/app';
 import myApp from './config.js';
 // import Login from './components/Login';
@@ -52,29 +52,16 @@ class App extends React.Component {
   render() {
     return (
       <div>
-         <Meetings />
-        {/* { this.state.user
-          ?
-          ( */}
-            {/* <Router> */}
-              {/* <Navbar logout={this.handleLogout}/> */}
-              {/* <Switch> */}
-                {/* <Route path='/' exact component={Stafprofile} />
-                <Route path='/guidestudents' exact component={GuideStudents} /> */}
-                {/* <Route path='/meetings' exact component={Meetings} /> */}
-                {/* <Route path='/guidelines' exact component={Guidelines} />
-                <Route path='*' exact component={ErrorPage} /> */}
-              {/* </Switch>
-            </Router> */}
-        {/* //   )
-        //   :
-        //   (
-        //     <Login 
-        //       user={this.state.user} 
-        //       login={this.handleAuth}
-        //     />
-        //   )
-        // } */}
+            <Router>
+              <Navbar logout={this.handleLogout}/>
+              <Switch>
+                <Route path='/' exact component={Stafprofile} />
+                <Route path='/guidestudents' exact component={GuideStudents} />
+                <Route path='/meetings' exact component={Meetings} />
+                <Route path='/guidelines' exact component={Guidelines} />
+                <Route path='*' exact component={ErrorPage} />
+              </Switch>
+            </Router>
       </div>
     )
   }
