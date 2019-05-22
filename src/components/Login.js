@@ -3,22 +3,6 @@ import '../styles/login.css';
 import logo from '../images/logo.png';
 
 class Login extends React.Component {
-  // state = {
-  //   user: false,
-  //   name: '',
-  //   password: ''
-  // }
-
-  // changeName = (event) => {
-  //   this.setState({ name: event.target.value });
-  // }
-
-  // changePassword = (event) => {
-  //   this.setState({ password: event.target.value });
-  // }
-
-  // }
-
   render() {
     return (
       <div className="login-container">

@@ -7,9 +7,9 @@ class Guidelines extends React.Component {
             <div id="accordion" className="flex-column" style={{width: '75%', marginTop: '100px'}}>
                 <div className="card">
                     <div className="card-header" id="headingOne">
-                        <h5 className="mb-0">
-                            <button className="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Class Guide System
+                        <h5 className="mb-0 ">
+                            <button className="btn show d-flex justify-content-between" style={{width: '100%'}} data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Class Guide System <span><i class="fas fa-caret-down"></i></span>
                             </button>
                         </h5>
                     </div>
@@ -28,8 +28,8 @@ class Guidelines extends React.Component {
                 <div className="card">
                     <div className="card-header" id="headingTwo">
                         <h5 className="mb-0">
-                            <button className="btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            An effective Class guide
+                            <button className="btn collapsed d-flex justify-content-between" style={{width: '100%'}} data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            An effective Class guide <span><i class="fas fa-caret-down"></i></span>
                             </button>
                         </h5>
                     </div>
@@ -51,8 +51,8 @@ class Guidelines extends React.Component {
                 <div className="card">
                     <div className="card-header" id="headingThree">
                         <h5 className="mb-0">
-                            <button className="btn collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Activities which could be taken up
+                            <button className="btn collapsed d-flex justify-content-between" style={{width: '100%'}} data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Activities which could be taken up <span><i class="fas fa-caret-down"></i></span>
                             </button>
                         </h5>
                     </div>

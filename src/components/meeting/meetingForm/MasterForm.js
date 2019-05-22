@@ -13,16 +13,7 @@ class MasterForm extends React.Component {
         currentStep: 1,
         date: '',
         agenda: '',
-        minutes: '',
-    }
-
-    componentWillUnmount = () => {
-        this.setState({
-            currentStep: 1,
-            date: '',
-            agenda: '',
-            minutes: ''
-        })
+        minutes: ''
     }
 
     _next = () => {
@@ -41,16 +32,18 @@ class MasterForm extends React.Component {
         })
     }
 
-    // functions for our button
+    // functions for button
     previousButton() {
         let currentStep = this.state.currentStep;
         if (currentStep !== 1) {
             return (
                 <button
-                    className="btn btn-secondary"
-                    type="button" onClick={this._prev}>
+                    className="btn btn-secondary mr-2"
+                    type="button" 
+                    onClick={this._prev}
+                >
                     Previous
-        </button>
+                </button>
             )
         }
         return null;
@@ -61,8 +54,10 @@ class MasterForm extends React.Component {
         if (currentStep < 3) {
             return (
                 <button
-                    className="btn btn-primary float-right"
-                    type="button" onClick={this._next}>
+                    className="btn btn-primary"
+                    type="button" 
+                    onClick={this._next}
+                >
                     Next
                 </button>
             )
@@ -103,7 +98,7 @@ class MasterForm extends React.Component {
 
     render() {
         return (
-            <div className="d-flex align-items-center flex-column outerBox overlay">
+            <div className="d-flex align-items-center flex-column overlay shadow-lg" >
                 <h1>React Form</h1>
                 <p>Step {this.state.currentStep} </p>
 
@@ -112,7 +107,7 @@ class MasterForm extends React.Component {
                         <Step1
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
-                            date={this.state.date}
+                            date={this.state.date} 
                         />
                         <Step2
                             currentStep={this.state.currentStep}

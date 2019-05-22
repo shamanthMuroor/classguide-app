@@ -55,12 +55,10 @@ class Meetings extends React.Component {
   }
 
   render() {
-
-    // console.log(this.state)
     return (
       <div className="container">
         <AddMeeting addMeeting={this.addMeeting} />
-        <div style={{marginTop: '10px'}}>
+        <div>
           <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} />
         </div>
       </div>

@@ -12,7 +12,7 @@ function Step3(props) {
                 className="form-control"
                 id="minutes"
                 name="minutes"
-                rows="6"
+                rows="7"
                 cols="30"
                 type="text"
                 placeholder="Enter minutes"

@@ -11,7 +11,7 @@ function Step2(props) {
                 className="form-control"
                 id="agenda"
                 name="agenda"
-                rows="6"
+                rows="7"
                 cols="30"
                 placeholder="agenda"
                 value={props.agenda}

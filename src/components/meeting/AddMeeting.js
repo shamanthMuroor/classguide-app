@@ -18,19 +18,19 @@ class AddMeeting extends React.Component{
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <div className="d-flex justify-content-center align-items-center flex-column addBox">
                     <button 
                         className="btnAdd"
                         onClick={this._onButtonClick}
                         style={{background: '#F5F2F2'}}
                     > 
-                        <i className="addPlusSymbol fas fa-plus"></i>
+                        <span className="addPlusSymbol">+</span>
                     </button>
-                    <h4>Add Meeting!</h4>
+                    <h5 style={{padding:'10px'}}>Add Meeting!</h5>
                 </div>                                
                 { this.state.showForm ? <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} />  : null  }
-            </div>
+            </React.Fragment>
         )
     }
 }

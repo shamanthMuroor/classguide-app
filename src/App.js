@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import './styles/style.css'
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 // import Login from './components/Login';
 import GuideStudents from './components/GuideStudents';
 import Stafprofile from './components/Stafprofile';
@@ -10,7 +10,6 @@ import Guidelines from './components/Guidelines';
 import ErrorPage from './components/ErrorPage';
 import firebase from 'firebase/app';
 import myApp from './config.js';
-// import Login from './components/Login';
 import './styles/style.css';
 
 
@@ -62,6 +61,7 @@ class App extends React.Component {
                 <Route path='/guidelines' exact component={Guidelines} />
                 <Route path='*' exact component={ErrorPage} />
               </Switch>
+              <Footer/>
             </Router>
       </div>
     )

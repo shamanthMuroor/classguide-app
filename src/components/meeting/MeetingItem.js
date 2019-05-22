@@ -9,10 +9,14 @@ class MeetingItem extends React.Component{
                     <div className="card" >
                         <div className="card-header" id="heading">
                             <button className="btn" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
-                                <span >{date}  </span>
-                                <span >{agenda}</span>
+                                <span >{date}  </span>  
                             </button>
-                                <button className="closeBtn" onClick={this.props.delMeeting.bind(this, id)}>x</button>
+                            <button className="btn" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
+                                <span >{agenda}</span>
+                            </button>                  
+                                <button type="button" className="close" aria-label="Close" onClick={this.props.delMeeting.bind(this, id)}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div id={id} className="collapse hide" aria-labelledby="heading" data-parent="#accordion">
                             <div className="card-body">
