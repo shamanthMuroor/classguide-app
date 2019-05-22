@@ -8,47 +8,12 @@ import Stafprofile from './components/Stafprofile';
 import Meetings from './components/Meetings';
 import Guidelines from './components/Guidelines';
 import ErrorPage from './components/ErrorPage';
-import firebase from 'firebase/app';
 import myApp from './config.js';
 import './styles/style.css';
 
-
-// export let auth=myApp.auth();
-// export let storage=myApp.storage();
 export let db=myApp.firestore();
-// export let googleProvider = new firebase.auth.GoogleAuthProvider();
-
 
 class App extends React.Component {
-  // state = {
-  //   user: false,
-  //   name: '',
-  //   pass: ''
-  // }
-
-  // componentWillMount = () => {
-  //   auth.onAuthStateChanged((user) => {
-  //     if(user)
-  //       this.setState({user})
-  //     else
-  //       this.setState({user: false})
-  //   })
-  // }
-
-  // handleAuth = () => {
-  //   auth.signInWithPopup(googleProvider)
-  //     .then(user => this.setState({user}))
-  //     .catch(err => console.log(err));
-  // }
-
-  // handleLogout = () => {
-  //   auth.signOut()
-  //     .then(() => {
-  //       this.setState({user: false})
-  //     })
-  //     .catch(err => console.log(err));
-  // }
-
   render() {
     return (
       <div>

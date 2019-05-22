@@ -9,7 +9,7 @@ function Navbar(props) {
                 <span className="navbar-toggler-icon"></span>
             </button>
                 
-            <button className="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#optionToggler" aria-controls="optionToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <button className="navbar-toggler border-0 " type="button" data-toggle="collapse" data-target="#optionToggler" aria-controls="optionToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="">...</span>
             </button>
 
