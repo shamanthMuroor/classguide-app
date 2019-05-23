@@ -41,6 +41,7 @@ class MasterForm extends React.Component {
                     className="btn btn-secondary mr-2"
                     type="button" 
                     onClick={this._prev}
+                    style={{float:'left'}}
                 >
                     Previous
                 </button>
@@ -57,6 +58,7 @@ class MasterForm extends React.Component {
                     className="btn btn-primary"
                     type="button" 
                     onClick={this._next}
+                    style={{float:'right'}}
                 >
                     Next
                 </button>
@@ -66,10 +68,9 @@ class MasterForm extends React.Component {
     }
 
     handleChange = event => {
-        // console.log(event.target.value)
-        const { name, value } = event.target
+        console.log(event.target.value)
         this.setState({
-            [name]: value
+            [event.target.name]: event.target.value
         })
     }
 
@@ -96,6 +97,16 @@ class MasterForm extends React.Component {
         .catch(err => console.log(err))
     }
 
+    changeForm = () => {
+        this.props.hideForm(false);
+        this.setState({
+            currentStep: 1,
+            date: '',
+            agenda: '',
+            minutes: ''
+        })        
+    }
+
     render() {
         return (
             <div className="d-flex align-items-center flex-column overlay shadow-lg" >
@@ -104,6 +115,17 @@ class MasterForm extends React.Component {
 
                 <div className="boxForm">
                     <form onSubmit={this.handleSubmit}>
+                        <button 
+                            type="button"
+                            className="close" 
+                            aria-label="Close"
+                            data-toggle="tooltip" 
+                            data-placement="bottom" 
+                            title="Close"
+                            onClick={this.changeForm}
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         <Step1
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
