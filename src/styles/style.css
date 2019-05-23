@@ -7,6 +7,18 @@ body{
     background: #F5F2F2;
 }
 
+
+a {
+    color: rgba(255,255,255,.5);
+    text-decoration: none !important ;
+}
+
+a:hover {
+    color: #F5F2F2;
+}
+
+
+
 /* Navbar */
 .mainNav {
     background-color: #333333; 
@@ -16,6 +28,31 @@ body{
 .topnav a:hover {
     border-bottom: 2px solid white;
   }
+
+
+.dropDownLinks {
+    background-color: #333333;
+    left: auto;
+    right:10px;
+}
+
+.dp {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.colgLogo {
+    position: absolute;
+    top: 2px;
+    left: 47%;
+    padding: 0px;
+    list-style: none;
+    font-size: 1.25em;
+}
+
 
 
 /* login */
@@ -188,6 +225,13 @@ body{
     line-height: 0.5em;
 }
 
+
+/* Guidelines */
+#GuidelinesOne, #GuidelinesTwo, #GuidelinesThree {
+    padding-left: 10px;
+    color: #333333;
+}
+
 /* Footer */
 footer {
     margin-top: 3rem;
@@ -219,14 +263,3 @@ footer {
 .copyrights {
    font-size: 1.5vw;
 }
-
-a {
-    color: rgba(255,255,255,.5);
-    text-decoration: none !important ;
-
-}
-
-a:hover {
-    color: #F5F2F2;
-}
-
