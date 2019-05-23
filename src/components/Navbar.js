@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';   
+import {Link} from 'react-router-dom';  
+import logo from '../images/aloylogo.png'; 
 
 function Navbar(props) {
     return (
@@ -29,7 +30,10 @@ function Navbar(props) {
 
             <ul className="mb-0 colgLogo">
                 <li className="nav-item" >
-                    <Link className="nav-link" exact="true" to="/" style={{padding:'5px'}}>SAC</Link>
+                    <Link className="nav-link" exact="true" to="/" style={{padding:'0px'}}>
+                        <img src={logo} width="50px" height="50px" alt="College Logo"/>
+                        <span> SAC</span>
+                    </Link>
                 </li>
             </ul>
 

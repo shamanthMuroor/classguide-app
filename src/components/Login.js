@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/login.css';
 import logo from '../images/logo.png';
 
 class Login extends React.Component {

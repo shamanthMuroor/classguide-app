@@ -22,6 +22,7 @@ const errPage = {
   color:'darkgray', 
   textAlign:'center', 
   width: '25rem', 
-  marginTop: '160px', 
+  marginTop: '150px', 
+  marginBottom: '120px', 
   padding: '50px'
 }

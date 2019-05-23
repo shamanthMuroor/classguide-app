@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-// import '../style/style.css'
+import logo from '../images/aloylogo.png';
 
 class Footer extends React.Component {
     render() {
@@ -8,6 +8,7 @@ class Footer extends React.Component {
             <footer>
                 <div >
                     <div className="text-center foot">
+                        <img src={logo} width="100px" height="100px" style={{paddingTop:'10px'}} alt="College Logo"/>
                         <h5>St. Aloysius College(Autonomous) Mangaluru</h5>
                         <ul className="font-weight-bold footerUL" >
                             <li className="active">
