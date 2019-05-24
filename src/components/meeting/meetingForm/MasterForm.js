@@ -86,25 +86,25 @@ class MasterForm extends React.Component {
             alert("Meeting added successfully")
             console.log("Added id: " + docRef.id)
             this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.minutes)
-            this.props.hideForm(false);
             this.setState({
                 currentStep: 1,
                 date: '',
                 agenda: '',
                 minutes: ''
             })
+            this.props.hideForm();
         })
         .catch(err => console.log(err))
     }
 
     changeForm = () => {
-        this.props.hideForm(false);
         this.setState({
             currentStep: 1,
             date: '',
             agenda: '',
             minutes: ''
-        })        
+        })     
+        this.props.hideForm();   
     }
 
     render() {

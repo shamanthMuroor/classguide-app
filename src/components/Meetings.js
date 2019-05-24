@@ -56,7 +56,7 @@ class Meetings extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <AddMeeting addMeeting={this.addMeeting} />
         <div>
           <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} />

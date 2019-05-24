@@ -6,6 +6,11 @@ class GuideStudents extends React.Component {
       <div className="container card profile">
         <div className="card-body">
             <h1>Card test</h1>
+            <h1>Card test</h1>
+            <h1>Card test</h1>
+            <h1>Card test</h1>
+            <h1>Card test</h1>
+            <h1>Card test</h1>
         </div>
       </div>
     )

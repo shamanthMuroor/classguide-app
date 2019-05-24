@@ -11,9 +11,9 @@ class AddMeeting extends React.Component{
         this.setState({ showForm: true })
     }
 
-    hideForm = (a) => {
-        this.setState({ showForm: a })
-        console.log(this.state.showForm)
+    hideForm = () => {
+        this.setState({ showForm: !this.state.showForm })
+        // console.log(this.state.showForm)
     }
 
     render() {
@@ -29,7 +29,7 @@ class AddMeeting extends React.Component{
                     </button>
                     <h5 style={{padding:'10px'}}>Add Meeting!</h5>
                 </div>                                
-                { this.state.showForm ? <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} />  : null  }
+                {this.state.showForm && <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} />  }
             </React.Fragment>
         )
     }
