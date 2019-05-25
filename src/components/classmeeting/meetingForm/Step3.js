@@ -7,16 +7,16 @@ function Step3(props) {
     return(
       <React.Fragment>
         <div className="form-group">
-            <label>Minutes</label>
+            <label>Description</label>
             <textarea
                 className="form-control"
-                id="minutes"
-                name="minutes"
+                id="description"
+                name="description"
                 rows="7"
                 cols="30"
                 type="text"
-                placeholder="Enter minutes"
-                value={props.minutes}
+                placeholder="Enter description"
+                value={props.description}
                 onChange={props.handleChange}
             >
             </textarea>   

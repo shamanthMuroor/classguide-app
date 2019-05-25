@@ -3,11 +3,11 @@ import '../../styles/style.css'
 
 class MeetingItem extends React.Component{
     render() {
-        const { id, date, agenda, minutes } = this.props.meeting;
+        const { id, date, agenda, description } = this.props.meeting;
         return (
             <div className="mt-4">
                 <div id="accordion">
-                    <div className="card">
+                    <div className="card mi">
                         <div className="card-header" id="headMeetingItems">  
                             <div className="row mr-0">
                                 <div className="col p-0"> 
@@ -25,7 +25,7 @@ class MeetingItem extends React.Component{
                             <div className="row meetingListHeadings d-none d-md-flex">
                                 <div className="col-md-3">Date</div>
                                 <div className="col-md-5">Agenda</div>
-                                <div className="col-md-4">Minutes</div>
+                                <div className="col-md-4">Description</div>
                             </div>
                             <div className="row  mr-0">
                                 <div className="col-md-3 text-center">
@@ -39,8 +39,8 @@ class MeetingItem extends React.Component{
                                     </button> 
                                 </div>
                                 <div className="col-md-4 d-none d-md-flex">
-                                    <button className="btn minutes text-white" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
-                                        <span>{minutes}</span>
+                                    <button className="btn description text-white" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
+                                        <span>{description}</span>
                                     </button> 
                                 </div>  
                             </div>
@@ -62,7 +62,7 @@ class MeetingItem extends React.Component{
                                 <hr />
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <span style={{fontWeight:'bold', color: 'gray'}}>Minutes: </span><span>{minutes}</span> 
+                                        <span style={{fontWeight:'bold', color: 'gray'}}>Description: </span><span>{description}</span> 
                                     </div>
                                 </div>
                             </div>

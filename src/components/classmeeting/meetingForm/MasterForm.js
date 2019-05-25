@@ -13,7 +13,7 @@ class MasterForm extends React.Component {
         currentStep: 1,
         date: '',
         agenda: '',
-        minutes: ''
+        description: ''
     }
 
     _next = () => {
@@ -80,17 +80,17 @@ class MasterForm extends React.Component {
             .collection(this.state.sec).add({
                 agenda: this.state.agenda,
                 date: this.state.date,
-                minutes: this.state.minutes
+                description: this.state.description
         })
         .then((docRef) => {
             alert("Meeting added successfully")
             console.log("Added id: " + docRef.id)
-            this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.minutes)
+            this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
             this.setState({
                 currentStep: 1,
                 date: '',
                 agenda: '',
-                minutes: ''
+                description: ''
             })
             this.props.hideForm();
         })
@@ -102,7 +102,7 @@ class MasterForm extends React.Component {
             currentStep: 1,
             date: '',
             agenda: '',
-            minutes: ''
+            description: ''
         })     
         this.props.hideForm();   
     }
@@ -110,7 +110,7 @@ class MasterForm extends React.Component {
     render() {
         return (
             <div className="d-flex align-items-center flex-column overlay shadow-lg" >
-                <h1>React Form</h1>
+                <h3>Add Class Meeting</h3>
                 <p>Step {this.state.currentStep} </p>
 
                 <div className="boxForm">
@@ -139,7 +139,7 @@ class MasterForm extends React.Component {
                         <Step3
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
-                            minutes={this.state.minutes}
+                            description={this.state.description}
                         />
                         {this.previousButton()}
                         {this.nextButton()}

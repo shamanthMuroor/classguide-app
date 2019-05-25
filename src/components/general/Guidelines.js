@@ -4,7 +4,8 @@ class Guidelines extends React.Component {
   render() {
     return (
         <div className="d-flex justify-content-center">
-            <div id="accordion" className="flex-column" style={{width: '75%', marginTop: '100px'}}>
+            <div id="accordion" className="flex-column" style={{width: '85%', marginTop: '70px', marginBottom: '40px'}}>
+                <h1 className="text-center mb-5 p-2">Guidelines</h1>
                 <div className="card">
                     <div className="card-header" id="headingOne">
                         <h5 className="mb-0 ">

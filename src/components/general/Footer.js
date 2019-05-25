@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import logo from '../images/aloylogo.png';
+import logo from '../../images/aloylogo.png';
 
 class Footer extends React.Component {
     render() {

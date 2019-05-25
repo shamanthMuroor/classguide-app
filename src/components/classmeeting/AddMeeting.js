@@ -20,6 +20,7 @@ class AddMeeting extends React.Component{
         return (
             <React.Fragment>
                 <div className="d-flex justify-content-center align-items-center flex-column addBox">
+                <h3 className="p-2">Class Meeting Database</h3>
                     <button 
                         className="btnAdd"
                         onClick={this._onButtonClick}

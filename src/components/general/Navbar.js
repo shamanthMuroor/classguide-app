@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';  
-import logo from '../images/aloylogo.png'; 
- const hidenav = () =>{
-        document.getElementById('menuToggler').className="navbar-collapse topnav collapse";
- }
+import logo from '../../images/aloylogo.png'; 
+    
+const hidenav = () =>{
+    document.getElementById('menuToggler').className="navbar-collapse topnav collapse";
+}
+
 function Navbar(props) {
     return (
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark mainNav">
@@ -22,12 +24,12 @@ function Navbar(props) {
                         <Link onClick={hidenav} className="nav-link" exact="true" to="/students">Student Details </Link>
                     </li>
                     <li className="nav-item">
-                            <Link onClick={hidenav} className="nav-link" exact="true" to="/meetings">Class Meetings</Link>
+                            <Link onClick={hidenav} className="nav-link" exact="true" to="/classmeetings">Class Meetings</Link>
                     </li>
                     <li className="nav-item">
-                        <Link onClick={hidenav} className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
+                        <Link onClick={hidenav} className="nav-link" exact="true" to="/parentmeetings">Parent Meetings</Link>
                     </li>
-                </ul>
+                </ul>   
             </div>
 
             <ul className="mb-0 dp">
@@ -37,13 +39,14 @@ function Navbar(props) {
                     </Link>
                     <div className="dropdown-menu dropDownLinks" aria-labelledby="navbarDropdownMenuLink">
                         <Link className="nav-link disabled" to="#" aria-disabled="true">Announcements</Link>
+                        <Link className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
                         <Link className="nav-link" to="/guidelines" >Guidelines</Link>
                         <button className="btn text-left" onClick={props.logout} style={{color: 'rgba(255,255,255,.5)'}}>Logout</button>
                     </div>
                 </li>
             </ul>
             
-            <div className="mx-auto ml-lg-5">   
+            <div className="mx-auto">   
                 <Link className="navbar-brand d-md-none" exact="true" to="/" style={{ padding: '0px' }}>
                     <img src={logo} width="50px" height="50px" className="d-inline-block align-middle" alt="College Logo" />
                     SAC

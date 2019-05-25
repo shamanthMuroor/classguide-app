@@ -1,11 +1,11 @@
-// Meeting --> (AddMeeting + ViewMeeting)  --> (MasterForm/MeetingItem) --> Step1/Step2/Step3
+// ClassMeeting --> (AddMeeting + ViewMeeting)  --> (MasterForm/MeetingItem) --> Step1/Step2/Step3
 import React from 'react';
 import '../styles/style.css';
-import ViewMeeting from './meeting/ViewMeeting';
-import AddMeeting from './meeting/AddMeeting';
+import ViewMeeting from './classmeeting/ViewMeeting';
+import AddMeeting from './classmeeting/AddMeeting';
 import {db} from '../App';
 
-class Meetings extends React.Component {
+class ClassMeetings extends React.Component {
   state = {
     lecturer: "lec1",
     sec: "3rd bsc Ecsm",
@@ -66,4 +66,4 @@ class Meetings extends React.Component {
   }
 }
 
-export default Meetings;
+export default ClassMeetings;

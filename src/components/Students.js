@@ -53,15 +53,27 @@ class Students extends React.Component {
     render() {
         // console.log(this.state.studs)
         let html = (
-            <StudList 
-                studs = {this.state.studs}
-                viewStudDetails = {this.viewStudDetails}
-                view={this.view} 
-            />)
+            <React.Fragment>
+                <h2 className="text-center">Student List</h2>
+                <div className="my-4">
+                    <form className="form-inline d-flex justify-content-center">
+                        <input className="form-control mt-2 mb-md-4 mr-md-2" type="search" placeholder="Search" aria-label="Search" />
+                        <button className="btn btn-outline-dark mt-2 mb-4" type="submit">Search</button>
+                    </form>
+                </div>
+                <StudList 
+                    studs = {this.state.studs}
+                    viewStudDetails = {this.viewStudDetails}
+                    view={this.view} 
+                />
+            </React.Fragment>
+        )
         return (
-            <div className="studList">
-                {this.state.show ? <StudProfile info={this.state.info} hideStudProfile={this.hideStudProfile} /> : html } 
-            </div>
+            <React.Fragment>
+                <div className="studList">
+                    {this.state.show ? <StudProfile info={this.state.info} hideStudProfile={this.hideStudProfile} /> : html } 
+                </div>
+            </React.Fragment>
         )
     }
 }
