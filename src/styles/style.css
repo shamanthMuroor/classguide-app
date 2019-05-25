@@ -234,7 +234,7 @@ a:hover {
 
 
 /* MeetingItem component */
-.card {
+#accordion .card {
     margin-left: auto;
     width: 95%;
 }
@@ -268,6 +268,42 @@ a:hover {
     text-overflow: ellipsis;
     color: #F5F2F2;
 }
+
+/* Students component */
+.studList {
+    margin: 60px 10px;
+}
+
+/* StudentItems */
+.indiStudentLists {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.studItemBtn {
+    width: 100%;
+    padding: 5px;
+    background: transparent;
+    border: none;
+    overflow: hidden; /*Should be changed */
+}
+
+.studItemBtn.col {
+    padding: 0px;
+}
+
+
+
+/* Student Profile */
+.studProf {
+    width: 90vw;
+    height: 450px;
+    margin-top: 20px;
+}
+
+
 
 
 /* Guidelines */

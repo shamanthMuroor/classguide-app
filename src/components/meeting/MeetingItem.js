@@ -7,7 +7,7 @@ class MeetingItem extends React.Component{
         return (
             <div className="mt-4">
                 <div id="accordion">
-                    <div className="card ">
+                    <div className="card">
                         <div className="card-header" id="headMeetingItems">  
                             <div className="row mr-0">
                                 <div className="col p-0"> 

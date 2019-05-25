@@ -19,7 +19,7 @@ function Navbar(props) {
                         <Link onClick={hidenav} className="nav-link" exact="true" to="/"><i className="fas fa-home"></i> Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
-                        <Link onClick={hidenav} className="nav-link" exact="true" to="/guidestudents">Student Details </Link>
+                        <Link onClick={hidenav} className="nav-link" exact="true" to="/students">Student Details </Link>
                     </li>
                     <li className="nav-item">
                             <Link onClick={hidenav} className="nav-link" exact="true" to="/meetings">Class Meetings</Link>
