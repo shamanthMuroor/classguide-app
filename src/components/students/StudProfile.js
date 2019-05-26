@@ -1,15 +1,31 @@
 import React from 'react';
+import {db} from '../../App';
 
 class StudProfile extends React.Component {
-    back = () => {
-        this.props.hideStudProfile();
+    state = {
+        info : []
     }
 
+    componentDidMount () {
+        const { StudID } = this.props.location.state;
+        console.log('id:' + StudID)
+        db.collection('students').doc(StudID).get()
+            .then(data => {
+                let details = [];
+                details.push({
+                    id: data.id,
+                    ...data.data()
+                })
+                this.setState({ info: details })
+            })
+            .catch(err => console.log(err))
+    }
+
+ 
     render() {
-        let html = this.props.info.map(val => {
-            // {console.log(val.name)}
+        let html = this.state.info.map((val) => {
             return (
-                <React.Fragment>
+                <React.Fragment key={val.id}>
                     <div className="container card shadow-lg p-3 mb-5 bg-white studProf">
                         <div className="studentDP">
                             <i className="fas fa-user-circle fa-6x"></i>
@@ -25,9 +41,6 @@ class StudProfile extends React.Component {
         })
         return (
             <div style={{marginTop: '110px'}}>
-                <div className="d-none d-md-flex mb-md-5">
-                    <button onClick={this.back}>Back</button>
-                </div>
                 <div>
                     {html}
                 </div>

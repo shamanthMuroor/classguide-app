@@ -44,12 +44,12 @@ class ClassMeetings extends React.Component {
   }
 
   // Add Meeting
-  addMeeting = (id, agenda, date, minutes) => {
+  addMeeting = (id, agenda, date, description) => {
     const newMeeting = {
       id,
       agenda, 
       date, 
-      minutes
+      description
     }
     this.setState({meetings: this.state.meetings.concat(newMeeting) })
   }

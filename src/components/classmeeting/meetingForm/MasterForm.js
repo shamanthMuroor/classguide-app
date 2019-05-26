@@ -125,7 +125,7 @@ class MasterForm extends React.Component {
                             title="Close"
                             onClick={this.changeForm}
                         >
-                            <p aria-hidden="true"><small class="align-middle" style={{fontSize: '14px'}}>Close</small>&times;</p>
+                            <p aria-hidden="true"><small className="align-middle" style={{fontSize: '14px'}}>Close</small>&times;</p>
                         </button>
                         </div>
                         <Step1

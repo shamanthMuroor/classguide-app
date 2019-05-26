@@ -296,6 +296,7 @@ a:hover {
 .tagBtn2 div {   
     padding: 0px;
     width: 275px;
+    overflow: hidden;
 }
 
 /* StudentItems */

@@ -1,12 +1,10 @@
 import React from 'react';
 import StudList from './students/StudList';
-import StudProfile from './students/StudProfile';
 import {db} from '../App';
+import {Link} from 'react-router-dom';
 
 class Students extends React.Component {
-    state = {
-        show: false,        
-        info: [],
+    state = { 
         studs : []
     }
 
@@ -24,34 +22,11 @@ class Students extends React.Component {
         .catch(err => console.log(err))
     }
 
-    viewStudDetails = () => {
-        return (console.log("hello"))
-    }
-    
-
-    // Viewing Student Profile
-    view = (ids) => {
-        console.log('id:' + ids)
-        db.collection('students').doc(ids).get()
-        .then(data => {
-            let details = [];
-            details.push({
-                id: data.id,
-                ...data.data() 
-            })
-            this.setState({info: details, show: true})
-            // console.log(this.state.info)
-        })
-    .catch(err => console.log(err))
-    }
-
-    // Function to hide Student Profile
-    hideStudProfile = () => {
-        this.setState({show: false})
+    componentWillUnmount = () => {
+        this.setState({studs: []})
     }
 
     render() {
-        // console.log(this.state.studs)
         let html = (
             <React.Fragment>
                 <h2 className="text-center">Student List</h2>
@@ -64,10 +39,14 @@ class Students extends React.Component {
                 <hr />
                 <div className="row m-2 justify-content-center tagBtn1">
                     <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button">SC/ST Students</button>
+                        <Link className="btn btn-outline-dark" to={{ pathname: `/students/scst` }} >
+                            SC/ST Students
+                        </Link>
                     </div>
                     <div className="col-sm-6 col-md-2 my-1 ">
-                        <button className="btn btn-outline-dark" type="button">Rural Students</button>
+                        <Link to={{ pathname: `/students/rural` }} >
+                            <button className="btn btn-outline-dark" type="button">Rural Students</button>
+                        </Link>
                     </div>
                     <div className="col-sm-6 col-md-2 my-1" >
                         <button className="btn btn-outline-dark" type="button">Academic Achievers</button>
@@ -99,15 +78,13 @@ class Students extends React.Component {
                 <hr />
                 <StudList 
                     studs = {this.state.studs}
-                    viewStudDetails = {this.viewStudDetails}
-                    view={this.view} 
                 />
             </React.Fragment>
         )
         return (
             <React.Fragment>
                 <div className="studList">
-                    {this.state.show ? <StudProfile info={this.state.info} hideStudProfile={this.hideStudProfile} /> : html } 
+                    { html }
                 </div>
             </React.Fragment>
         )

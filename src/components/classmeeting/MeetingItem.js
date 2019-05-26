@@ -16,8 +16,21 @@ class MeetingItem extends React.Component{
                                     </button> 
                                 </div>
                                 <div className="col pr-2">
-                                    <button type="button" className="close text-white" aria-label="Close" onClick={this.props.delMeeting.bind(this, id)}  data-toggle="tooltip" data-placement="bottom" title="Delete this meeting">
-                                    <span className="mb-0" aria-hidden="true"><small class="align-middle" style={{fontSize: '12px'}}>Delete</small>&times;</span>
+                                    <button 
+                                        type="button" 
+                                        className="close text-white" 
+                                        aria-label="Close" 
+                                        onClick={this.props.delMeeting.bind(this, id)} 
+                                        data-toggle="tooltip" 
+                                        data-placement="bottom" 
+                                        title="Delete this meeting"
+                                    >
+                                        <span className="mb-0" aria-hidden="true">
+                                            <small className="align-middle" style={{fontSize: '12px', textShadow: 'none'}}>
+                                                Delete
+                                            </small>
+                                            &times;
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -29,17 +42,38 @@ class MeetingItem extends React.Component{
                             </div>
                             <div className="row  mr-0">
                                 <div className="col-md-3 text-center">
-                                    <button className="btn text-white" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
+                                    <button 
+                                        className="btn" 
+                                        style={{color: '#e2d5d5'}} 
+                                        data-toggle="collapse" 
+                                        data-target={'#'+id} 
+                                        aria-expanded="false" 
+                                        aria-controls={id}
+                                    >
                                         <span>{date}</span>  
                                     </button> 
                                 </div>
                                 <div className="col-md-5">
-                                    <button className="btn agenda text-white" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
+                                    <button 
+                                        className="btn agenda" 
+                                        style={{color: '#e2d5d5'}} 
+                                        data-toggle="collapse" 
+                                        data-target={'#'+id} 
+                                        aria-expanded="false" 
+                                        aria-controls={id}
+                                    >
                                         <span>{agenda}</span>
                                     </button> 
                                 </div>
                                 <div className="col-md-4 d-none d-md-flex">
-                                    <button className="btn description text-white" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
+                                    <button 
+                                        className="btn description" 
+                                        style={{color: '#e2d5d5'}} 
+                                        data-toggle="collapse" 
+                                        data-target={'#'+id} 
+                                        aria-expanded="false" 
+                                        aria-controls={id}
+                                    >
                                         <span>{description}</span>
                                     </button> 
                                 </div>  
@@ -50,7 +84,8 @@ class MeetingItem extends React.Component{
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col-md-4">
-                                        <span style={{fontWeight:'bold', color: 'gray'}}>Date: </span><span>{date}</span> 
+                                        <span style={{fontWeight:'bold', color: 'gray'}}>Date: </span>
+                                        <span>{date}</span> 
                                     </div>
                                 </div>
                                 <hr />
