@@ -7,7 +7,7 @@ function Step3(props) {
     return(
       <React.Fragment>
         <div className="form-group">
-            <label>Description</label>
+            <label className="h5">Description</label>
             <textarea
                 className="form-control"
                 id="description"

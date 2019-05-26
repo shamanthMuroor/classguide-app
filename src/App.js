@@ -17,7 +17,7 @@ export let db=myApp.firestore();
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
             <Router>
               <Navbar logout={this.handleLogout}/>
               <Switch>
@@ -30,7 +30,7 @@ class App extends React.Component {
               </Switch>
               <Footer/>
             </Router>
-      </div>
+      </React.Fragment>
     )
   }
 }

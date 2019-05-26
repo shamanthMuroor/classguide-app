@@ -6,7 +6,7 @@ function Step2(props) {
     } 
     return(
         <div className="form-group">
-            <label>Agenda</label>
+            <label className="h5">Agenda</label>
             <textarea
                 className="form-control"
                 id="agenda"

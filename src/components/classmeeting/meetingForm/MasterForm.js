@@ -115,6 +115,7 @@ class MasterForm extends React.Component {
 
                 <div className="boxForm">
                     <form onSubmit={this.handleSubmit}>
+                        <div className="d-flex flex-row-reverse">
                         <button 
                             type="button"
                             className="close" 
@@ -124,8 +125,9 @@ class MasterForm extends React.Component {
                             title="Close"
                             onClick={this.changeForm}
                         >
-                            <span aria-hidden="true">&times;</span>
+                            <p aria-hidden="true"><small class="align-middle" style={{fontSize: '14px'}}>Close</small>&times;</p>
                         </button>
+                        </div>
                         <Step1
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}

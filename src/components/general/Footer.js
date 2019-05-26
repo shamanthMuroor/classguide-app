@@ -6,9 +6,8 @@ class Footer extends React.Component {
     render() {
         return (
             <footer>
-                <div >
                     <div className="text-center foot">
-                        <img src={logo} width="100px" height="100px" style={{paddingTop:'10px'}} alt="College Logo"/>
+                        <img src={logo} width="100px" height="100px" alt="College Logo"/>
                         <h5>St. Aloysius College(Autonomous) Mangaluru</h5>
                         <ul className="font-weight-bold footerUL" >
                             <li className="active">
@@ -26,7 +25,6 @@ class Footer extends React.Component {
                         </ul>
                         <small className="copyrights">© Copyright 2019</small>
                     </div>
-                </div>
             </footer>
         )
     }

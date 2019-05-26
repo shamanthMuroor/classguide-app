@@ -11,13 +11,13 @@ class MeetingItem extends React.Component{
                         <div className="card-header" id="headMeetingItems">  
                             <div className="row mr-0">
                                 <div className="col p-0"> 
-                                    <button className="btn p-0" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
+                                    <button className="btn pl-1" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
                                        <small>View</small> 
                                     </button> 
                                 </div>
-                                <div className="col">
+                                <div className="col pr-2">
                                     <button type="button" className="close text-white" aria-label="Close" onClick={this.props.delMeeting.bind(this, id)}  data-toggle="tooltip" data-placement="bottom" title="Delete this meeting">
-                                        <span aria-hidden="true">&times;</span>
+                                    <span className="mb-0" aria-hidden="true"><small class="align-middle" style={{fontSize: '12px'}}>Delete</small>&times;</span>
                                     </button>
                                 </div>
                             </div>

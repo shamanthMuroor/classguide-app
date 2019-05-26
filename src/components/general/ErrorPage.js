@@ -15,8 +15,6 @@ class ErrorPage extends React.Component {
   }
 }
 
-export default ErrorPage;
-
 const errPage = {
   backgroundColor:'#333333', 
   color:'darkgray', 
@@ -26,3 +24,6 @@ const errPage = {
   marginBottom: '120px', 
   padding: '50px'
 }
+
+
+export default ErrorPage;

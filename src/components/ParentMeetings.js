@@ -54,7 +54,7 @@ class ParentMeetings extends React.Component {
 
   render() {
     return (
-      <div className="container mt-5 text-center">
+      <div className="container text-center">
         <AddParentMeeting addParentMeeting={this.addParentMeeting} />
         <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting} />
       </div>

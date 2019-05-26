@@ -7,7 +7,7 @@ function Step1(props) {
     } 
     return(
       <div className="form-group" style={{height:'215px'}} >        
-        <label>Student Register Number</label>
+        <label className="h5">Student Register Number</label>
         <div style={{padding: '10px'}}>
           <input
             className="form-control"
@@ -20,7 +20,7 @@ function Step1(props) {
           />
         </div>
         <hr />
-        <label>Date</label>
+        <label className="h5">Date</label>
         <div style={{padding: '10px'}}>
           <input
             className="form-control"
