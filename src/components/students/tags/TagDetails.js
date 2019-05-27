@@ -20,12 +20,12 @@ class TagDetails extends React.Component {
         if(this.props.tag === 'scst') {
             if(caste === 'scst') {
                 html = 
-                <div>
-                    <h6>{name}</h6>
-                    <h6>{reg}</h6>
-                    <h6>{caste}</h6>
-                    <h6>{location}</h6>
-                </div>
+                <tr>
+                    <td>{name}</td>
+                    <td>{reg}</td>
+                    {/* <h6>{caste}</h6>
+                    <h6>{location}</h6> */}
+                </tr>
             }
                       
         }
@@ -42,11 +42,9 @@ class TagDetails extends React.Component {
         }
         return (
             <React.Fragment>
-                <div className="mt-5">
-                        {/* {console.log(this.props.tag)} */}
-                        {/* {console.log(this.props.stud.caste)} */}
-                        { html }
-                </div>
+                {/* {console.log(this.props.tag)} */}
+                {/* {console.log(this.props.stud.caste)} */}
+                {html}
             </React.Fragment>
         ) 
     }

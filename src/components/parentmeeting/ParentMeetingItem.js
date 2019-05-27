@@ -11,8 +11,11 @@ class ParentMeetingItem extends React.Component {
                     <span>{reg} </span>
                     <span>{agenda} </span>
                     <span>{description} </span>
-                    <button type="button" className="close" aria-label="Close" onClick={this.props.delMeeting.bind(this, id)}  data-toggle="tooltip" data-placement="bottom" title="Delete this meeting">
-                    <span aria-hidden="true">&times;</span>
+                    <button type="button" className="close" aria-label="Close" onClick={this.props.delMeeting.bind(this, id)}  data-toggle="tooltip" data-placement="bottom" title="Delete this meeting" style={{ background: 'transparent', border: 'none', float: 'right' }}
+>
+                    <span aria-hidden="true">                        
+                        <i className="far fa-trash-alt"></i>
+                    </span>
                     </button>
                 </div>
             </React.Fragment>

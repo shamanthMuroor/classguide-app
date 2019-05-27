@@ -12,15 +12,22 @@ class Footer extends React.Component {
                         <ul className="font-weight-bold footerUL" >
                             <li className="active">
                                 <Link exact="true" to="/"><i className="fas fa-home"></i> Home </Link>
+                                <span>|</span>
                             </li>
                             <li>
-                                <Link exact="true" to="/guidestudents">Student Details </Link>
+                                <Link exact="true" to="/students">Student Details </Link>
+                                <span>|</span>
                             </li>
                             <li>
-                                <Link exact="true" to="/meetings">Class Meetings</Link>
+                                <Link exact="true" to="/classmeetings">Class Meetings </Link>
+                                <span>|</span>
                             </li>
                             <li>
-                                <Link className=" disabled" to="#" aria-disabled="true">Sahaaya</Link>
+                                <Link exact="true" to="/parentmeetings">Parent Meetings </Link>
+                                <span>|</span>
+                            </li>
+                            <li>
+                                <Link exact="true" to="/guidelines">Guidelines</Link>
                             </li>
                         </ul>
                         <small className="copyrights">© Copyright 2019</small>
