@@ -67,6 +67,8 @@ class StudProfile extends React.Component {
                         </div>
                     </div>
 
+                    <hr />
+
                 </React.Fragment>
             )
         })

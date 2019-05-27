@@ -49,7 +49,8 @@ function Navbar(props) {
                         <Link className="nav-link disabled" to="#" aria-disabled="true">Announcements</Link>
                         <Link className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
                         <Link className="nav-link" to="/guidelines" >Guidelines</Link>
-                        <Link className="nav-link" to="/guidelines" onClick={props.logout} >Logout</Link>
+                        <hr className="m-1 mx-3" style={{backgroundColor: '#F5F2F2', opacity:'0.15'}}/>
+                        <Link className="nav-link" to="#" onClick={props.logout} >Logout</Link>
                     </div>
                 </li>
             </ul>

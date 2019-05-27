@@ -29,7 +29,7 @@ class MasterForm extends React.Component {
             }                 
         }
         else if(this.state.currentStep === 2) {
-            if(this.state.agenda === "") {
+            if(this.state.agenda === "" || this.state.agenda === "Select Meeting Agenda") {
                 this.setState({ error: "Enter valid agenda" })
             }
             else {

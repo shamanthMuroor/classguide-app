@@ -7,7 +7,7 @@ function Step1(props) {
     } 
     return(
       <div className="form-group" style={{height:'245px', margin: '-15px 0px 0px 0px'}} >  
-        {props.error && <div class="alert alert-danger m-1 p-0" role="alert">
+        {props.error && <div className="alert alert-danger m-1 p-0" role="alert">
           {props.error}
         </div>}      
         <label className="h6">Student Register Number</label>
