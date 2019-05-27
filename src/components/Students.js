@@ -2,10 +2,12 @@ import React from 'react';
 import StudList from './students/StudList';
 import {db} from '../App';
 import {Link} from 'react-router-dom';
+import Search from './Search';
 
 class Students extends React.Component {
     state = { 
-        studs : []
+        studs : [],
+        search: ''
     }
 
     componentWillMount = () => {
@@ -26,18 +28,19 @@ class Students extends React.Component {
         this.setState({studs: []})
     }
 
+    updateSearch = (e) => {
+        this.setState({search: e.target.value});
+    }
+
     render() {
         let html = (
             <React.Fragment>
                 <h2 className="text-center">Student List</h2>
                 <div className="my-2">
-                    <form className="form-inline d-flex justify-content-center">
-                        <input className="form-control mt-2 mr-md-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-dark mt-2" type="submit">Search</button>
-                    </form>
+                   <Search filterValue={this.updateSearch} search={this.state.search}/>
                 </div>
                 <hr />
-                <div className="row m-2 justify-content-center tagBtn1">
+                {/* <div className="row m-2 justify-content-center tagBtn1">
                     <div className="col-sm-6 col-md-2 my-1">
                         <Link className="btn btn-outline-dark" to={{ pathname: `/students/scst` }} >
                             SC/ST Students
@@ -75,9 +78,10 @@ class Students extends React.Component {
                         <button className="btn btn-outline-dark" type="button">Students Not Completed Sahaya Programme</button>
                     </div>
                 </div>
-                <hr />
+                <hr /> */}
                 <StudList 
                     studs = {this.state.studs}
+                    filteredValue = {this.state.search}
                 />
             </React.Fragment>
         )
