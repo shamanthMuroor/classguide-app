@@ -277,8 +277,7 @@ a:hover {
 }
 
 .tagBtn1 .btn {
-    padding: 2px 10px;
-    height: 9vh;
+    height: auto;
     width: 100%;
 }
 

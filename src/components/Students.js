@@ -1,8 +1,8 @@
 import React from 'react';
 import StudList from './students/StudList';
 import {db} from '../App';
-import {Link} from 'react-router-dom';
 import Search from './Search';
+import Tags from './Tags';
 
 class Students extends React.Component {
     state = { 
@@ -29,7 +29,13 @@ class Students extends React.Component {
     }
 
     updateSearch = (e) => {
+        
         this.setState({search: e.target.value});
+    }
+
+    updateTag = (e) => {
+        
+        this.setState({search: e.target.name});
     }
 
     render() {
@@ -40,45 +46,8 @@ class Students extends React.Component {
                    <Search filterValue={this.updateSearch} search={this.state.search}/>
                 </div>
                 <hr />
-                {/* <div className="row m-2 justify-content-center tagBtn1">
-                    <div className="col-sm-6 col-md-2 my-1">
-                        <Link className="btn btn-outline-dark" to={{ pathname: `/students/scst` }} >
-                            SC/ST Students
-                        </Link>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1 ">
-                        <Link to={{ pathname: `/students/rural` }} >
-                            <button className="btn btn-outline-dark" type="button">Rural Students</button>
-                        </Link>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1" >
-                        <button className="btn btn-outline-dark" type="button">Academic Achievers</button>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button">Slow learners</button>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button">Peer Group Learning</button>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button">Attendance shortage</button>
-                    </div>
-                </div>
-                <div className="row m-2 mb-5 justify-content-center tagBtn2">
-                    <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Student achievers (Non Academic Areas)</button>
-                    </div>
-                    <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Student achievers</button>
-                    </div>
-                    <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Students with special attention/ Counselling</button>
-                    </div>
-                    <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Students Not Completed Sahaya Programme</button>
-                    </div>
-                </div>
-                <hr /> */}
+                    <Tags search={this.updateTag}/>
+                <hr />
                 <StudList 
                     studs = {this.state.studs}
                     filteredValue = {this.state.search}
