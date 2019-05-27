@@ -34,6 +34,7 @@ class StudProfile extends React.Component {
                             <h4>Name: {val.name}</h4>
                             <h5>Reg. no: {val.reg}</h5>
                             <h5>Course: {val.id}</h5>
+                            <h5>Location: {val.location}</h5>
                         </div>
                     </div>
                 </React.Fragment>

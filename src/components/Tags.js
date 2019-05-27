@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 
 class Tags extends React.Component {
@@ -7,16 +6,19 @@ class Tags extends React.Component {
         return (
             <React.Fragment>
                 <div className="row m-2 justify-content-center tagBtn1">
-                    <div className="col-sm-6 col-md-2 my-1">
+                    {/* <div className="col-sm-6 col-md-2 my-1">
                         <button className="btn btn-outline-dark" type="button" name="" onClick={this.props.search}>SC/ST</button>
-                    </div>
+                    </div> */}
+
+
                     <div className="col-sm-6 col-md-2 my-1 ">
                         <button className="btn btn-outline-dark" name="rural" onClick={this.props.search} type="button">Rural</button>
                     </div>
                     <div className="col-sm-6 col-md-2 my-1 ">
                         <button className="btn btn-outline-dark" name="urban" onClick={this.props.search} type="button">Urban</button>
                     </div>
-
+                    
+                    
                     {/* <div className="col-sm-6 col-md-2 my-1" >
                         <button className="btn btn-outline-dark" type="button">Academic Achievers</button>
                     </div>
