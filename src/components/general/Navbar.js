@@ -20,7 +20,7 @@ function Navbar(props) {
                 SAC
                 </Link>
                 <ul className="navbar-nav nav-pills mt-2 mt-lg-0">
-                    <li className="nav-item active">
+                    <li className="nav-item">
                         <Link onClick={hidenav} className="nav-link" exact="true" to="/"><i className="fas fa-home"></i> Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">

@@ -24,6 +24,11 @@ a:hover {
     background-color: #333333; 
 }
 
+.navbar-nav .nav-link {
+    font-size: 15px;
+    font-weight: 500;
+}
+
 .topnav a:hover {
     border-bottom: 2px solid white;
   }
@@ -324,14 +329,14 @@ a:hover {
 /* Student Profile */
 .studProf {
     width: 90vw;
-    height: 450px;
+    /* height: 450px; */
 }
 
 .studentDP {
     width: 100px;
-    position: relative;
+    position: absolute;
     z-index: 1;
-    top: -70px;
+    top: -50px;
 }
 
 

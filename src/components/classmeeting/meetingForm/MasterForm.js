@@ -17,11 +17,27 @@ class MasterForm extends React.Component {
     }
 
     _next = () => {
-        let currentStep = this.state.currentStep
-        currentStep = currentStep >= 2 ? 3 : currentStep + 1
-        this.setState({
-            currentStep: currentStep
-        })
+        this.setState({error: false})
+        if(this.state.currentStep === 1) {
+            if(this.state.date === "") {
+                this.setState({error: "Enter valid date"})
+            }
+            else {
+                let currentStep = this.state.currentStep
+                currentStep = currentStep >= 2 ? 3 : currentStep + 1
+                this.setState({ currentStep: currentStep })
+            }                 
+        }
+        else if(this.state.currentStep === 2) {
+            if(this.state.agenda === "") {
+                this.setState({ error: "Enter valid agenda" })
+            }
+            else {
+                let currentStep = this.state.currentStep
+                currentStep = currentStep >= 2 ? 3 : currentStep + 1
+                this.setState({ currentStep: currentStep })
+            }
+        }
     }
 
     _prev = () => {
@@ -76,25 +92,30 @@ class MasterForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        db.collection("classMeetings").doc(this.state.lecturer)
-            .collection(this.state.sec).add({
-                agenda: this.state.agenda,
-                date: this.state.date,
-                description: this.state.description
-        })
-        .then((docRef) => {
-            alert("Meeting added successfully")
-            console.log("Added id: " + docRef.id)
-            this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
-            this.setState({
-                currentStep: 1,
-                date: '',
-                agenda: '',
-                description: ''
+        if (this.state.description === "") {
+            this.setState({ error: "Enter valid Description" })
+        }
+        else {
+            db.collection("classMeetings").doc(this.state.lecturer)
+                .collection(this.state.sec).add({
+                    agenda: this.state.agenda,
+                    date: this.state.date,
+                    description: this.state.description
             })
-            this.props.hideForm();
-        })
-        .catch(err => console.log(err))
+            .then((docRef) => {
+                alert("Meeting added successfully")
+                console.log("Added id: " + docRef.id)
+                this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
+                this.setState({
+                    currentStep: 1,
+                    date: '',
+                    agenda: '',
+                    description: ''
+                })
+                this.props.hideForm();
+            })
+            .catch(err => console.log(err))
+        }
     }
 
     changeForm = () => {
@@ -132,16 +153,19 @@ class MasterForm extends React.Component {
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             date={this.state.date} 
+                            error={this.state.error} 
                         />
                         <Step2
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             agenda={this.state.agenda}
+                            error={this.state.error} 
                         />
                         <Step3
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             description={this.state.description}
+                            error={this.state.error} 
                         />
                         {this.previousButton()}
                         {this.nextButton()}

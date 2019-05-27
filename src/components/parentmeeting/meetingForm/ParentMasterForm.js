@@ -12,17 +12,34 @@ class ParentMasterForm extends React.Component {
         sec: "3rd bsc Ecsm",
         currentStep: 1,
         reg: '',
+        error: false,
         date: '',
         agenda: '',
         description: ''
     }
 
     _next = () => {
-        let currentStep = this.state.currentStep
-        currentStep = currentStep >= 2 ? 3 : currentStep + 1
-        this.setState({
-            currentStep: currentStep
-        })
+        this.setState({error: false})
+        if(this.state.currentStep === 1) {
+            if(this.state.reg === "" || this.state.date === "") {
+                this.setState({error: "Enter valid details"})
+            }
+            else {
+                let currentStep = this.state.currentStep
+                currentStep = currentStep >= 2 ? 3 : currentStep + 1
+                this.setState({ currentStep: currentStep })
+            }                 
+        }
+        else if(this.state.currentStep === 2) {
+            if(this.state.agenda === "") {
+                this.setState({ error: "Enter valid agenda" })
+            }
+            else {
+                let currentStep = this.state.currentStep
+                currentStep = currentStep >= 2 ? 3 : currentStep + 1
+                this.setState({ currentStep: currentStep })
+            }
+        }
     }
 
     _prev = () => {
@@ -52,54 +69,62 @@ class ParentMasterForm extends React.Component {
     }
 
     nextButton() {
-        let currentStep = this.state.currentStep;
-        if (currentStep < 3) {
-            return (
-                <button
-                    className="btn btn-primary"
-                    type="button" 
-                    onClick={this._next}
-                    style={{float:'right'}}
-                >
-                    Next
-                </button>
-            )
-        }
-        return null;
+        
+            let currentStep = this.state.currentStep;
+            if (currentStep < 3) {
+                return (
+                    <button
+                        className="btn btn-primary"
+                        type="button" 
+                        onClick={this._next}
+                        style={{float:'right'}}
+                    >
+                        Next
+                    </button>
+                )
+            }
+            return null;
     }
 
     handleChange = event => {
         // console.log(event.target.value)
+        
         this.setState({
             [event.target.name]: event.target.value
         })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = (e) => {        
         e.preventDefault();
-        db.collection("parentMeetings").doc(this.state.lecturer)
-            .collection(this.state.sec).add({
-                reg: this.state.reg,
-                agenda: this.state.agenda,
-                date: this.state.date,
-                description: this.state.description
-        })
-        .then((docRef) => {
-            alert("Meeting added successfully")
-            console.log("Added id: " + docRef.id)
-            this.props.addParentMeeting(docRef.id, this.state.reg, this.state.agenda, this.state.date, this.state.description)
-            this.setState({
-                currentStep: 1,
-                reg: '',
-                date: '',
-                agenda: '',
-                description: ''
+        if (this.state.description === "") {
+            this.setState({ error: "Enter valid Description" })
+        }
+        else {
+            db.collection("parentMeetings").doc(this.state.lecturer)
+                .collection(this.state.sec).add({
+                    reg: this.state.reg,
+                    agenda: this.state.agenda,
+                    date: this.state.date,
+                    description: this.state.description
             })
-            this.props.hideForm();
-        })
-        .catch(err => console.log(err))
+            .then((docRef) => {
+                alert("Meeting added successfully")
+                console.log("Added id: " + docRef.id)
+                this.props.addParentMeeting(docRef.id, this.state.reg, this.state.agenda, this.state.date, this.state.description)
+                this.setState({
+                    currentStep: 1,
+                    reg: '',
+                    date: '',
+                    agenda: '',
+                    description: ''
+                })
+                this.props.hideForm();
+            })
+            .catch(err => console.log(err))
+        }
     }
 
+    // Close Form on Close button
     changeForm = () => {
         this.setState({
             currentStep: 1,
@@ -136,17 +161,20 @@ class ParentMasterForm extends React.Component {
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             reg={this.state.reg}
-                            date={this.state.date} 
+                            date={this.state.date}
+                            error={this.state.error} 
                         />
                         <Step2
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             agenda={this.state.agenda}
+                            error={this.state.error} 
                         />
                         <Step3
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             description={this.state.description}
+                            error={this.state.error} 
                         />
                         {this.previousButton()}
                         {this.nextButton()}

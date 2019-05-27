@@ -9,7 +9,7 @@ import ClassMeetings from './components/ClassMeetings';
 import ParentMeetings from './components/ParentMeetings';
 import Guidelines from './components/general/Guidelines';
 import StudProfile from './components/students/StudProfile';
-import TagDetails from './components/students/tags/TagDetails';
+import Tagloop from './components/students/tags/Tagloop';
 import ErrorPage from './components/general/ErrorPage';
 import myApp from './config.js';
 import './styles/style.css';
@@ -28,10 +28,8 @@ class App extends React.Component {
                 <Route path='/classmeetings' exact component={ClassMeetings} />
                 <Route path='/parentmeetings' exact component={ParentMeetings} />
                 <Route path='/guidelines' exact component={Guidelines} />
-
-                
                 <Route path='/students/student-profile/:name' exact component={StudProfile} />
-                <Route path='/students/:tag' exact component={TagDetails} />
+                <Route path='/students/:tag' exact component={Tagloop} />
                 <Route path='*' exact component={ErrorPage} />
               </Switch>
               <Footer/>

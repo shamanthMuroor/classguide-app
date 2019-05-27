@@ -1,38 +1,50 @@
 import React from 'react';
-import {db} from '../../../App';
 
 class TagDetails extends React.Component {       
-    state = {
-        students : []
-    }
-
     componentWillMount = () => { 
-        const { tag } = this.props.match.params;
-        console.log('id:' + tag)
-        db.collection('students').get()
-            .then(res => { res.forEach(val => {
-                let arr = [];
-                arr.push({
-                    id: val.id,
-                    ...val.data() 
-                })
-                this.setState({students: this.state.students.concat(arr)})
-            })
-        })
-        .catch(err => console.log(err))
+        // console.log('id:' + tag)
+        // console.log(this.props.stud)
+        // this.props.studs.forEach(stud => {
+        //     let arr= []
+        //     arr.push({
+        //         id: stud.id,
+        //         ...stud.data()
+        //     })
+        //     this.setState({students: this.state.students.concat(arr)})
+        // })
     }
 
     render() {
-        let html = <h1>Hello</h1>
-        console.log(this.state.students)
-            // html = this.state.students.filter(stud => {
-            //     if(tag)
-                    // return <h1>{stud.tag}</h1>
-            // })
+        const { name, location, caste, reg } = this.props.stud;
+        let html = ''
+        if(this.props.tag === 'scst') {
+            if(caste === 'scst') {
+                html = 
+                <div>
+                    <h6>{name}</h6>
+                    <h6>{reg}</h6>
+                    <h6>{caste}</h6>
+                    <h6>{location}</h6>
+                </div>
+            }
+                      
+        }
+        else if(this.props.tag === 'rural') {           
+            if(location === 'rural') {
+                html = 
+                <div> 
+                    <h6>{name}</h6>
+                    <h6>{reg}</h6>
+                    <h6>{caste}</h6>
+                    <h6>{location}</h6>
+                </div>
+            }  
+        }
         return (
             <React.Fragment>
                 <div className="mt-5">
-                    <h2>Tag Details</h2>
+                        {/* {console.log(this.props.tag)} */}
+                        {/* {console.log(this.props.stud.caste)} */}
                         { html }
                 </div>
             </React.Fragment>

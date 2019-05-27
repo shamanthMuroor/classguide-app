@@ -39,12 +39,12 @@ class Students extends React.Component {
                 <hr />
                 <div className="row m-2 justify-content-center tagBtn1">
                     <div className="col-sm-6 col-md-2 my-1">
-                        <Link className="btn btn-outline-dark" to={{ pathname: `/students/scst` }} >
-                            SC/ST Students
+                        <Link to={{ pathname: `/students/scst`, state: { studs: this.state.studs }  }} >      
+                            <button className="btn btn-outline-dark" type="button">SC/ST Students</button>
                         </Link>
                     </div>
                     <div className="col-sm-6 col-md-2 my-1 ">
-                        <Link to={{ pathname: `/students/rural` }} >
+                        <Link to={{ pathname: `/students/rural`, state: { studs: this.state.studs } }} >
                             <button className="btn btn-outline-dark" type="button">Rural Students</button>
                         </Link>
                     </div>
@@ -72,7 +72,7 @@ class Students extends React.Component {
                         <button className="btn btn-outline-dark" type="button">Students with special attention/ Counselling</button>
                     </div>
                     <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Students Not Completed Sahaya Programme</button>
+                        <button className="btn btn-outline-dark" type="button">Students Not Completed Sahaaya Programme</button>
                     </div>
                 </div>
                 <hr />
