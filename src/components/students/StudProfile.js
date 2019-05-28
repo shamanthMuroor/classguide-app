@@ -34,24 +34,8 @@ class StudProfile extends React.Component {
                             Personal Details
                             <h4>Name: {val.name}</h4>
                             <h5>Reg. no: {val.reg}</h5>
-                            <h5>Course Name: -</h5>
-                            <h5>Batch: -</h5>
-                            <h5>Date of Birth: -</h5>
-                            <h5>Gender: -</h5>
- 
-                        </div>
-                    </div>
-
-                    <div className="container card shadow-lg p-3 mb-5 bg-white studProf">
-                        <div className="card-body">      
-                            Social Information
-                            <h5>Religion: -</h5>
-                            <h5>Caste: -</h5>
-                            <h5>Caste Category: -</h5>        
-                            <h5>Email: -</h5>
-                            <h5>Mobile: -</h5>
-                            <h5>Aadhaar No: -</h5>
-                            <h5>Address: -</h5>
+                            <h5>Course: {val.id}</h5>
+                            <h5>Location: {val.location}</h5>
                         </div>
                     </div>
 
