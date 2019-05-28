@@ -20,42 +20,18 @@ class MeetingItem extends React.Component{
                                     <button
                                         type="button"
                                         className="text-danger"
-                                        data-toggle="tooltip" 
-                                        data-placement="bottom" 
-                                        title="Delete this meeting"
-                                        onClick={this.props.delMeeting.bind(this, id)} 
-                                        // data-toggle="modal"
-                                        // data-target="#exampleModal"
+                                        // data-toggle="tooltip" 
+                                        // data-placement="bottom" 
+                                        // title="Delete this meeting"
+                                        // onClick={this.props.delMeeting.bind(this, id)} 
+                                        data-toggle="modal"
+                                        data-target="#exampleModal"
                                         style={{ background: 'transparent', border: 'none', float: 'right' }}
                                     >
                                         <span className="mb-0" aria-hidden="true">
                                             <i className="far fa-trash-alt"></i>
                                         </span>
                                     </button>
-
-                                    {/* <div className="modal fade" data-backdrop="" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div className="modal-dialog">
-                                            <div className="modal-content">
-                                                <div className="modal-header">
-                                                    <h5 className="modal-title" id="exampleModalLabel">Confirm Delete</h5>
-                                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div className="modal-body">
-                                                    <div className="alert alert-danger" role="alert">
-                                                        <i class="fas fa-exclamation-circle"></i>Warning: This action cannot be undone!
-                                                    </div>
-                                                    Are you sure, you want to delete this permanently?
-                                                </div>
-                                                <div className="modal-footer">
-                                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" className="btn btn-danger">Delete</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
-
                                 </div>
                             </div>
 
@@ -126,6 +102,38 @@ class MeetingItem extends React.Component{
                                 </div>
                             </div>
                         </div>
+
+                        <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal-dialog modal-dialog-centered">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <div className="alert alert-danger" role="alert">
+                                            <i className="fas fa-exclamation-circle"></i><span> Warning: This action cannot be undone!</span>
+                                        </div>
+                                        Are you sure, you want to delete this meeting permanently?
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button 
+                                            type="button" 
+                                            className="btn btn-danger"
+                                            onClick={this.props.delMeeting.bind(this, id)} 
+                                            data-dismiss="modal"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>

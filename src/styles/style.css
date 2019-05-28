@@ -246,6 +246,7 @@ a:hover {
 }
 
 .meetingListHeadings {
+    margin-right: 0px;
     text-align: center;
     font-weight:bold;
     color: gray;

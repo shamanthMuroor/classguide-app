@@ -9,7 +9,8 @@ class ClassMeetings extends React.Component {
   state = {
     lecturer: "lec1",
     sec: "3rd bsc Ecsm",
-    meetings: []
+    meetings: [],
+    loading: true
   }
 
   // Displaying all the meetings from the database
@@ -24,8 +25,7 @@ class ClassMeetings extends React.Component {
         })
           // console.log((val.id))
           // console.log((val.data().agenda))
-          //  this.setState({meetings: [this.state.meetings, val.data()]} )
-          this.setState({meetings: this.state.meetings.concat(arr)} )
+          this.setState({meetings: this.state.meetings.concat(arr), loading: false} )
         })
       })
       .catch(err => console.log(err))
@@ -36,7 +36,7 @@ class ClassMeetings extends React.Component {
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).doc(id).delete()
         .then(() => {
-          alert('Deleted successfully')
+          // alert('Deleted successfully')
           console.log(id + " del successful")
           this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
         })
@@ -54,13 +54,17 @@ class ClassMeetings extends React.Component {
     this.setState({meetings: this.state.meetings.concat(newMeeting) })
   }
 
-  render() {
+  render() {    
+    let html = 
+      <div className="text-center" style={{marginBottom: '150px', marginTop: '-25px'}}>
+        <div className="spinner-grow mr-1" role="status"> </div>
+        <div className="spinner-grow mx-2" role="status"> </div>
+        <div className="spinner-grow ml-1" role="status"> </div>
+      </div>
     return (
       <div>
         <AddMeeting addMeeting={this.addMeeting} />
-        <div>
-          <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} />
-        </div>
+        {this.state.loading ? html : <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} /> }
       </div>
     )
   }

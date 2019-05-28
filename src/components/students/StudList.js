@@ -18,7 +18,7 @@ class StudList extends React.Component {
     );
 
     return filteredList.map(stud => (
-        <StudItems key={stud.id} stud={stud} /> 
+        <StudItems key={stud.regno} stud={stud} /> 
     ));
   }
 }
