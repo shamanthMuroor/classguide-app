@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import logo from '../../images/aloylogo.png'; 
     
 const hidenav = () =>{
-    document.getElementById('menuToggler').className="navbar-collapse topnav collapse";
+    document.getElementById('menuToggler').className="navbar-collapse collapse topnav";
 }
 
 function Navbar(props) {
