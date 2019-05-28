@@ -103,7 +103,7 @@ class MasterForm extends React.Component {
                     description: this.state.description
                 })
                 .then((docRef) => {
-                    alert("Meeting added successfully")
+                    this.props.showSuccess()
                     console.log("Added id: " + docRef.id)
                     this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
                     this.setState({

@@ -14,12 +14,12 @@ function Navbar(props) {
             </button>
 
             {/* Action for Menu toggler */}
-            <div className="collapse navbar-collapse topnav" id="menuToggler"  style={{flexGrow:0}}>
+            <div className="collapse navbar-collapse topnav" id="menuToggler">
                 <Link className="navbar-brand d-none d-lg-flex" to="/">
                 <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="College Logo" />
                 SAC
                 </Link>
-                <ul className="navbar-nav nav-pills mt-2 mt-lg-0">
+                <ul className="navbar-nav mt-2 mt-lg-0">
                     <li className="nav-item">
                         <Link onClick={hidenav} className="nav-link" exact="true" to="/"><i className="fas fa-home"></i> Home <span className="sr-only">(current)</span></Link>
                     </li>

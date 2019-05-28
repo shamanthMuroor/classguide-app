@@ -108,7 +108,7 @@ class ParentMasterForm extends React.Component {
                     description: this.state.description
             })
             .then((docRef) => {
-                alert("Meeting added successfully")
+                this.props.showSuccess()
                 console.log("Added id: " + docRef.id)
                 this.props.addParentMeeting(docRef.id, this.state.reg, this.state.agenda, this.state.date, this.state.description)
                 this.setState({

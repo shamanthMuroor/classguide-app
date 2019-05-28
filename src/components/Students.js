@@ -3,12 +3,13 @@ import StudList from './students/StudList';
 import {db} from '../App';
 import Search from './Search';
 import Tags from './Tags';
-import axios from 'axios'
+import axios from 'axios';
 
 class Students extends React.Component {
     state = { 
         studs : [],
-        search: ''
+        search: '',
+        loading: true
     }
 
     componentWillMount = () => {
@@ -37,7 +38,7 @@ class Students extends React.Component {
                                     exarr.push({
                                         ...val.data()
                                     })
-                                    this.setState({ studs: this.state.studs.concat(exarr) })
+                                    this.setState({ studs: this.state.studs.concat(exarr), loading: false })
                                 })
                             })
                     })
@@ -57,16 +58,15 @@ class Students extends React.Component {
         this.setState({search: e.target.name});
     }
 
-    render() {
+    render() {      
+    let loader = 
+    <div className="text-center" style={{marginBottom: '150px', marginTop: '50px'}}>
+        <div className="spinner-grow mr-1" role="status"> </div>
+        <div className="spinner-grow mx-2" role="status"> </div>
+        <div className="spinner-grow ml-1" role="status"> </div>
+    </div>
         let html = (
             <React.Fragment>
-                <h2 className="text-center">Student List</h2>
-                <div className="my-2">
-                   <Search filterValue={this.updateSearch} search={this.state.search}/>
-                </div>
-                <hr />
-                    <Tags search={this.updateTag}/>
-                <hr />
                 <StudList 
                     studs = {this.state.studs}
                     filteredValue = {this.state.search}
@@ -76,7 +76,14 @@ class Students extends React.Component {
         return (
             <React.Fragment>
                 <div className="studList">
-                    { html }
+                <h2 className="text-center">Student List</h2>
+                <div className="my-2">
+                   <Search filterValue={this.updateSearch} search={this.state.search}/>
+                </div>
+                <hr />
+                    <Tags search={this.updateTag}/>
+                <hr />
+                {this.state.loading ? loader : html }
                 </div>
             </React.Fragment>
         )

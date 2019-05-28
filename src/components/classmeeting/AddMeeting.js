@@ -4,33 +4,49 @@ import MasterForm from './meetingForm/MasterForm';
 
 class AddMeeting extends React.Component{
     state = {
-        showForm: false
+        showForm: false,
+        showSuccess: false
     }
 
-    _onButtonClick = () => {
+    onButtonClick = () => {
         this.setState({ showForm: true })
     }
 
     hideForm = () => {
         this.setState({ showForm: !this.state.showForm })
-        // console.log(this.state.showForm)
+    }
+
+    showSuccess = () => {
+        this.setState({ showSuccess: true })
+    }
+
+    hideSuccess = () => {
+        this.setState({ showSuccess: false })
     }
 
     render() {
+        let html =
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Class Meeting added successfully
+                <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.hideSuccess}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         return (
             <React.Fragment>
                 <div className="d-flex justify-content-center align-items-center flex-column addBox">
-                <h3 className="p-2">Class Meeting Database</h3>
-                    <button 
+                    {this.state.showSuccess && html}
+                    <h3 className="p-2">Class Meeting Database</h3>
+                    <button
                         className="btnAdd"
-                        onClick={this._onButtonClick}
-                        style={{background: '#F5F2F2'}}
-                    > 
+                        onClick={this.onButtonClick}
+                        style={{ background: '#F5F2F2' }}
+                    >
                         <span className="addPlusSymbol">+</span>
                     </button>
-                    <h5 style={{padding:'10px'}}>Add Meeting!</h5>
-                </div>                                
-                {this.state.showForm && <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} />  }
+                    <h5 style={{ padding: '10px' }}>Add Meeting!</h5>
+                </div>
+                {this.state.showForm && <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} showSuccess={this.showSuccess} />}
             </React.Fragment>
         )
     }
