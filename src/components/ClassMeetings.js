@@ -36,7 +36,7 @@ class ClassMeetings extends React.Component {
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).doc(id).delete()
         .then(() => {
-          alert('Deleted successfully')
+          // alert('Deleted successfully')
           console.log(id + " del successful")
           this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
         })

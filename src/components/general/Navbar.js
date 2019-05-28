@@ -46,7 +46,7 @@ function Navbar(props) {
                         <i className="fas fa-user-circle fa-2x"></i>
                     </Link>
                     <div className="dropdown-menu dropDownLinks" aria-labelledby="navbarDropdownMenuLink">
-                        <Link className="nav-link disabled" to="#" aria-disabled="true">Announcements</Link>
+                        <Link className="nav-link disabled" to="#" aria-disabled="true">Notifications <span className="badge badge-secondary">0</span></Link>
                         <Link className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
                         <Link className="nav-link" to="/guidelines" >Guidelines</Link>
                         <hr className="m-1 mx-3" style={{backgroundColor: '#F5F2F2', opacity:'0.15'}}/>

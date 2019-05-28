@@ -101,20 +101,20 @@ class MasterForm extends React.Component {
                     agenda: this.state.agenda,
                     date: this.state.date,
                     description: this.state.description
-            })
-            .then((docRef) => {
-                alert("Meeting added successfully")
-                console.log("Added id: " + docRef.id)
-                this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
-                this.setState({
-                    currentStep: 1,
-                    date: '',
-                    agenda: '',
-                    description: ''
                 })
-                this.props.hideForm();
-            })
-            .catch(err => console.log(err))
+                .then((docRef) => {
+                    alert("Meeting added successfully")
+                    console.log("Added id: " + docRef.id)
+                    this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
+                    this.setState({
+                        currentStep: 1,
+                        date: '',
+                        agenda: '',
+                        description: ''
+                    })
+                    this.props.hideForm();
+                })
+                .catch(err => console.log(err))
         }
     }
 
