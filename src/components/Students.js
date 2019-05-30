@@ -9,7 +9,7 @@ class Students extends React.Component {
     state = { 
         studs : [],
         search: '',
-        loading: false
+        loading: true
     }
 
     componentWillMount = () => {
