@@ -46,8 +46,12 @@ function Navbar(props) {
                         <i className="fas fa-user-circle fa-2x"></i>
                     </Link>
                     <div className="dropdown-menu dropDownLinks" aria-labelledby="navbarDropdownMenuLink">
-                        <Link className="nav-link disabled" to="#" aria-disabled="true">Notifications <span className="badge badge-secondary">0</span></Link>
-                        <Link className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
+                        <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Disabled">
+                            <Link className="nav-link disabled" to="#" aria-disabled="true">Notifications <span className="badge badge-secondary">0</span></Link>
+                        </span>
+                        <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Coming Up">
+                            <Link className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
+                        </span>
                         <Link className="nav-link" to="/guidelines" >Guidelines</Link>
                         <hr className="m-1 mx-3" style={{backgroundColor: '#F5F2F2', opacity:'0.15'}}/>
                         <Link className="nav-link" to="#" onClick={props.logout} >Logout</Link>

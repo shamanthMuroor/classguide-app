@@ -10,21 +10,21 @@ class StudItems extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="row bg-light indiStudentLists my-3 shadow-lg">     
-                    <Link to={{ pathname: `/students/student-profile/${this.state.name}`, state: { studDetails: this.props.stud } }} >
+                <Link to={{ pathname: `/students/student-profile/${this.state.name}`, state: { studDetails: this.props.stud } }} >
+                    <div className="row bg-light indiStudentLists my-3 shadow-lg">
                         <button className="studItemBtn d-flex" >
+                            <div className="col">
+                                <span>{this.props.slno}</span>
+                            </div>
                             <div className="col">
                                 <span>{this.props.stud.regno}</span>
                             </div>
                             <div className="col">
                                 <span>{this.props.stud.name}</span>
                             </div>
-                            <div className="col">
-                                <span>{this.props.stud.Caste}</span>
-                            </div>
                         </button>
-                    </Link>
-                </div>
+                    </div>
+                </Link>
             </React.Fragment>
         ) 
     }

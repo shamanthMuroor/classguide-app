@@ -6,12 +6,13 @@ class Search extends React.Component {
             <React.Fragment>
                 <form className="form-inline d-flex justify-content-center">
                     <input
-                        className="form-control mt-2 mr-md-2"
+                        className="form-control search"
                         id="filterInput"
                         type="search"
-                        placeholder="Search"
+                        placeholder="Search name, reg no"
                         value={this.props.search}
-                        onChange={this.props.filterValue} />
+                        onChange={this.props.filterValue} 
+                    />
                 </form>
             </React.Fragment>
         )

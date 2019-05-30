@@ -339,6 +339,21 @@ a:hover {
     top: -50px;
 }
 
+.btn-circle.btn-xl {
+    width: 8em;
+    height: 8em;
+    padding: 5px 5px;
+    border-radius: 50%
+}
+
+/* Search component */
+.search {
+    border-radius: 20px;
+}
+
+.search:focus {
+    width: 95%;
+}
 
 
 /* Guidelines */
@@ -377,4 +392,22 @@ footer {
 
 .copyrights {
    font-size: 1.5vw;
+}
+
+
+@media print {
+   
+
+    .shadow-lg {
+        box-shadow: none!important;
+        border: none;
+    }
+
+    .a, .print, .studentDP, .footerUL {
+        display: none;
+    } 
+
+    .foot {
+        height: 10px!important;
+    }
 }

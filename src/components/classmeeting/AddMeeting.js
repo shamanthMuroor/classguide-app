@@ -26,7 +26,7 @@ class AddMeeting extends React.Component{
 
     render() {
         let html =
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div className="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success!</strong> Class Meeting added successfully
                 <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.hideSuccess}>
                     <span aria-hidden="true">&times;</span>

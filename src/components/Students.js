@@ -9,7 +9,7 @@ class Students extends React.Component {
     state = { 
         studs : [],
         search: '',
-        loading: true
+        loading: false
     }
 
     componentWillMount = () => {
@@ -19,6 +19,7 @@ class Students extends React.Component {
             .then(value => {
                 value.data.data.forEach((val, i) => {
                     arr.push(val.course + val.Batch)
+                       // this.setState({loading: false})
                 })
                 
                 //Removing duplicate array
@@ -77,7 +78,7 @@ class Students extends React.Component {
             <React.Fragment>
                 <div className="studList">
                 <h2 className="text-center">Student List</h2>
-                <div className="my-2">
+                <div className="my-3">
                    <Search filterValue={this.updateSearch} search={this.state.search}/>
                 </div>
                 <hr />
