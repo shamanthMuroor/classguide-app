@@ -19,7 +19,7 @@ class Students extends React.Component {
             .then(value => {
                 value.data.data.forEach((val, i) => {
                     arr.push(val.course + val.Batch)
-                       // this.setState({loading: false})
+                    this.setState({loading: true})
                 })
                 
                 //Removing duplicate array

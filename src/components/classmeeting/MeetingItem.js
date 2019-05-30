@@ -5,16 +5,16 @@ class MeetingItem extends React.Component{
     render() {
         const { id, date, agenda, description } = this.props.meeting;
         return (
-            <div className="mt-4">
+            <div className="mt-4 container">
                 <div id="accordion">
-                    <div className="card mi">
-                        <div className="card-header" id="headMeetingItems">  
+                    <div className="card headMeetingItems">
+                        <div className="card-header">  
                             <div className="row mr-0">
-                                <div className="col p-0"> 
+                                {/* <div className="col p-0"> 
                                     <button className="btn pl-1" data-toggle="collapse" data-target={'#'+id} aria-expanded="false" aria-controls={id}>
                                        <small>View</small> 
                                     </button> 
-                                </div>
+                                </div> */}
                                 
                                 <div className="col pr-2">
                                     <button
@@ -80,7 +80,7 @@ class MeetingItem extends React.Component{
                             </div>
                         </div>
                             
-                        <div id={id} className="collapse hide" aria-labelledby="headMeetingItems" data-parent="#accordion">
+                        <div id={id} className="collapse hide" aria-labelledby="headMeetingItems" data-parent="#accordion" style={{borderTop: '1px solid'}}>
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col-md-4">
