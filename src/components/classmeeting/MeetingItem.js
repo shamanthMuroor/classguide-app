@@ -97,7 +97,7 @@ class MeetingItem extends React.Component{
                                 <hr />
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <span style={{fontWeight:'bold', color: 'gray'}}>Description: </span><span>{description}</span> 
+                                        <span style={{fontWeight:'bold', color: 'gray'}}>Description: </span><pre>{description}</pre> 
                                     </div>
                                 </div>
                             </div>

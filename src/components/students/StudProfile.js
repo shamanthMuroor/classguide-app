@@ -6,7 +6,7 @@ class StudProfile extends React.Component {
         return (
             <div style={{ marginTop: '110px' }}>
                 <div>
-                    {console.log(studDetails.name)}
+                    {/* {console.log(studDetails.name)} */}
                     <React.Fragment>
                         <div className="container card shadow-lg p-3 mb-5 bg-white studProf">
                             <div className="studentDP">
