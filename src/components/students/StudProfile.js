@@ -34,7 +34,7 @@ class StudProfile extends React.Component {
                                 <h6>Caste Category: {studDetails.castecatagory}</h6>
                                 <h6>Email: {studDetails.email}</h6>
                                 <h6>Mobile: -</h6>
-                                <h6>Aadhaar No: -</h6>
+                                <h6>Aadhaar No: {studDetails.adhaarNo}</h6>
                                 <h6>Address: {studDetails.address}</h6>
                             </div>	                        
                         </div>
@@ -45,7 +45,7 @@ class StudProfile extends React.Component {
                                 <h6>Father'<s></s> Name: {studDetails.father}</h6>
                                 <h6>Father's Number: {studDetails.fnumber}</h6>
                                 <h6>Mother's Name: {studDetails.mother}</h6>
-                                <h6>Mother's Number: -</h6>
+                                <h6>Mother's Number: {studDetails.mnumber}</h6>
                                 <h6>Guardians's Name: -</h6>
                                 <h6>Guardians's Number: -</h6>
                             </div>

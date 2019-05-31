@@ -16,19 +16,26 @@ class ClassMeetings extends React.Component {
   // Displaying all the meetings from the database
   componentWillMount = () => {
     db.collection('classMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).get()
+      .collection(this.state.sec).orderBy("date").get()
         .then(res => { res.forEach(val => {
           let arr = [];
           arr.push({
             id: val.id,
             ...val.data() 
         })
-          // console.log((val.id))
-          // console.log((val.data().agenda))
-          this.setState({meetings: this.state.meetings.concat(arr), loading: false} )
+          this.setState({meetings: this.state.meetings.concat(arr), loading: false})
         })
       })
       .catch(err => console.log(err))
+  }
+
+  componentWillUnmount = () => {
+    this.setState({
+      lecturer: "",
+      sec: "",
+      meetings: [],
+      loading: true
+    })
   }
 
   // Delete a meeting
@@ -36,8 +43,7 @@ class ClassMeetings extends React.Component {
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).doc(id).delete()
         .then(() => {
-          // alert('Deleted successfully')
-          console.log(id + " del successful")
+          // console.log(id + " del successful")
           this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
         })
         .catch(err => console.log(err))

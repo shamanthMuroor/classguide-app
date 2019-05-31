@@ -7,18 +7,22 @@ class AddParentMeeting extends React.Component {
         showSuccess: false
     }
 
+    // Opens Form
     onButtonClick = () => {
         this.setState({ showForm: true })
     }
 
+    // Hides Form
     hideForm = () => {
         this.setState({ showForm: !this.state.showForm })
     }
 
+    // Shows success message after submitting
     showSuccess = () => {
         this.setState({ showSuccess: true })
     }
 
+    // Hides success message
     hideSuccess = () => {
         this.setState({ showSuccess: false })
     }

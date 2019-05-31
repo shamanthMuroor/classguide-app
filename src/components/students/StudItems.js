@@ -22,6 +22,12 @@ class StudItems extends React.Component {
                             <div className="col">
                                 <span>{this.props.stud.name}</span>
                             </div>
+                            <div className="col">
+                                <span>{this.props.stud.dob}</span>
+                            </div>
+                            <div className="col">
+                                <span>{this.props.stud.gender}</span>
+                            </div>
                         </button>
                     </div>
                 </Link>

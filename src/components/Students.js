@@ -25,7 +25,7 @@ class Students extends React.Component {
                 //Removing duplicate array
                 newArr = arr.filter(function (item, i, ar) { return ar.indexOf(item) === i; });
 
-                db.collection("staff").where("student_id", "==", newArr[12]).get()
+                db.collection("staff").where("student_id", "==", newArr[17]).get()
                     .then(value => {
                         let val = ''
                         value.forEach(doc => {
