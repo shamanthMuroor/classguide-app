@@ -6,23 +6,66 @@ class ParentMeetingItem extends React.Component {
         const { id, reg, date, agenda, description } = this.props.parentmeeting;
         return (
             <React.Fragment>
-                <div className="parentMeetingItem">
-                    <span>{date} </span>
-                    <span>{reg} </span>
-                    <span>{agenda} </span>
-                    <span>{description} </span>
-                    <button 
-                        type="button" 
-                        className="text-danger"                  
-                        data-toggle="modal"
-                        data-target="#exampleModal" 
-                        style={{ background: 'transparent', border: 'none', float: 'right' }}
-                    >
-                        <span aria-hidden="true">                        
-                            <i className="far fa-trash-alt"></i>
-                        </span>
-                    </button>
+                <div className="mt-4 container headMeetingItems">
+                    <div className="row pt-2">
+                        <div className="col pr-2">
+                            <button
+                                type="button"
+                                className="text-danger"
+                                // data-toggle="tooltip" 
+                                // data-placement="bottom" 
+                                // title="Delete this meeting"
+                                // onClick={this.props.delMeeting.bind(this, id)} 
+                                data-toggle="modal"
+                                data-target="#exampleModal"
+                                style={{ background: 'transparent', border: 'none', float: 'right' }}
+                            >
+                                <span className="mb-0" aria-hidden="true">
+                                    <i className="far fa-trash-alt"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="text-left">
+                        <div className="row">
+                            <div className="col-md-2">
+                                <span style={{ fontWeight: 'bold', color: 'gray' }}>Register No: </span>
+                            </div>
+                            <div className="col-md-10">
+                                <span>{reg}</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <div className="col-md-2">
+                                <span style={{ fontWeight: 'bold', color: 'gray' }}>Date: </span>
+                            </div>
+                            <div className="col-md-10">
+                                <span>{date}</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <div className="col-md-2">
+                                <span style={{ fontWeight: 'bold', color: 'gray' }}>Agenda: </span>
+                            </div>
+                            <div className="col-md-10">
+                                <span>{agenda}</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <div className="col-md-2">
+                                <span style={{ fontWeight: 'bold', color: 'gray' }}>Description: </span>
+                            </div>
+                            <div className="col-md-10">
+                                <pre>{description}</pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
@@ -37,7 +80,7 @@ class ParentMeetingItem extends React.Component {
                                     <i className="fas fa-exclamation-circle"></i><span> Warning: This action cannot be undone!</span>
                                 </div>
                                 Are you sure, you want to delete this meeting permanently?
-                                    </div>
+                                </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button
@@ -47,7 +90,7 @@ class ParentMeetingItem extends React.Component {
                                     data-dismiss="modal"
                                 >
                                     Delete
-                                        </button>
+                                    </button>
                             </div>
                         </div>
                     </div>
