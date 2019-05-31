@@ -120,7 +120,10 @@ class MasterForm extends React.Component {
                     })
                     this.props.hideForm();
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err)
+                    this.props.history.push('/');
+                })
         }
     }
 

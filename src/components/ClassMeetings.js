@@ -68,7 +68,7 @@ class ClassMeetings extends React.Component {
         <div className="spinner-grow ml-1" role="status"> </div>
       </div>
     return (
-      <div>
+      <div className="container">
         <AddMeeting addMeeting={this.addMeeting} />
         {this.state.loading ? html : <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} /> }
       </div>

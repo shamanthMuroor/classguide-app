@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';  
+import {NavLink, Link} from 'react-router-dom';  
 import logo from '../../images/aloylogo.png'; 
     
 const hidenav = () =>{
@@ -21,16 +21,16 @@ function Navbar(props) {
                 </Link>
                 <ul className="navbar-nav mt-2 mt-lg-0">
                     <li className="nav-item">
-                        <Link onClick={hidenav} className="nav-link" exact="true" to="/"><i className="fas fa-home"></i> Home <span className="sr-only">(current)</span></Link>
+                        <NavLink onClick={hidenav} activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/"><i className="fas fa-home"></i> Home <span className="sr-only">(current)</span></NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link onClick={hidenav} className="nav-link" exact="true" to="/students">Student Details </Link>
+                        <NavLink onClick={hidenav} activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/students">Student Details </NavLink>
                     </li>
                     <li className="nav-item">
-                            <Link onClick={hidenav} className="nav-link" exact="true" to="/classmeetings">Class Meetings</Link>
+                        <NavLink onClick={hidenav}  activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/classmeetings">Class Meetings</NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link onClick={hidenav} className="nav-link" exact="true" to="/parentmeetings">Parent Meetings</Link>
+                        <NavLink onClick={hidenav}  activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/parentmeetings">Parent Meetings</NavLink>
                     </li>
                 </ul>   
             </div>
@@ -47,14 +47,14 @@ function Navbar(props) {
                     </Link>
                     <div className="dropdown-menu dropDownLinks" aria-labelledby="navbarDropdownMenuLink">
                         <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Disabled">
-                            <Link className="nav-link disabled" to="#" aria-disabled="true">Notifications <span className="badge badge-secondary">0</span></Link>
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link disabled" exact to="#" aria-disabled="true">Notifications <span className="badge badge-secondary">0</span></NavLink>
                         </span>
                         <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Coming Up">
-                            <Link className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link disabled" exact to="#" aria-disabled="true">Sahaaya</NavLink>
                         </span>
-                        <Link className="nav-link" to="/guidelines" >Guidelines</Link>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/guidelines" >Guidelines</NavLink>
                         <hr className="m-1 mx-3" style={{backgroundColor: '#F5F2F2', opacity:'0.15'}}/>
-                        <Link className="nav-link" to="#" onClick={props.logout} >Logout</Link>
+                        <Link className="nav-link" exact="true" to="#" onClick={props.logout} >Logout</Link>
                     </div>
                 </li>
             </ul>
@@ -62,6 +62,12 @@ function Navbar(props) {
         </nav>
     )
 }
+
+const NavStyle ={
+    color: 'white',
+    fontSize: '18px'
+}
+
 
 export default Navbar;
 

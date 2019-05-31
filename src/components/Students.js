@@ -32,7 +32,7 @@ class Students extends React.Component {
                             val = doc.data().student_id;
                         })
                         console.log(val);
-                        db.collection("students").where("_id", "==", val).get()
+                        db.collection("students").where("_id", "==", val).orderBy("regno").get()
                             .then(querySnap => {
                                 querySnap.forEach(val => {
                                     let exarr = [];
@@ -44,7 +44,10 @@ class Students extends React.Component {
                             })
                     })
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err)
+                this.props.history.push('./error');
+            });
     }
 
     componentWillUnmount = () => {
