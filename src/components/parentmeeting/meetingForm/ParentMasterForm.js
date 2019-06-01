@@ -14,6 +14,7 @@ class ParentMasterForm extends React.Component {
         reg: '',
         error: false,
         date: '',
+        attended: '',
         agenda: '',
         description: '',
         isLoading: false
@@ -33,8 +34,8 @@ class ParentMasterForm extends React.Component {
             }                 
         }
         else if(this.state.currentStep === 2) {
-            if(this.state.agenda === "") {
-                this.setState({ error: "Enter valid agenda" })
+            if(this.state.agenda === "" || this.state.attended === "") {
+                this.setState({ error: "Enter valid details" })
             }
             else {
                 let currentStep = this.state.currentStep
@@ -108,12 +109,12 @@ class ParentMasterForm extends React.Component {
             db.collection("parentMeetings").doc(this.state.lecturer)
                 .collection(this.state.sec).add({
                     reg: this.state.reg,
+                    attended: this.state.attended,
                     agenda: this.state.agenda,
                     date: this.state.date,
                     description: this.state.description
             })
             .then((docRef) => {
-                this.props.showSuccess()
                 // console.log("Added id: " + docRef.id)
                 this.props.addParentMeeting(docRef.id, this.state.reg, this.state.agenda, this.state.date, this.state.description)
                 this.setState({
@@ -121,9 +122,11 @@ class ParentMasterForm extends React.Component {
                     reg: '',
                     date: '',
                     agenda: '',
+                    attended: '',
                     description: '',
                     isLoading: false
                 })
+                this.props.showSuccess()
                 this.props.hideForm();
             })
             .catch(err => console.log(err))
@@ -137,6 +140,7 @@ class ParentMasterForm extends React.Component {
             reg: '',
             date: '',
             agenda: '',
+            attended: '',
             description: ''
         })     
         this.props.hideForm();   
@@ -173,6 +177,7 @@ class ParentMasterForm extends React.Component {
                         <Step2
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
+                            attended={this.state.attended}
                             agenda={this.state.agenda}
                             error={this.state.error} 
                         />

@@ -108,7 +108,6 @@ class MasterForm extends React.Component {
                     description: this.state.description
                 })
                 .then((docRef) => {
-                    this.props.showSuccess()
                     // console.log("Added id: " + docRef.id)
                     this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
                     this.setState({
@@ -118,11 +117,12 @@ class MasterForm extends React.Component {
                         description: '',
                         isLoading: false
                     })
+                    this.props.showSuccess()
                     this.props.hideForm();
                 })
                 .catch(err => {
                     console.log(err)
-                    this.props.history.push('/');
+                    this.props.history.push('/error');
                 })
         }
     }

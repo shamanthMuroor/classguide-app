@@ -9,6 +9,7 @@ import ClassMeetings from './components/ClassMeetings';
 import ParentMeetings from './components/ParentMeetings';
 import Guidelines from './components/general/Guidelines';
 import StudProfile from './components/students/StudProfile';
+import PeerGroup from './components/students/features/PeerGroup';
 import SomethingsWrong from './components/general/SomethingsWrong';
 import ErrorPage from './components/general/ErrorPage';
 import myApp from './config.js';
@@ -29,6 +30,7 @@ class App extends React.Component {
                 <Route path='/parentmeetings' exact component={ParentMeetings} />
                 <Route path='/guidelines' exact component={Guidelines} />
                 <Route path='/students/student-profile/:name' exact component={StudProfile} />
+                <Route path='/peergroup' exact component={PeerGroup} />
                 <Route path='/error' exact component={SomethingsWrong} />
                 <Route path='*' exact component={ErrorPage} />
               </Switch>

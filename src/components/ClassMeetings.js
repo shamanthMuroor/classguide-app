@@ -17,12 +17,13 @@ class ClassMeetings extends React.Component {
   componentWillMount = () => {
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).orderBy("date").get()
-        .then(res => { res.forEach(val => {
+        .then(res => { 
+          res.forEach(val => {
           let arr = [];
           arr.push({
             id: val.id,
             ...val.data() 
-        })
+          })
           this.setState({meetings: this.state.meetings.concat(arr), loading: false})
         })
       })
@@ -31,8 +32,8 @@ class ClassMeetings extends React.Component {
 
   componentWillUnmount = () => {
     this.setState({
-      lecturer: "",
-      sec: "",
+      lecturer: "lec1",
+      sec: "3rd bsc Ecsm",
       meetings: [],
       loading: true
     })
@@ -57,7 +58,7 @@ class ClassMeetings extends React.Component {
       date, 
       description
     }
-    this.setState({meetings: this.state.meetings.concat(newMeeting) })
+    this.setState({meetings: this.state.meetings.concat(newMeeting)})
   }
 
   render() {    

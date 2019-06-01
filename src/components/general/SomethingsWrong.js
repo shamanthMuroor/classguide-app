@@ -8,7 +8,7 @@ class SomethingsWrong extends React.Component {
         <div className="card-body" style={{padding: "50px"}}>
           <i className="fas fa-exclamation-triangle fa-5x mb-4"></i>
             <h1 className="text-monospace">Oops!</h1>
-            <p>Something went wrong, Sorry</p>
+            <p>Sorry, Something went wrong</p>
             <p> Go back to
                 <Link to='/'> <b style={{fontSize:"2em", color:"#333333", textDecoration:"underline"}}>Home?</b> </Link>
             </p>

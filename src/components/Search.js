@@ -12,6 +12,11 @@ class Search extends React.Component {
                         placeholder="Search name, reg no"
                         value={this.props.search}
                         onChange={this.props.filterValue} 
+                        onKeyPress={event => {
+                            if (event.key === 'Enter') {
+                              event.preventDefault();
+                            }
+                          }}
                     />
                 </form>
             </React.Fragment>

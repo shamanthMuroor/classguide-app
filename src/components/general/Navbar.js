@@ -32,6 +32,9 @@ function Navbar(props) {
                     <li className="nav-item">
                         <NavLink onClick={hidenav}  activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/parentmeetings">Parent Meetings</NavLink>
                     </li>
+                    <li className="nav-item">
+                        <NavLink onClick={hidenav}  activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/peergroup">Peer Groups</NavLink>
+                    </li>
                 </ul>   
             </div>
   
@@ -52,9 +55,9 @@ function Navbar(props) {
                         <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Coming Up">
                             <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link disabled" exact to="#" aria-disabled="true">Sahaaya</NavLink>
                         </span>
-                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/guidelines" >Guidelines</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/guidelines" style={{fontWeight: '600'}}>Guidelines</NavLink>
                         <hr className="m-1 mx-3" style={{backgroundColor: '#F5F2F2', opacity:'0.15'}}/>
-                        <Link className="nav-link" exact="true" to="#" onClick={props.logout} >Logout</Link>
+                        <Link className="nav-link" exact="true" to="#" onClick={props.logout} style={{fontWeight: '600'}}>Logout</Link>
                     </div>
                 </li>
             </ul>
