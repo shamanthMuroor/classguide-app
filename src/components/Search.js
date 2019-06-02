@@ -4,7 +4,7 @@ class Search extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <form className="form-inline d-flex justify-content-center">
+                <form className="form-inline d-flex justify-content-center d-print-none">
                     <input
                         className="form-control search"
                         id="filterInput"

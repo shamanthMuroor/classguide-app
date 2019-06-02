@@ -26,11 +26,22 @@ class StudItems extends React.Component {
                             <div className="col-md-4">
                                 <span>{this.props.stud.name}</span>
                             </div>
-                            <div className="col">
+                            <div className="col d-print-none">
                                 <span>{this.props.stud.dob}</span>
                             </div>
-                            <div className="col">
+                            <div className="col d-print-none">
                                 <span>{this.props.stud.gender}</span>
+                            </div>
+                            <div className="col d-none d-print-block">
+                                <span>
+                                    <input 
+                                       type='checkbox'
+                                       style={{
+                                        height: '25px',
+                                        width: '25px'
+                                       }}
+                                    />
+                                </span>
                             </div>
                         </button>
                     </div>

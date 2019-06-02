@@ -19,21 +19,21 @@ function Navbar(props) {
                 <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="College Logo" />
                 SAC
                 </Link>
-                <ul className="navbar-nav mt-2 mt-lg-0">
+                <ul className="navbar-nav mt-2 mt-lg-0" onClick={hidenav}>
                     <li className="nav-item">
-                        <NavLink onClick={hidenav} activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/"><i className="fas fa-home"></i> Home <span className="sr-only">(current)</span></NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/"><i className="fas fa-home"></i> Home </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink onClick={hidenav} activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/students">Student Details </NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/students">Student Details </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink onClick={hidenav}  activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/classmeetings">Class Meetings</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/classmeetings">Class Meetings</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink onClick={hidenav}  activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/parentmeetings">Parent Meetings</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/parentmeetings">Parent Meetings</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink onClick={hidenav}  activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/peergroup">Peer Groups</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/peergroup">Peer Groups</NavLink>
                     </li>
                 </ul>   
             </div>
@@ -50,12 +50,16 @@ function Navbar(props) {
                     </Link>
                     <div className="dropdown-menu dropDownLinks" aria-labelledby="navbarDropdownMenuLink">
                         <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Disabled">
-                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link disabled" exact to="#" aria-disabled="true">Notifications <span className="badge badge-secondary">0</span></NavLink>
+                            <NavLink className="nav-link disabled" exact to="#" aria-disabled="true" style={{fontSize: '14px'}}>Notifications <span className="badge badge-secondary">0</span></NavLink>
                         </span>
                         <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Coming Up">
-                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link disabled" exact to="#" aria-disabled="true">Sahaaya</NavLink>
+                            <NavLink className="nav-link disabled" exact to="#" aria-disabled="true" style={{fontSize: '14px'}}>Sahaaya</NavLink>
                         </span>
+                        <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Coming Up">
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link disabled" exact to="#" aria-disabled="true" style={{fontSize: '14px'}}>Reports</NavLink>
+                        </span>                        
                         <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/guidelines" style={{fontWeight: '600'}}>Guidelines</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/feedback" style={{fontWeight: '600'}}>Feedback</NavLink>
                         <hr className="m-1 mx-3" style={{backgroundColor: '#F5F2F2', opacity:'0.15'}}/>
                         <Link className="nav-link" exact="true" to="#" onClick={props.logout} style={{fontWeight: '600'}}>Logout</Link>
                     </div>

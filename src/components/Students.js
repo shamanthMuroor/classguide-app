@@ -95,6 +95,9 @@ class Students extends React.Component {
                     <h2 className="text-center">Student List</h2>
                     <div className="my-3">
                         <Search filterValue={this.updateSearch} search={this.state.search}/>
+                        <div className="d-flex m-2 flex-row-reverse">
+                            <button className="btn btn-small btn-secondary print" onClick={() => window.print()}>PRINT</button>
+                    </div>
                     </div>
                     <hr />
                         <Tags search={this.updateTag}/>

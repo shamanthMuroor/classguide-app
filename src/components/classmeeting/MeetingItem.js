@@ -26,7 +26,7 @@ class MeetingItem extends React.Component {
                     </div>
                 </div>
 
-                <div className="text-left">
+                <div className="text-left p-3">
                     <div className="row">
                         <div className="col-md-2">
                             <span style={{ fontWeight: 'bold', color: 'gray' }}>Date: </span>
@@ -50,7 +50,13 @@ class MeetingItem extends React.Component {
                             <span style={{ fontWeight: 'bold', color: 'gray' }}>Description: </span>
                         </div>
                         <div className="col-md-10">
-                            <pre>{description}</pre>
+                            <pre style={{
+                                marginBottom: '0px', 
+                                fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"'
+                            }}
+                            >
+                                {description}
+                            </pre>
                         </div>
                     </div>
                 </div>
