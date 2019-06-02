@@ -1,8 +1,8 @@
 import React from 'react';
-import StudList from './students/StudList';
 import {db} from '../App';
-import Search from './Search';
-import Tags from './Tags';
+import StudList from './students/studentList/StudList';
+import Search from './students/studentList/Search';
+import Tags from './students/studentList/Tags';
 import axios from 'axios';
 
 class Students extends React.Component {
