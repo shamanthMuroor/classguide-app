@@ -13,9 +13,11 @@ class MasterForm extends React.Component {
         currentStep: 1,
         date: '',
         agenda: '',
-        description: ''
+        description: '',
+        isLoading: false
     }
 
+    // Code to increment currentStep and validate form fields
     _next = () => {
         this.setState({error: false})
         if(this.state.currentStep === 1) {
@@ -40,6 +42,7 @@ class MasterForm extends React.Component {
         }
     }
 
+    // Code to decrement currentStep
     _prev = () => {
         let currentStep = this.state.currentStep
         currentStep = currentStep <= 1 ? 1 : currentStep - 1
@@ -83,19 +86,21 @@ class MasterForm extends React.Component {
         return null;
     }
 
+    // Handling form field changes
     handleChange = event => {
-        // console.log(event.target.value)
         this.setState({
             [event.target.name]: event.target.value
         })
     }
 
+    // Form submit section
     handleSubmit = (e) => {
         e.preventDefault();
         if (this.state.description === "") {
             this.setState({ error: "Enter valid Description" })
         }
         else {
+            this.setState({ isLoading: true })
             db.collection("classMeetings").doc(this.state.lecturer)
                 .collection(this.state.sec).add({
                     agenda: this.state.agenda,
@@ -103,21 +108,26 @@ class MasterForm extends React.Component {
                     description: this.state.description
                 })
                 .then((docRef) => {
-                    this.props.showSuccess()
-                    console.log("Added id: " + docRef.id)
+                    // console.log("Added id: " + docRef.id)
                     this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
                     this.setState({
                         currentStep: 1,
                         date: '',
                         agenda: '',
-                        description: ''
+                        description: '',
+                        isLoading: false
                     })
+                    this.props.showSuccess()
                     this.props.hideForm();
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err)
+                    this.props.history.push('/error');
+                })
         }
     }
 
+    // Close Form on Close button
     changeForm = () => {
         this.setState({
             currentStep: 1,
@@ -166,6 +176,7 @@ class MasterForm extends React.Component {
                             handleChange={this.handleChange}
                             description={this.state.description}
                             error={this.state.error} 
+                            isLoading={this.state.isLoading}
                         />
                         {this.previousButton()}
                         {this.nextButton()}

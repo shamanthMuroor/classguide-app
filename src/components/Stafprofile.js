@@ -10,10 +10,10 @@ class Stafprofile extends React.Component {
             <i className="fas fa-user-circle fa-4x"></i>
           </div>
           <div className="text-center">
-            <h3>John Doe</h3>
+            <h3>John Snow</h3>
             <h4>MSc, PGDCA</h4>
-            <h5>Assistant Professor</h5>
-            <h6>DOB: 12/12/1977</h6>
+            <h5>King in the north</h5>
+            <h6>DOB: 12/12/677</h6>
           </div>
         </div>	       
       </div>

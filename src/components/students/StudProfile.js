@@ -6,17 +6,16 @@ class StudProfile extends React.Component {
         return (
             <div style={{ marginTop: '110px' }}>
                 <div>
-                    {console.log(studDetails.name)}
                     <React.Fragment>
+                        <div className="text-right" style={{margin: "-2vw 5vw 10px 5vw"}}>
+                            <button className="btn btn-secondary print d-print-none" onClick={() => window.print()}>PRINT</button>
+                        </div>
                         <div className="container card shadow-lg p-3 mb-5 bg-white studProf">
-                            <div className="studentDP">
+                            <div className="studentDP d-print-none">
                                 <i className="fas fa-user-circle fa-5x"></i>
                             </div>
                             <div className="mt-3 card-body">
                                 <h5 className="text-center mb-3">Personal Details</h5>
-                                <div className="text-right">
-                                    <button className="btn btn-secondary print" onClick={() => window.print()}>PRINT</button>
-                                </div>
                                 <h6>Name: {studDetails.name}</h6>
                                 <h6>Reg. no: {studDetails.regno}</h6>
                                 <h6>Course Name: {studDetails.course}</h6>
@@ -34,7 +33,7 @@ class StudProfile extends React.Component {
                                 <h6>Caste Category: {studDetails.castecatagory}</h6>
                                 <h6>Email: {studDetails.email}</h6>
                                 <h6>Mobile: -</h6>
-                                <h6>Aadhaar No: -</h6>
+                                <h6>Aadhaar No: {studDetails.adhaarNo}</h6>
                                 <h6>Address: {studDetails.address}</h6>
                             </div>	                        
                         </div>
@@ -45,12 +44,12 @@ class StudProfile extends React.Component {
                                 <h6>Father'<s></s> Name: {studDetails.father}</h6>
                                 <h6>Father's Number: {studDetails.fnumber}</h6>
                                 <h6>Mother's Name: {studDetails.mother}</h6>
-                                <h6>Mother's Number: -</h6>
+                                <h6>Mother's Number: {studDetails.mnumber}</h6>
                                 <h6>Guardians's Name: -</h6>
                                 <h6>Guardians's Number: -</h6>
                             </div>
                         </div>
-                        <div className="container card shadow-lg p-3 mb-5 bg-white studProf a">
+                        <div className="container card shadow-lg p-3 mb-5 bg-white studProf d-print-none">
                             <div className="card-body text-center" style={{padding: '2px'}}>
                                 <button 
                                 type="button" className="btn btn-info btn-circle btn-xl mr-2" data-toggle="tooltip" data-placement="top" title="Coming Soon" disabled>Attendance</button>

@@ -5,7 +5,7 @@ class Tags extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="row m-2 justify-content-center tagBtn1">
+                <div className="row m-2 justify-content-center tagBtn1 d-print-none">
                     <div className="col-sm-6 col-md-2 my-1">
                         <button className="btn btn-outline-dark" type="button" name="scst" onClick={this.props.search}>SC/ST</button>
                     </div>

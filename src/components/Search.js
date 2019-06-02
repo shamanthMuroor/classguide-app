@@ -4,7 +4,7 @@ class Search extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <form className="form-inline d-flex justify-content-center">
+                <form className="form-inline d-flex justify-content-center d-print-none">
                     <input
                         className="form-control search"
                         id="filterInput"
@@ -12,6 +12,11 @@ class Search extends React.Component {
                         placeholder="Search name, reg no"
                         value={this.props.search}
                         onChange={this.props.filterValue} 
+                        onKeyPress={event => {
+                            if (event.key === 'Enter') {
+                              event.preventDefault();
+                            }
+                          }}
                     />
                 </form>
             </React.Fragment>

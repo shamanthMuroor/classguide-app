@@ -16,7 +16,7 @@ class ParentMeetings extends React.Component {
   // Displaying all the meetings from the database
   componentWillMount = () => {
     db.collection('parentMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).get()
+      .collection(this.state.sec).orderBy("date").get()
         .then(res => { res.forEach(val => {
           let arr = [];
           arr.push({
@@ -34,7 +34,7 @@ class ParentMeetings extends React.Component {
       db.collection('parentMeetings').doc(this.state.lecturer)
         .collection(this.state.sec).doc(id).delete()
           .then(() => {
-            console.log(id + " del successful")
+            // console.log(id + " del successful")
             this.setState({ parentmeetings: [...this.state.parentmeetings.filter(meeting => meeting.id !== id)] })
           })
           .catch(err => console.log(err))

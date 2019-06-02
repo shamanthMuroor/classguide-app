@@ -7,20 +7,41 @@ class StudItems extends React.Component {
         this.state = { name:this.props.stud.name};
     }
 
+    componentWillUnmount = () => {
+        this.setState({name: ''})
+    }
+
     render() {
         return (
             <React.Fragment>
                 <Link to={{ pathname: `/students/student-profile/${this.state.name}`, state: { studDetails: this.props.stud } }} >
                     <div className="row bg-light indiStudentLists my-3 shadow-lg">
-                        <button className="studItemBtn d-flex" >
+                        <button className="studItemBtn d-flex overflow-auto" >
                             <div className="col">
                                 <span>{this.props.slno}</span>
                             </div>
                             <div className="col">
                                 <span>{this.props.stud.regno}</span>
                             </div>
-                            <div className="col">
+                            <div className="col-md-4">
                                 <span>{this.props.stud.name}</span>
+                            </div>
+                            <div className="col d-print-none">
+                                <span>{this.props.stud.dob}</span>
+                            </div>
+                            <div className="col d-print-none">
+                                <span>{this.props.stud.gender}</span>
+                            </div>
+                            <div className="col d-none d-print-block">
+                                <span>
+                                    <input 
+                                       type='checkbox'
+                                       style={{
+                                        height: '25px',
+                                        width: '25px'
+                                       }}
+                                    />
+                                </span>
                             </div>
                         </button>
                     </div>

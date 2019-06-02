@@ -4,13 +4,13 @@ import StudItems from './StudItems';
 class StudList extends React.Component {
   render() {
     let filteredList = this.props.studs.filter( (students) => {
-       console.log(this.props.filteredValue)
+      //  console.log(students.regno)
          return (
            students.name.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1 
+          //   || 
+          //  students.regno.indexOf(this.props.filteredValue) !== -1 
             || 
-           students.regno.indexOf(this.props.filteredValue) !== -1 
-            // || 
-            // students.caste.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
+            students.Caste.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
             // || 
             // students.location.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
             
