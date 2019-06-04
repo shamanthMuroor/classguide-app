@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/style.css';
 import ViewParentMeeting from './parentmeeting/ViewParentMeeting';
 import AddParentMeeting from './parentmeeting/AddParentMeeting';
+import EditForm from './parentmeeting/EditForm';
 import {db} from '../App';
 
 class ParentMeetings extends React.Component {
@@ -10,7 +11,9 @@ class ParentMeetings extends React.Component {
     sec: "3rd bsc Ecsm",
     showParentMeetings: false,
     parentmeetings: [],
-    loading: true
+    loading: true,
+    id: '',
+    showEdit: false
   }
 
   // Displaying all the meetings from the database
@@ -29,6 +32,38 @@ class ParentMeetings extends React.Component {
       .catch(err => console.log(err))
   }
 
+  // Add Meeting
+  addParentMeeting = (id, reg, agenda, date, attended, description) => {
+    const newMeeting = {
+      id,
+      reg,
+      agenda, 
+      attended,
+      date, 
+      description
+    }
+    this.setState({parentmeetings: this.state.parentmeetings.concat(newMeeting) })
+  }
+
+  replaceParentMeeting = (id, reg, agenda, date, attended, description) => {
+    this.state.parentmeetings.forEach((val, i) => {
+      if(val.id === id)
+      {
+        this.setState( parentmeetings => ({
+          id: {
+              ...parentmeetings.id,
+              [parentmeetings.id[i]]: id,
+          },
+          reg: {
+            ...parentmeetings.reg,
+            [parentmeetings.reg[i]]: reg,
+        },
+      }))
+        console.log(this.state.parentmeetings)
+      }
+    })
+  }
+
     // Delete a meeting
     delMeeting = (id) => {
       db.collection('parentMeetings').doc(this.state.lecturer)
@@ -40,16 +75,12 @@ class ParentMeetings extends React.Component {
           .catch(err => console.log(err))
     }
 
-    // Add Meeting
-    addParentMeeting = (id, reg, agenda, date, description) => {
-      const newMeeting = {
-        id,
-        reg,
-        agenda, 
-        date, 
-        description
-      }
-      this.setState({parentmeetings: this.state.parentmeetings.concat(newMeeting) })
+    editMeeting = (id) => {
+      this.setState({id: id, showEdit: true})
+    }
+
+    hideEdit = () => {
+      this.setState({showEdit: false})
     }
 
   render() {
@@ -61,8 +92,8 @@ class ParentMeetings extends React.Component {
       </div>
     return (
       <div className="container text-center">
-        <AddParentMeeting addParentMeeting={this.addParentMeeting} />
-        {this.state.loading ? html : <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting} />}
+        { this.state.showEdit ? <EditForm id={this.state.id} addParentMeeting={this.addParentMeeting} hideEdit={this.hideEdit} replaceParentMeeting={this.replaceParentMeeting} /> : <AddParentMeeting addParentMeeting={this.addParentMeeting} /> }
+        { this.state.loading ? html : <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting} editMeeting={this.editMeeting} /> }
       </div>
     )
   }

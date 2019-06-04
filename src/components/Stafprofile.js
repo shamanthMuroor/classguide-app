@@ -1,6 +1,9 @@
 import React from 'react';
 
 class Stafprofile extends React.Component {
+  getYear() {
+    return new Date().getFullYear();
+  }
   render() {
     return (  
       <div className="container card shadow-lg p-3 mb-5 profile">
@@ -14,6 +17,9 @@ class Stafprofile extends React.Component {
             <h4>MSc, PGDCA</h4>
             <h5>King in the north</h5>
             <h6>DOB: 12/12/677</h6>
+          </div>
+          <div className="text-center bg-transparent card-footer text-muted">
+            {this.getYear()}-{this.getYear()+1}
           </div>
         </div>	       
       </div>

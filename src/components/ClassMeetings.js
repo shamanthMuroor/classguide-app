@@ -32,8 +32,8 @@ class ClassMeetings extends React.Component {
 
   componentWillUnmount = () => {
     this.setState({
-      lecturer: "lec1",
-      sec: "3rd bsc Ecsm",
+      lecturer: "",
+      sec: "",
       meetings: [],
       loading: true
     })
@@ -44,7 +44,7 @@ class ClassMeetings extends React.Component {
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).doc(id).delete()
         .then(() => {
-          // console.log(id + " del successful")
+          console.log(id + " del successful")
           this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
         })
         .catch(err => console.log(err))

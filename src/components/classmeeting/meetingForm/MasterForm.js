@@ -46,9 +46,7 @@ class MasterForm extends React.Component {
     _prev = () => {
         let currentStep = this.state.currentStep
         currentStep = currentStep <= 1 ? 1 : currentStep - 1
-        this.setState({
-            currentStep: currentStep
-        })
+        this.setState({ currentStep: currentStep })
     }
 
     // functions for button
@@ -89,7 +87,7 @@ class MasterForm extends React.Component {
     // Handling form field changes
     handleChange = event => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
 
