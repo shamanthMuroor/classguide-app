@@ -27,13 +27,22 @@ function Navbar(props) {
                         <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/students">Student Details </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/classmeetings">Class Meetings</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/class-meetings">Class Meetings</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/parentmeetings">Parent Meetings</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/parent-meetings">Parent Meetings</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle}className="nav-link" exact to="/peergroup">Peer Groups</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/counselling">Counselling</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/peer-group">Peer Groups</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/slow-learner">Slow Learners</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/achievers">Achievers</NavLink>
                     </li>
                 </ul>   
             </div>

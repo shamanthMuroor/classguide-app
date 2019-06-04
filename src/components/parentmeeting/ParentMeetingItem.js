@@ -3,7 +3,7 @@ import '../../styles/style.css'
 
 class ParentMeetingItem extends React.Component {
     render() {
-        const { id, reg, date, agenda, description } = this.props.parentmeeting;
+        const { id, reg, date, agenda, attended, description } = this.props.parentmeeting;
         return (
             <React.Fragment>
                 <div className="mt-4 container headMeetingItems">
@@ -24,6 +24,17 @@ class ParentMeetingItem extends React.Component {
                                     <i className="far fa-trash-alt"></i>
                                 </span>
                             </button>
+                            <button
+                                type="button"
+                                className="text-secondary mr-2"
+                                onClick={this.props.editMeeting.bind(this, id)} 
+                                style={{ background: 'transparent', border: 'none', float: 'right'}}
+                            >
+                                <span className="mb-0" aria-hidden="true">
+                                    <i className="far fa-edit"></i>
+                                </span>
+                            </button>
+                        
                         </div>
                     </div>
 
@@ -43,6 +54,15 @@ class ParentMeetingItem extends React.Component {
                             </div>
                             <div className="col-md-10">
                                 <span>{date}</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <div className="col-md-2">
+                                <span style={{ fontWeight: 'bold', color: 'gray' }}>Parent/Guardian Name: </span>
+                            </div>
+                            <div className="col-md-10">
+                                <span>{attended}</span>
                             </div>
                         </div>
                         <hr />

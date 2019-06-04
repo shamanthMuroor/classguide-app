@@ -3,9 +3,8 @@ import MeetingItem from './MeetingItem';
 
 class ViewMeeting extends React.Component{
     render() {
-        return this.props.meetings.map((meeting) => (
-            <MeetingItem key={meeting.id} meeting={meeting} 
-            delMeeting = {this.props.delMeeting} />
+        return this.props.meetings.map((meeting, i) => (
+            <MeetingItem key={i} meeting={meeting} delMeeting = {this.props.delMeeting} />
         ));
     }
 }

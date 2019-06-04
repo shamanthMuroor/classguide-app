@@ -11,12 +11,9 @@ class MeetingItem extends React.Component {
                         <button
                             type="button"
                             className="text-danger"
-                            // data-toggle="tooltip" 
-                            // data-placement="bottom" 
-                            // title="Delete this meeting"
-                            // onClick={this.props.delMeeting.bind(this, id)} 
-                            data-toggle="modal"
-                            data-target="#exampleModal"
+                            onClick={this.props.delMeeting.bind(this, id)} 
+                            // data-toggle="modal"
+                            // data-target="#DeleteModal"
                             style={{ background: 'transparent', border: 'none', float: 'right' }}
                         >
                             <span className="mb-0" aria-hidden="true">
@@ -60,8 +57,7 @@ class MeetingItem extends React.Component {
                         </div>
                     </div>
                 </div>
-
-                <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                {/* <div className="modal fade" id="DeleteModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -79,9 +75,10 @@ class MeetingItem extends React.Component {
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button
+                                    id="feed_id"
                                     type="button"
                                     className="btn btn-danger"
-                                    onClick={this.props.delMeeting.bind(this, id)}
+                                    onClick={this.props.delMeeting.bind(this,id)}
                                     data-dismiss="modal"
                                 >
                                     Delete
@@ -89,8 +86,8 @@ class MeetingItem extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> */}
+            </div>        
         )
     }
 }
