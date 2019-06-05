@@ -33,15 +33,20 @@ class Feedback extends React.Component {
             </div>
           </div>
           <hr />
-          <div class="form-group text-center container">
-            <label>Please enter your feedback</label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              style={{height:'250px'}}
-            />
-          </div>
+          <form action="" className="container">
+            <div class="form-group text-center">
+              <label>Please enter your feedback</label>
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                style={{ height: "250px" }}
+              />
+            </div>
+            <button type="submit" class="btn btn-primary mb-2 float-right">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
     );
