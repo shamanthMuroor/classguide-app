@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AddPeerGroup(props) {
+function AddLearnerGroups(props) {
     return (
         <React.Fragment>
             <button
@@ -10,12 +10,12 @@ function AddPeerGroup(props) {
                 data-toggle="tooltip"
                 data-placement="bottom"
                 title="Close"
-                onClick={props.hideAddPeerGroup}
+                onClick={props.hideForm}
             >
                 <p aria-hidden="true">&times;</p>
             </button>
             <form style={{ marginTop: '100px' }}>
-                <h3 className="text-center">Add Peer Group</h3>
+                <h3 className="text-center">Add Slow Learners and Peer Group</h3>
                 {
                     props.error && <div className="alert alert-danger" role="alert">
                         {props.error}
@@ -78,7 +78,7 @@ function AddPeerGroup(props) {
                     </div>
                 </div>
                 <div className="form-group" >
-                    <label className="h5">* Student Guide Name</label>
+                    <label className="h5">Student Guide Name</label>
                     <div>
                         <input
                             className="form-control"
@@ -108,7 +108,7 @@ function AddPeerGroup(props) {
                 <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={props.addPeerGroup} 
+                    onClick={props.addLearnerGroups} 
                 >
                 Submit
             </button>
@@ -116,4 +116,4 @@ function AddPeerGroup(props) {
         </React.Fragment>
     )
 }
-export default AddPeerGroup;
+export default AddLearnerGroups;

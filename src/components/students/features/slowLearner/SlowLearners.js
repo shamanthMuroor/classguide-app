@@ -1,14 +1,16 @@
 import React from 'react';
-import AddSlowLearners from './AddSlowLearners';
+import AddLearnerGroups from './AddLearnerGroups';
 import { db } from '../../../../App'
 
 class SlowLearners extends React.Component {
     state = {
         showPeers: false,
+        peersbtn: false,
         regno: '',
-        student_name: '',
+        student_learner: '',
         marks: '',
-        comment: '',    
+        comment: '',
+        student_guide: '',
         measures: '',
         groups: [],
         error: ''
@@ -16,7 +18,7 @@ class SlowLearners extends React.Component {
 
     componentWillMount = () => {
         db.collection('general').doc('lectureid')
-            .collection('slowlearner').orderBy('regno').get()
+            .collection('slowLearner').orderBy('regno').get()
             .then(val => {
                 val.forEach(values => {
                     let arr = []
@@ -35,30 +37,34 @@ class SlowLearners extends React.Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
-    addLearners = () => {
-        const { regno, student_name, marks, measures } = this.state;
-        if( regno === '' || student_name === '' || marks === '' || measures === '')
+    // Adding Slow Learners and Peer Group
+    addLearnerGroups = () => {
+        const { regno, student_learner, marks, measures } = this.state;
+        if( regno === '' || student_learner === '' || marks === '' || measures === '')
             this.setState({error: 'Enter valid details'})
         else {
             db.collection('general').doc('lectureid')
-                .collection('peergroup').add({
+                .collection('slowLearner').add({
                     regno: this.state.regno,
-                    student_name: this.state.student_name,
+                    student_learner: this.state.student_learner,
                     marks: this.state.marks,
                     comment: this.state.comment,
+                    student_guide: this.state.student_guide,
                     measures: this.state.measures
                 })
                 .then((docRef) => {
-                    const { regno, student_name, marks, comment, measures } = this.state;
+                    const { regno, student_guide, student_learner, marks, comment, measures } = this.state;
                     const { id } = docRef;
-                    const group = { id, regno, student_name, marks, comment, measures };
+                    console.log("adding id: " + id)
+                    const group = { id, regno, student_guide, student_learner, marks, comment, measures };
                     this.setState({
                         showPeers: false,        
                         groups: this.state.groups.concat(group),
                         regno: '',
-                        student_name: '',
+                        student_learner: '',
                         marks: '',
                         comment: '',
+                        student_guide: '',
                         measures: '',
                         error: ''
                     })
@@ -66,9 +72,11 @@ class SlowLearners extends React.Component {
         }
     }
 
+    // Deleting Peer Group
     delPeerGroup = (id) => {
+        // console.log("delete id: " + id)
         db.collection('general').doc('lectureid')
-        .collection('slowlearner').doc(id).delete()
+        .collection('slowLearner').doc(id).delete()
           .then(() => {
             console.log(id + " del successful")
             alert("deleted successfully")
@@ -77,55 +85,109 @@ class SlowLearners extends React.Component {
           .catch(err => console.log(err))
     }
 
-    showLearnersForm = () => {
-        this.setState({ showPeers: true })
+
+    // Toggle for Adding (Slow learner and peer group) Form
+    showLearnerForm = () => {
+        this.setState({ 
+            showPeers: true,
+            showAddPeerGroup: false
+        })
     }
 
-    hideLearnersForm = () => {
+    hideForm = () => {
         this.setState({ 
             showPeers: false,
             regno: '',
-            student_name: '',
+            student_learner: '',
             marks: '',
             comment: '',
+            student_guide: '',
             measures: '',
             error: ''
         })
     }
 
+    // Toggle for Show Peer button
+    togglePeerGroup = () => {
+        this.setState({peersbtn: !this.state.peersbtn})
+    }
+
     render() {
-        let html =
-            <div className="row">
-                <div className="d-flex" style={{ width: '100%' }}>
-                    <div className="col">-</div>
-                    <div className="col">-</div>
-                    <div className="col">-</div>
-                    <div className="col">-</div>
-                    <div className="col">-</div>
-                    <div className="col">-</div>
-                </div>
-            </div>
+        let html = <h1>No data to display...</h1>
+
         if (this.state.groups.length > 0) {
             html = this.state.groups.map((data, i) => {
                 return (
-                    <div key={i} className="row mt-3 bg-light align-items-center">
-                        <div className="d-flex" style={{ width: '100%' }}>
-                            <div className="col">{++i}</div>
-                            <div className="col">{data.regno}</div>
-                            <div className="col">{data.student_name}</div>
-                            <div className="col">{data.marks}</div>
-                            <div className="col">{data.comment}</div>
-                            <div className="col">{data.measures}</div>
+                    <div key={i} className="card mt-3 bg-light">
+                        <div className="card-header d-flex justify-content-between">
+                            <small style={{ color: 'gray' }}>{++i}</small>
                             <button
-                                type="button"
-                                className="text-danger"
-                                onClick={()=>this.delPeerGroup(data.id)} 
-                                style={{ background: 'transparent', border: 'none'}}
-                            >
-                                <span className="mb-0" aria-hidden="true">
-                                    <i className="far fa-trash-alt"></i>
-                                </span>
+                                    type="button"
+                                    className="text-danger"
+                                    onClick={()=>this.delPeerGroup(data.id)} 
+                                    style={{ background: 'transparent', border: 'none'}}
+                                >
+                                    <span className="mb-0" aria-hidden="true">
+                                        <i className="far fa-trash-alt"></i>
+                                    </span>
                             </button>
+                        </div>
+                        <div className="card-body d-flex">
+                            <div className="row mx-0" style={{ width: '100%' }}>
+                                <div className="col-md-2">
+                                    <div>
+                                        <i className="fas fa-user-circle fa-5x d-none d-md-block"></i>
+                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Student Learner</span>
+                                        <div>{data.student_learner}</div> 
+                                    </div>
+                                </div>
+                                <div className="col-md-8">
+                                    <hr className="d-md-none" />
+                                    <div className="row">
+                                        <div className="col-md-3">
+                                            <span style={{ fontWeight: 'bold', color: 'gray' }}>Register No: </span>
+                                        </div>
+                                        <div className="col-md-9">
+                                            <span>{data.regno}</span>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-md-3">
+                                            <span style={{ fontWeight: 'bold', color: 'gray' }}>Marks: </span>
+                                        </div>
+                                        <div className="col-md-9">
+                                            <span>{data.marks}</span>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-md-3">
+                                            <span style={{ fontWeight: 'bold', color: 'gray' }}>Comment: </span>
+                                        </div>
+                                        <div className="col-md-9">
+                                            <span>{data.comment}</span>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-md-3">
+                                            <span style={{ fontWeight: 'bold', color: 'gray' }}>Measures: </span>
+                                        </div>
+                                        <div className="col-md-9">
+                                            <span>{data.measures}</span>
+                                        </div>
+                                    </div>
+                                    {this.state.peersbtn && <hr className="d-md-none" />} 
+                                </div>
+                                { this.state.peersbtn &&
+                                    <div className="col-md-2">
+                                        <i className="fas fa-user-circle fa-5x d-none d-md-block text-center"></i>      
+                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Student Guide</span>
+                                        <div>{data.student_guide}</div>  
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 )
@@ -137,38 +199,58 @@ class SlowLearners extends React.Component {
                     this.state.showPeers 
                     ? 
                     (
-                        <AddSlowLearners 
+                        <AddLearnerGroups 
                             handleChange={this.handleChange}
                             regno={this.state.regno}
-                            student_name={this.state.student_name}
+                            student_learner={this.state.student_learner}
                             marks={this.state.marks}
                             comment={this.state.comment}
+                            student_guide={this.state.student_guide}
                             measures={this.state.measures}
-                            hideLearnersForm={this.hideLearnersForm}
+                            hideForm={this.hideForm}
                             error={this.state.error} 
-                            addLearners={this.addLearners}
+                            addLearnerGroups={this.addLearnerGroups}
                         />
                     ) 
                     : 
                     (
                         <React.Fragment>
-                            <div className="text-center" style={{marginTop: '100px'}}><h2>Slow Learners</h2></div>
-                            <div className="row">
-                                <button
-                                    className="btn btn-secondary"
-                                    onClick={this.showLearnersForm}
-                                >
-                                    + Add group
-                                </button>
+                            <div className="text-center" style={{marginTop: '100px'}}>
+                                { this.state.peersbtn 
+                                ? (
+                                    <React.Fragment>
+                                    <h2>Peer Group Learning</h2>
+                                    <h5>List of slow learner and student guides </h5>
+                                    </React.Fragment> )  
+                                : (
+                                    <React.Fragment>
+                                    <h2>Slow Learners</h2>
+                                    <h5>List of slow learner</h5>
+                                    </React.Fragment> ) 
+                                }
                             </div>
-                            <div className="row mt-5">
-                                <div className="d-flex" style={{ width: '100%' }}>
-                                    <div className="col">SL. NO</div>
-                                    <div className="col">REG. NO</div>
-                                    <div className="col">STUDENT LEARNER</div>
-                                    <div className="col">MARKS</div>
-                                    <div className="col">COMMENT</div>
-                                    <div className="col">MEASURES TAKEN</div>
+                            <div className="m-2">
+                                <div className="d-flex flex-row-reverse">
+                                    <button
+                                        className="btn btn-secondary ml-2"
+                                        onClick={this.showLearnerForm}
+                                    >
+                                        + Add Slow Learners
+                                    </button>
+                                </div>                                
+                                <div className="d-flex flex-row-reverse mt-2">
+                                    <button
+                                        className="btn btn-secondary"
+                                        onClick={this.togglePeerGroup}
+                                    >
+                                        {this.state.peersbtn ? (
+                                            <h6>Hide Peer Groups  <i className="fas fa-toggle-on"></i>
+                                            </h6> 
+                                        ): (
+                                            <h6>Show Peer Groups <i className="fas fa-toggle-off"></i>
+                                            </h6>
+                                        )}
+                                    </button>
                                 </div>
                             </div>
                             {html}

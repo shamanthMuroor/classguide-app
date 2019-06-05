@@ -36,10 +36,7 @@ function Navbar(props) {
                         <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/counselling">Counselling</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/peer-group">Peer Groups</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/slow-learner">Slow Learners</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/slow-learners">Slow Learners</NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/achievers">Achievers</NavLink>
