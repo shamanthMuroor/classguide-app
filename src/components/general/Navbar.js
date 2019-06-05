@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';  
+import {NavLink, Link} from 'react-router-dom';  
 import logo from '../../images/aloylogo.png'; 
     
 const hidenav = () =>{
@@ -14,23 +14,35 @@ function Navbar(props) {
             </button>
 
             {/* Action for Menu toggler */}
-            <div className="collapse navbar-collapse topnav" id="menuToggler"  style={{flexGrow:0}}>
+            <div className="collapse navbar-collapse topnav" id="menuToggler">
                 <Link className="navbar-brand d-none d-lg-flex" to="/">
                 <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="College Logo" />
                 SAC
                 </Link>
-                <ul className="navbar-nav nav-pills mt-2 mt-lg-0">
+                <ul className="navbar-nav mt-2 mt-lg-0" onClick={hidenav}>
                     <li className="nav-item">
-                        <Link onClick={hidenav} className="nav-link" exact="true" to="/"><i className="fas fa-home"></i> Home <span className="sr-only">(current)</span></Link>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/"><i className="fas fa-home"></i> Home </NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link onClick={hidenav} className="nav-link" exact="true" to="/students">Student Details </Link>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/students">Student Details </NavLink>
                     </li>
                     <li className="nav-item">
-                            <Link onClick={hidenav} className="nav-link" exact="true" to="/classmeetings">Class Meetings</Link>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/class-meetings">Class Meetings</NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link onClick={hidenav} className="nav-link" exact="true" to="/parentmeetings">Parent Meetings</Link>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/parent-meetings">Parent Meetings</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/counselling">Counselling</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/peer-group">Peer Groups</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/slow-learner">Slow Learners</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/achievers">Achievers</NavLink>
                     </li>
                 </ul>   
             </div>
@@ -46,11 +58,19 @@ function Navbar(props) {
                         <i className="fas fa-user-circle fa-2x"></i>
                     </Link>
                     <div className="dropdown-menu dropDownLinks" aria-labelledby="navbarDropdownMenuLink">
-                        <Link className="nav-link disabled" to="#" aria-disabled="true">Announcements</Link>
-                        <Link className="nav-link disabled" to="#" aria-disabled="true">Sahaaya</Link>
-                        <Link className="nav-link" to="/guidelines" >Guidelines</Link>
+                        <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Disabled">
+                            <NavLink className="nav-link disabled" exact to="#" aria-disabled="true" style={{fontSize: '14px'}}>Notifications <span className="badge badge-secondary">0</span></NavLink>
+                        </span>
+                        <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Coming Up">
+                            <NavLink className="nav-link disabled" exact to="#" aria-disabled="true" style={{fontSize: '14px'}}>Sahaaya</NavLink>
+                        </span>
+                        <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Coming Up">
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link disabled" exact to="#" aria-disabled="true" style={{fontSize: '14px'}}>Reports</NavLink>
+                        </span>                        
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/guidelines" style={{fontWeight: '600'}}>Guidelines</NavLink>
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/feedback" style={{fontWeight: '600'}}>Feedback</NavLink>
                         <hr className="m-1 mx-3" style={{backgroundColor: '#F5F2F2', opacity:'0.15'}}/>
-                        <Link className="nav-link" to="#" onClick={props.logout} >Logout</Link>
+                        <Link className="nav-link" exact="true" to="#" onClick={props.logout} style={{fontWeight: '600'}}>Logout</Link>
                     </div>
                 </li>
             </ul>
@@ -58,6 +78,12 @@ function Navbar(props) {
         </nav>
     )
 }
+
+const NavStyle ={
+    color: 'white',
+    fontSize: '18px'
+}
+
 
 export default Navbar;
 

@@ -24,7 +24,9 @@ function Step3(props) {
             >
             </textarea>   
         </div>
-        <button className="btn btn-success" style={{float:'right'}}>Submit</button>
+        <button className="btn btn-success" style={{float:'right'}} disabled={props.isLoading}>
+          {props.isLoading ? "Submitting..." : "Submit"}
+        </button>
       </React.Fragment>
     );
   }

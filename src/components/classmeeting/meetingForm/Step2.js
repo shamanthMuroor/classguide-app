@@ -37,6 +37,7 @@ function Step2(props) {
               <option>Preparation for final exam / Preparation for College Fest </option>
               <option>Unplanned meeting 1</option>  
               <option>Unplanned meeting 2</option>
+              <option>Unplanned meeting 3</option>
             </select>
             </div>
         </div>

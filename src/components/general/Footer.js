@@ -9,7 +9,7 @@ class Footer extends React.Component {
                     <div className="text-center foot">
                         <img src={logo} width="100px" height="100px" alt="College Logo"/>
                         <h5>St. Aloysius College(Autonomous) Mangaluru</h5>
-                        <ul className="font-weight-bold footerUL" >
+                        <ul className="font-weight-bold footerUL d-print-none" >
                             <li className="active">
                                 <Link exact="true" to="/"><i className="fas fa-home"></i> Home </Link>
                                 <span>|</span>

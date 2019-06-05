@@ -9,26 +9,34 @@ class ClassMeetings extends React.Component {
   state = {
     lecturer: "lec1",
     sec: "3rd bsc Ecsm",
-    meetings: []
+    meetings: [],
+    loading: true
   }
 
   // Displaying all the meetings from the database
   componentWillMount = () => {
     db.collection('classMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).get()
-        .then(res => { res.forEach(val => {
+      .collection(this.state.sec).orderBy("date").get()
+        .then(res => { 
+          res.forEach(val => {
           let arr = [];
           arr.push({
             id: val.id,
             ...val.data() 
-        })
-          // console.log((val.id))
-          // console.log((val.data().agenda))
-          //  this.setState({meetings: [this.state.meetings, val.data()]} )
-          this.setState({meetings: this.state.meetings.concat(arr)} )
+          })
+          this.setState({meetings: this.state.meetings.concat(arr), loading: false})
         })
       })
       .catch(err => console.log(err))
+  }
+
+  componentWillUnmount = () => {
+    this.setState({
+      lecturer: "",
+      sec: "",
+      meetings: [],
+      loading: true
+    })
   }
 
   // Delete a meeting
@@ -36,7 +44,6 @@ class ClassMeetings extends React.Component {
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).doc(id).delete()
         .then(() => {
-          alert('Deleted successfully')
           console.log(id + " del successful")
           this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
         })
@@ -51,16 +58,20 @@ class ClassMeetings extends React.Component {
       date, 
       description
     }
-    this.setState({meetings: this.state.meetings.concat(newMeeting) })
+    this.setState({meetings: this.state.meetings.concat(newMeeting)})
   }
 
-  render() {
+  render() {    
+    let html = 
+      <div className="text-center" style={{marginBottom: '150px', marginTop: '-25px'}}>
+        <div className="spinner-grow mr-1" role="status"> </div>
+        <div className="spinner-grow mx-2" role="status"> </div>
+        <div className="spinner-grow ml-1" role="status"> </div>
+      </div>
     return (
-      <div>
+      <div className="container">
         <AddMeeting addMeeting={this.addMeeting} />
-        <div>
-          <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} />
-        </div>
+        {this.state.loading ? html : <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} /> }
       </div>
     )
   }
