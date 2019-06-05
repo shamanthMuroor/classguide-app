@@ -11,7 +11,6 @@ import ParentMeetings from './components/ParentMeetings';
 import Guidelines from './components/general/Guidelines';
 import StudProfile from './components/students/StudProfile';
 import Counselling from './components/students/features/counselling/Counselling';
-import PeerGroup from './components/students/features/peer/PeerGroup';
 import SlowLearners from './components/students/features/slowLearner/SlowLearners';
 import Achiever from './components/students/features/achievers/Achiever';
 import Feedback from './components/general/Feedback';
@@ -58,8 +57,7 @@ class App extends React.Component {
                 <Route path='/guidelines' exact component={Guidelines} />
                 <Route path='/students/student-profile/:name' exact component={StudProfile} />
                 <Route path='/counselling' exact component={Counselling} />
-                <Route path='/peer-group' exact component={PeerGroup} />
-                <Route path='/slow-learner' exact component={SlowLearners} />
+                <Route path='/slow-learners' exact component={SlowLearners} />
                 <Route path='/achievers' exact component={Achiever} />
                 <Route path='/feedback' exact component={Feedback} />
                 <Route path='/error' exact component={SomethingsWrong} />
