@@ -7,9 +7,9 @@ class StudList extends React.Component {
       //  console.log(students.regno)
          return (
            students.name.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1 
-          //   || 
-          //  students.regno.indexOf(this.props.filteredValue) !== -1 
-            || 
+           || 
+           // students.regno.indexOf(this.props.filteredValue) !== -1 
+           //  || 
             students.Caste.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
             // || 
             // students.location.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1

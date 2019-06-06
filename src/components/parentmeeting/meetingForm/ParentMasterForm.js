@@ -116,7 +116,7 @@ class ParentMasterForm extends React.Component {
             })
             .then((docRef) => {
                 // console.log("Added id: " + docRef.id)
-                this.props.addParentMeeting(docRef.id, this.state.reg, this.state.agenda, this.state.date, this.state.description)
+                this.props.addParentMeeting(docRef.id, this.state.reg, this.state.agenda, this.state.date, this.state.attended, this.state.description)
                 this.setState({
                     currentStep: 1,
                     reg: '',

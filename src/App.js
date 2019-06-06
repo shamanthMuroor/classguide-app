@@ -10,9 +10,10 @@ import ClassMeetings from './components/ClassMeetings';
 import ParentMeetings from './components/ParentMeetings';
 import Guidelines from './components/general/Guidelines';
 import StudProfile from './components/students/StudProfile';
-import Counselling from './components/students/features/counselling/Counselling';
-import SlowLearners from './components/students/features/slowLearner/SlowLearners';
-import Achiever from './components/students/features/achievers/Achiever';
+import Counselling from './components/features/counselling/Counselling';
+import SlowLearners from './components/features/slowLearner/SlowLearners';
+import Achiever from './components/features/achievers/Achiever';
+import Rural from './components/features/rural/Rural';
 import Feedback from './components/general/Feedback';
 import SomethingsWrong from './components/general/SomethingsWrong';
 import ErrorPage from './components/general/ErrorPage';
@@ -49,9 +50,9 @@ class App extends React.Component {
             <Router>
               <Navbar logout={this.handleLogout}/>
               <Switch>
-                {/* <Route path='/login' exact component={Login} /> */}
-                <Route path='/' exact component={Stafprofile} />
-                {/* <PrivateStaffRoute path='/students' exact component={Students} /> */}
+                <Route path='/login' exact component={Login} />
+                <PrivateStaffRoute path='/' exact component={Stafprofile} />
+                <Route path='/students' exact component={Students} />
                 <Route path='/class-meetings' exact component={ClassMeetings} />
                 <Route path='/parent-meetings' exact component={ParentMeetings} />
                 <Route path='/guidelines' exact component={Guidelines} />
@@ -59,6 +60,7 @@ class App extends React.Component {
                 <Route path='/counselling' exact component={Counselling} />
                 <Route path='/slow-learners' exact component={SlowLearners} />
                 <Route path='/achievers' exact component={Achiever} />
+                <Route path='/rural' exact component={Rural} />
                 <Route path='/feedback' exact component={Feedback} />
                 <Route path='/error' exact component={SomethingsWrong} />
                 <Route path='*' exact component={ErrorPage} />
@@ -70,3 +72,5 @@ class App extends React.Component {
   }
 }
 export default App;
+
+// username: 9845242258,password: "18.02.1973"

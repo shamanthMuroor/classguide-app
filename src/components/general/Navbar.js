@@ -16,8 +16,8 @@ function Navbar(props) {
             {/* Action for Menu toggler */}
             <div className="collapse navbar-collapse topnav" id="menuToggler">
                 <Link className="navbar-brand d-none d-lg-flex" to="/">
-                <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="College Logo" />
-                SAC
+                    <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="College Logo" />
+                    SAC
                 </Link>
                 <ul className="navbar-nav mt-2 mt-lg-0" onClick={hidenav}>
                     <li className="nav-item">
@@ -26,24 +26,28 @@ function Navbar(props) {
                     <li className="nav-item">
                         <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/students">Student Details </NavLink>
                     </li>
-                    <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/class-meetings">Class Meetings</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/parent-meetings">Parent Meetings</NavLink>
+                    <li className="nav-item dropdown">
+                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" exact to="#">Meetings</NavLink>
+                        <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{backgroundColor: '#333333', border: 'none'}}>
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/class-meetings" style={{color: 'rgba(255,255,255,.5)'}}>Class Meetings</NavLink>
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/parent-meetings" style={{color: 'rgba(255,255,255,.5)'}}>Parent Meetings</NavLink>
+                        </div>
                     </li>
                     <li className="nav-item">
                         <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/counselling">Counselling</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/slow-learners">Slow Learners</NavLink>
+                        <NavLink activeClassName="selected" className="nav-link" exact to="/slow-learners">Slow Learners</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/achievers">Achievers</NavLink>
+                        <NavLink activeClassName="selected" className="nav-link" exact to="/achievers">Achievers</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink activeClassName="selected" className="nav-link" exact to="/rural">Rural Students</NavLink>
                     </li>
                 </ul>   
             </div>
-  
+
             <Link className="d-lg-none colgLogo" exact="true" to="/">
                 <img src={logo} width="50px" height="50px" className="d-inline-block align-middle" alt="College Logo" />
                 SAC

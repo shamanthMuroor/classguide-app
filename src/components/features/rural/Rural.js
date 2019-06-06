@@ -1,33 +1,39 @@
 import React from 'react';
-import AddLearnerGroups from './AddLearnerGroups';
-import { db } from '../../../../App'
+import AddRural from './AddRural';
+import { db } from '../../../App'
 
-class SlowLearners extends React.Component {
+class Rural extends React.Component {
     state = {
-        showPeers: false,
-        peersbtn: false,
+        showRuralForm: false,
         regno: '',
-        student_learner: '',
+        student_name: '',
         marks: '',
         comment: '',
-        student_guide: '',
-        measures: '',
-        groups: [],
-        error: ''
+        motivation: '',
+        students: [],
+        error: '',
+        showSuccess: false,
+        submitting: false,
+        loading: true
     }
 
     componentWillMount = () => {
         db.collection('general').doc('lectureid')
-            .collection('slowLearner').orderBy('regno').get()
+            .collection('rural').orderBy('regno').get()
             .then(val => {
-                val.forEach(values => {
-                    let arr = []
-                    arr.push({
-                        id: values.id,
-                        ...values.data()
+                if(val.size > 0) {
+                    val.forEach(values => {
+                        let arr = []
+                        arr.push({
+                            id: values.id,
+                            ...values.data()
+                        })
+                        this.setState({ students: this.state.students.concat(arr), loading: false })
                     })
-                    this.setState({ groups: this.state.groups.concat(arr) })
-                })
+                }
+                else {
+                    this.setState({loading: false})
+                }
             })
             .catch(err => console.log(err))
     }
@@ -37,86 +43,103 @@ class SlowLearners extends React.Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
-    // Adding Slow Learners and Peer Group
-    addLearnerGroups = () => {
-        const { regno, student_learner, marks, measures } = this.state;
-        if( regno === '' || student_learner === '' || marks === '' || measures === '')
+    // Adding Rural Students
+    addRuralStudent = () => {
+        const { regno, student_name, marks, comment, motivation } = this.state;
+        if( regno === '' || student_name === '' || marks === '' || motivation === '')
             this.setState({error: 'Enter valid details'})
         else {
+            this.setState({submitting: true})
             db.collection('general').doc('lectureid')
-                .collection('slowLearner').add({
+                .collection('rural').add({
                     regno: this.state.regno,
-                    student_learner: this.state.student_learner,
+                    student_name: this.state.student_name,
                     marks: this.state.marks,
                     comment: this.state.comment,
-                    student_guide: this.state.student_guide,
-                    measures: this.state.measures
+                    motivation: this.state.motivation
                 })
                 .then((docRef) => {
-                    const { regno, student_guide, student_learner, marks, comment, measures } = this.state;
                     const { id } = docRef;
                     console.log("adding id: " + id)
-                    const group = { id, regno, student_guide, student_learner, marks, comment, measures };
+                    const student = { id, regno, student_name, marks, comment, motivation };
                     this.setState({
-                        showPeers: false,        
-                        groups: this.state.groups.concat(group),
+                        showRuralForm: false,        
+                        students: this.state.students.concat(student),
                         regno: '',
-                        student_learner: '',
+                        student_name: '',
                         marks: '',
                         comment: '',
-                        student_guide: '',
-                        measures: '',
-                        error: ''
+                        motivation: '',
+                        error: '',
+                        showSuccess: true,
+                        submitting: false
                     })
                 })
+                .catch(err => console.log(err))
         }
     }
 
-    // Deleting Peer Group
-    delPeerGroup = (id) => {
+    // Deleting Rural Student data
+    delRuralStudents = (id) => {
         // console.log("delete id: " + id)
         db.collection('general').doc('lectureid')
-        .collection('slowLearner').doc(id).delete()
+        .collection('rural').doc(id).delete()
           .then(() => {
             console.log(id + " del successful")
             alert("deleted successfully")
-            this.setState({ groups: [...this.state.groups.filter(group => group.id !== id)] })
+            this.setState({ students: [...this.state.students.filter(group => group.id !== id)] })
           })
           .catch(err => console.log(err))
     }
 
 
-    // Toggle for Adding (Slow learner and peer group) Form
-    showLearnerForm = () => {
-        this.setState({ 
-            showPeers: true,
-            showAddPeerGroup: false
-        })
+    // Showing Adding Rural Students Form
+    showRuralForm = () => {
+        this.setState({ showRuralForm: true })
     }
 
+    // Closes the add form
     hideForm = () => {
         this.setState({ 
-            showPeers: false,
+            showRuralForm: false,
             regno: '',
-            student_learner: '',
+            student_name: '',
             marks: '',
             comment: '',
             student_guide: '',
-            measures: '',
+            motivation: '',
             error: ''
         })
     }
 
-    // Toggle for Show Peer button
-    togglePeerGroup = () => {
-        this.setState({peersbtn: !this.state.peersbtn})
+    // Hides success message
+    hideSuccess = () => {
+        this.setState({ showSuccess: false })
     }
 
     render() {
-        let html = <h1>No data to display...</h1>
+        let loader = 
+            <div className="text-center my-5">
+                <div className="spinner-border" role="status" style={{width: '3rem', height: '3rem'}} />
+            </div>
 
-        if (this.state.groups.length > 0) {
-            html = this.state.groups.map((data, i) => {
+
+        let successMsg=             
+            <div className="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Rural Student details added successfully
+                <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.hideSuccess}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        let html =       
+            <div className="my-5">
+                <h3>No data Found</h3>
+                <small style={{color:'gray'}}>(Note: Maybe also due to network problem)</small>
+            </div>
+
+        if (this.state.students.length > 0) {
+            html = this.state.students.map((data, i) => {
                 return (
                     <div key={i} className="card mt-3 bg-light">
                         <div className="card-header d-flex justify-content-between">
@@ -124,7 +147,7 @@ class SlowLearners extends React.Component {
                             <button
                                     type="button"
                                     className="text-danger"
-                                    onClick={()=>this.delPeerGroup(data.id)} 
+                                    onClick={()=>this.delRuralStudents(data.id)} 
                                     style={{ background: 'transparent', border: 'none'}}
                                 >
                                     <span className="mb-0" aria-hidden="true">
@@ -138,7 +161,7 @@ class SlowLearners extends React.Component {
                                     <div>
                                         <i className="fas fa-user-circle fa-5x d-none d-md-block"></i>
                                         <span style={{ fontWeight: 'bold', color: 'gray' }}>Student Learner</span>
-                                        <div>{data.student_learner}</div> 
+                                        <div>{data.student_name}</div> 
                                     </div>
                                 </div>
                                 <div className="col-md-8">
@@ -172,21 +195,13 @@ class SlowLearners extends React.Component {
                                     <hr />
                                     <div className="row">
                                         <div className="col-md-3">
-                                            <span style={{ fontWeight: 'bold', color: 'gray' }}>Measures: </span>
+                                            <span style={{ fontWeight: 'bold', color: 'gray' }}>motivation: </span>
                                         </div>
                                         <div className="col-md-9">
-                                            <span>{data.measures}</span>
+                                            <span>{data.motivation}</span>
                                         </div>
                                     </div>
-                                    {this.state.peersbtn && <hr className="d-md-none" />} 
                                 </div>
-                                { this.state.peersbtn &&
-                                    <div className="col-md-2">
-                                        <i className="fas fa-user-circle fa-5x d-none d-md-block text-center"></i>      
-                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Student Guide</span>
-                                        <div>{data.student_guide}</div>  
-                                    </div>
-                                }
                             </div>
                         </div>
                     </div>
@@ -196,64 +211,42 @@ class SlowLearners extends React.Component {
         return (
             <div className="container">
                 {
-                    this.state.showPeers 
+                    this.state.showRuralForm 
                     ? 
                     (
-                        <AddLearnerGroups 
+                        <AddRural 
                             handleChange={this.handleChange}
                             regno={this.state.regno}
-                            student_learner={this.state.student_learner}
+                            student_name={this.state.student_name}
                             marks={this.state.marks}
                             comment={this.state.comment}
-                            student_guide={this.state.student_guide}
-                            measures={this.state.measures}
+                            motivation={this.state.motivation}
                             hideForm={this.hideForm}
                             error={this.state.error} 
-                            addLearnerGroups={this.addLearnerGroups}
+                            addRuralStudent={this.addRuralStudent}
+                            submitting={this.state.submitting}
                         />
                     ) 
                     : 
                     (
                         <React.Fragment>
                             <div className="text-center" style={{marginTop: '100px'}}>
-                                { this.state.peersbtn 
-                                ? (
-                                    <React.Fragment>
-                                    <h2>Peer Group Learning</h2>
-                                    <h5>List of slow learner and student guides </h5>
-                                    </React.Fragment> )  
-                                : (
-                                    <React.Fragment>
-                                    <h2>Slow Learners</h2>
-                                    <h5>List of slow learner</h5>
-                                    </React.Fragment> ) 
-                                }
+                                <h2>Rural Student List</h2>
                             </div>
+                            <hr />
                             <div className="m-2">
-                                <div className="d-flex flex-row-reverse">
-                                    <button
-                                        className="btn btn-secondary ml-2"
-                                        onClick={this.showLearnerForm}
-                                    >
-                                        + Add Slow Learners
-                                    </button>
-                                </div>                                
-                                <div className="d-flex flex-row-reverse mt-2">
+                                <div className="d-flex justify-content-between">
                                     <button
                                         className="btn btn-secondary"
-                                        onClick={this.togglePeerGroup}
+                                        onClick={this.showRuralForm}
                                     >
-                                        {this.state.peersbtn ? (
-                                            <h6>Hide Peer Groups  <i className="fas fa-toggle-on"></i>
-                                            </h6> 
-                                        ): (
-                                            <h6>Show Peer Groups <i className="fas fa-toggle-off"></i>
-                                            </h6>
-                                        )}
+                                        + Add Rural Students
                                     </button>
-                                </div>
+                                </div>   
                             </div>
-                            {html}
+                            <hr />
+                            {this.state.showSuccess && successMsg}
+                            {this.state.loading ? loader : html}
                         </React.Fragment>
                     )
                 }
@@ -262,4 +255,4 @@ class SlowLearners extends React.Component {
     }
 }
 
-export default SlowLearners;
+export default Rural;

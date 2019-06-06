@@ -109,8 +109,18 @@ function AddLearnerGroups(props) {
                     type="button"
                     className="btn btn-primary"
                     onClick={props.addLearnerGroups} 
+                    disabled={props.submitting}
                 >
-                Submit
+                { 
+                    props.submitting 
+                    ? 
+                    <React.Fragment>
+                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        <span> Submitting</span>
+                    </React.Fragment>
+                    : 
+                    "Submit" 
+                }
             </button>
             </form>
         </React.Fragment>

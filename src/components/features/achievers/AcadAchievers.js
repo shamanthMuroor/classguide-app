@@ -1,8 +1,8 @@
 import React from 'react';
-import AddLevelAchievers from './AddLevelAchievers'
-import { db } from '../../../../App'
+import AddAcadAchievers from './AddAcadAchievers'
+import { db } from '../../../App'
 
-class LevelAchievers extends React.Component {
+class AcadAchievers extends React.Component {
     state = {
         showAcad: false,
         regno: '',
@@ -15,7 +15,7 @@ class LevelAchievers extends React.Component {
 
     componentWillMount = () => {
         db.collection('general').doc('lectureid')
-            .collection('level').get()
+            .collection('academic').get()
                     .then(values => {
                         values.forEach(val => {
                             let arr = []
@@ -34,20 +34,19 @@ class LevelAchievers extends React.Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
-    addLevelAchievers = () => {
+    addAcadAchievers = () => {
         const { regno, name, marks, motivation } = this.state;
         if( regno === '' || name === '' || marks === '' || motivation === '')
             this.setState({error: 'Enter valid details'})
         else {
             db.collection('general').doc('lectureid')
-                .collection('level').add({
+                .collection('academic').add({
                         regno: this.state.regno,
                         name: this.state.name,
                         marks: this.state.marks,
                         motivation: this.state.motivation
                 })
                 .then((docRef) => {
-                    const { regno, name, marks, motivation } = this.state;
                     const { id } = docRef;
                     const group = { id, regno, name, marks, motivation };
                     this.setState({
@@ -63,9 +62,9 @@ class LevelAchievers extends React.Component {
         }
     }
 
-    delLevelAchievers = (id) => {
+    delAcadAchievers = (id) => {
         db.collection('general').doc('lectureid')
-            .collection('level').doc(id).delete()
+            .collection('academic').doc(id).delete()
                     .then(() => {
                         console.log(id + " del successful")
                         alert("deleted successfully")
@@ -74,11 +73,11 @@ class LevelAchievers extends React.Component {
                     .catch(err => console.log(err))
     }
 
-    showLevelForm = () => {
+    showAcadForm = () => {
         this.setState({ showAcad: true })
     }
 
-    hideLevelAchievers = () => {
+    hideAcadAchievers = () => {
         this.setState({ 
             showAcad: false,
             regno: '',
@@ -115,7 +114,7 @@ class LevelAchievers extends React.Component {
                             <button
                                 type="button"
                                 className="text-danger"
-                                onClick={()=>this.delLevelAchievers(data.id)} 
+                                onClick={()=>this.delAcadAchievers(data.id)} 
                                 style={{ background: 'transparent', border: 'none'}}
                             >
                                 <span className="mb-0" aria-hidden="true">
@@ -133,15 +132,15 @@ class LevelAchievers extends React.Component {
                     this.state.showAcad 
                     ? 
                     (
-                        <AddLevelAchievers 
+                        <AddAcadAchievers 
                             handleChange={this.handleChange}
                             regno={this.state.regno}
                             name={this.state.name}
                             marks={this.state.marks}
                             motivation={this.state.motivation}
-                            hideLevelAchievers={this.hideLevelAchievers}
+                            hideAcadAchievers={this.hideAcadAchievers}
                             error={this.state.error} 
-                            addLevelAchievers={this.addLevelAchievers}
+                            addAcadAchievers={this.addAcadAchievers}
                         />
 
                     ) 
@@ -149,12 +148,12 @@ class LevelAchievers extends React.Component {
                     (
                         <React.Fragment>
                             <div className="text-center">
-                                <h2>Academic Achievers Different Levels</h2>
+                                <h2>Academic Achievers</h2>
                             </div>
                             <div className="row">
                                 <button
                                     className="btn btn-secondary"
-                                    onClick={this.showLevelForm}
+                                    onClick={this.showAcadForm}
                                 >
                                     + Add group
                                 </button>
@@ -177,4 +176,4 @@ class LevelAchievers extends React.Component {
     }
 }
 
-export default LevelAchievers;
+export default AcadAchievers;

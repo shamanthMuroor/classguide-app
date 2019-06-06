@@ -9,7 +9,7 @@ class AddParentMeeting extends React.Component {
 
     // Opens Form
     onButtonClick = () => {
-        this.setState({ showForm: true })
+        this.setState({ showForm: true, showSuccess: false })
     }
 
     // Hides Form
@@ -39,7 +39,7 @@ class AddParentMeeting extends React.Component {
             <React.Fragment>
                 <div className="d-flex justify-content-center align-items-center flex-column addBox">
                 {this.state.showSuccess && html}
-                <h3 className="p-2">Parent Meeting Database</h3>
+                <h3 className="p-2">Parent-Teacher Meeting Database</h3>
                     <button 
                         className="btnAdd"
                         onClick={this.onButtonClick}

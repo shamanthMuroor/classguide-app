@@ -3,7 +3,8 @@ import '../../styles/style.css'
 
 class MeetingItem extends React.Component {
     render() {
-        const { id, date, agenda, description } = this.props.meeting;
+        let { id, date, agenda, description } = this.props.meeting;  
+        date = date.split("-").reverse().join("-");
         return (
             <div className="mt-4 container headMeetingItems">
                 <div className="row pt-2">

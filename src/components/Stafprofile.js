@@ -1,6 +1,11 @@
 import React from 'react';
+import jwt_decode from 'jwt-decode';
 
 class Stafprofile extends React.Component {
+  // componentWillMount = () => {
+  //   let val = JSON.parse(localStorage.getItem("auth"))
+  //   console.log(jwt_decode(val.token))
+  // }
   getYear() {
     return new Date().getFullYear();
   }

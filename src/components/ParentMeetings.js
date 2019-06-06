@@ -20,59 +20,51 @@ class ParentMeetings extends React.Component {
   componentWillMount = () => {
     db.collection('parentMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).orderBy("date").get()
-        .then(res => { res.forEach(val => {
-          let arr = [];
-          arr.push({
-            id: val.id,
-            ...val.data() 
+        .then(res => { 
+          if(res.size > 0) {
+            res.forEach(val => {
+              let arr = [];
+              arr.push({
+                id: val.id,
+                ...val.data() 
+              })
+              this.setState({parentmeetings: this.state.parentmeetings.concat(arr), loading: false} )
+            })
+          }
+          else {
+            this.setState({loading: false})
+          }
         })
-          this.setState({parentmeetings: this.state.parentmeetings.concat(arr), loading: false} )
-        })
-      })
-      .catch(err => console.log(err))
+        .catch(err => console.log(err))
   }
 
   // Add Meeting
   addParentMeeting = (id, reg, agenda, date, attended, description) => {
-    const newMeeting = {
-      id,
-      reg,
-      agenda, 
-      attended,
-      date, 
-      description
-    }
-    this.setState({parentmeetings: this.state.parentmeetings.concat(newMeeting) })
+    const newMeeting = { id, reg, agenda, attended, date, description }
+    this.setState({ parentmeetings: this.state.parentmeetings.concat(newMeeting) })
   }
 
+  // Replace Parent Meeting
   replaceParentMeeting = (id, reg, agenda, date, attended, description) => {
-    this.state.parentmeetings.forEach((val, i) => {
-      if(val.id === id)
-      {
-        this.setState( parentmeetings => ({
-          id: {
-              ...parentmeetings.id,
-              [parentmeetings.id[i]]: id,
-          },
-          reg: {
-            ...parentmeetings.reg,
-            [parentmeetings.reg[i]]: reg,
-        },
-      }))
-        console.log(this.state.parentmeetings)
-      }
-    })
+    const changedValues = { reg, agenda, date, attended, description }
+    this.setState({parentmeetings: [...this.state.parentmeetings.map(meeting => meeting.id === id ? changedValues : meeting )] })
+    // console.log(this.state.parentmeetings)
+  //   const { meeting } = { id, reg, agenda, date, attended, description }
+    // this.setState({ parentmeetings: [...this.state.parentmeetings.filter(meeting => meeting.id !== id)] })
+    // this.setState({parentmeetings: this.state.parentmeetings.concat(changedValues)}) 
+    console.log(this.state.parentmeetings)
   }
 
     // Delete a meeting
     delMeeting = (id) => {
-      db.collection('parentMeetings').doc(this.state.lecturer)
-        .collection(this.state.sec).doc(id).delete()
-          .then(() => {
-            // console.log(id + " del successful")
-            this.setState({ parentmeetings: [...this.state.parentmeetings.filter(meeting => meeting.id !== id)] })
-          })
-          .catch(err => console.log(err))
+      console.log("Final Delete id: " + id)
+      // db.collection('parentMeetings').doc(this.state.lecturer)
+      //   .collection(this.state.sec).doc(id).delete()
+      //     .then(() => {
+      //       console.log(id + " del successful")
+      //       this.setState({ parentmeetings: [...this.state.parentmeetings.filter(meeting => meeting.id !== id)] })
+      //     })
+      //     .catch(err => console.log(err))
     }
 
     editMeeting = (id) => {
@@ -84,7 +76,9 @@ class ParentMeetings extends React.Component {
     }
 
   render() {
-    let html = 
+    // console.log(this.state.id)
+    // console.log(this.state.parentmeetings)
+    let loader = 
       <div className="text-center" style={{marginBottom: '150px', marginTop: '-25px'}}>
         <div className="spinner-grow mr-1" role="status"> </div>
         <div className="spinner-grow mx-2" role="status"> </div>
@@ -92,8 +86,19 @@ class ParentMeetings extends React.Component {
       </div>
     return (
       <div className="container text-center">
-        { this.state.showEdit ? <EditForm id={this.state.id} addParentMeeting={this.addParentMeeting} hideEdit={this.hideEdit} replaceParentMeeting={this.replaceParentMeeting} /> : <AddParentMeeting addParentMeeting={this.addParentMeeting} /> }
-        { this.state.loading ? html : <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting} editMeeting={this.editMeeting} /> }
+        { this.state.showEdit 
+          ? 
+            <EditForm id={this.state.id} addParentMeeting={this.addParentMeeting} hideEdit={this.hideEdit} replaceParentMeeting={this.replaceParentMeeting} /> 
+          : 
+            <AddParentMeeting addParentMeeting={this.addParentMeeting} /> 
+        }
+
+        { this.state.loading 
+          ? 
+            loader 
+          : 
+            <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting} editMeeting={this.editMeeting} /> 
+        }
       </div>
     )
   }

@@ -5,6 +5,7 @@ class EditForm extends React.Component {
     state = {
         lecturer: "lec1",
         sec: "3rd bsc Ecsm",
+        id: '',
         regno: '',
         date: '',
         agenda: '',
@@ -17,6 +18,7 @@ class EditForm extends React.Component {
           .collection(this.state.sec).doc(this.props.id).get()
             .then(val => {
                 this.setState({
+                    id: val.data().id,
                     regno: val.data().reg,
                     date: val.data().date,
                     agenda: val.data().agenda,
@@ -50,7 +52,7 @@ class EditForm extends React.Component {
                     description: this.state.description
             })
             .then(() => {
-                this.props.replaceParentMeeting(this.props.id, this.state.regno, this.state.agenda, this.state.date, this.state.description)
+                this.props.replaceParentMeeting(this.state.id, this.state.regno, this.state.agenda, this.state.attended, this.state.date, this.state.description)
                 // this.props.showSuccess()
                 this.props.hideEdit();
             })

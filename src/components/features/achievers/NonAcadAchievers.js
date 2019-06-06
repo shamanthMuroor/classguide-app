@@ -1,6 +1,6 @@
 import React from 'react';
 import AddNonAcadAchievers from './AddNonAcadAchievers';
-import { db } from '../../../../App'
+import { db } from '../../../App'
 
 class NonAcadAchievers extends React.Component {
     state = {
@@ -47,7 +47,6 @@ class NonAcadAchievers extends React.Component {
                         motivation: this.state.motivation
                 })
                 .then((docRef) => {
-                    const { regno, name, marks, motivation } = this.state;
                     const { id } = docRef;
                     const group = { id, regno, name, marks, motivation };
                     this.setState({

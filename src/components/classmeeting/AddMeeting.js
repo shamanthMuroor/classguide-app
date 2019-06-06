@@ -10,7 +10,7 @@ class AddMeeting extends React.Component{
 
     // Opens Form
     onButtonClick = () => {
-        this.setState({ showForm: true })
+        this.setState({ showForm: true, showSuccess: false })
     }
 
     // Hides Form

@@ -18,16 +18,21 @@ class ClassMeetings extends React.Component {
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).orderBy("date").get()
         .then(res => { 
-          res.forEach(val => {
-          let arr = [];
-          arr.push({
-            id: val.id,
-            ...val.data() 
-          })
-          this.setState({meetings: this.state.meetings.concat(arr), loading: false})
+          if(res.size > 0 ) {
+            res.forEach(val => {
+            let arr = [];
+            arr.push({
+              id: val.id,
+              ...val.data() 
+            })
+            this.setState({meetings: this.state.meetings.concat(arr), loading: false})
+            })
+          }
+          else {
+            this.setState({loading: false})
+          }
         })
-      })
-      .catch(err => console.log(err))
+        .catch(err => console.log(err))
   }
 
   componentWillUnmount = () => {
@@ -52,26 +57,27 @@ class ClassMeetings extends React.Component {
 
   // Add Meeting
   addMeeting = (id, agenda, date, description) => {
-    const newMeeting = {
-      id,
-      agenda, 
-      date, 
-      description
-    }
+    const newMeeting = { id, agenda, date, description }
     this.setState({meetings: this.state.meetings.concat(newMeeting)})
   }
 
   render() {    
-    let html = 
+    let loader = 
       <div className="text-center" style={{marginBottom: '150px', marginTop: '-25px'}}>
         <div className="spinner-grow mr-1" role="status"> </div>
         <div className="spinner-grow mx-2" role="status"> </div>
         <div className="spinner-grow ml-1" role="status"> </div>
       </div>
     return (
-      <div className="container">
+      <div className="container text-center">
         <AddMeeting addMeeting={this.addMeeting} />
-        {this.state.loading ? html : <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} /> }
+        { 
+          this.state.loading 
+          ? 
+          loader 
+          : 
+          <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} /> 
+        }
       </div>
     )
   }

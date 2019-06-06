@@ -1,6 +1,6 @@
 import React from 'react';
 import AddCounselling from './AddCounselling';
-import { db } from '../../../../App'
+import { db } from '../../../App'
 
 class Counselling extends React.Component {
     state = {
@@ -37,7 +37,7 @@ class Counselling extends React.Component {
     }
 
     addCounselling = () => {
-        const { regno, output, name, marks, measures } = this.state;
+        const { regno, output, name, marks, reason, measures } = this.state;
         if( regno === '' ||  output === '' || name === '' || marks === '' || measures === '')
             this.setState({error: 'Enter valid details'})
         else {
@@ -51,7 +51,6 @@ class Counselling extends React.Component {
                     output: this.state.output
                 })
                 .then((docRef) => {
-                    const { regno, output, name, marks, reason, measures } = this.state;
                     const { id } = docRef;
                     console.log("adding id: " + id)
                     const group = { id, regno, output, name, marks, reason, measures };

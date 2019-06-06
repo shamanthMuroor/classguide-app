@@ -15,9 +15,9 @@ class Tags extends React.Component {
                     <div className="col-sm-6 col-md-2 my-1 ">
                         <button className="btn btn-outline-dark" name="urban" onClick={this.props.search} type="button">Urban</button>
                     </div>
-                    <div className="col-sm-6 col-md-2 my-1" >
+                    {/* <div className="col-sm-6 col-md-2 my-1" >
                         <button className="btn btn-outline-dark" name="" type="button">Academic Achievers</button>
-                    </div>
+                    </div> */}
                     <div className="col-sm-6 col-md-2 my-1">
                         <button className="btn btn-outline-dark" name="" type="button">Slow learners</button>
                     </div>
