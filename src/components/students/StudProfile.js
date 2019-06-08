@@ -64,6 +64,9 @@ class StudProfile extends React.Component {
                     </React.Fragment>
                 )
             }
+            else {
+                return null
+            }
         })
 
         return (

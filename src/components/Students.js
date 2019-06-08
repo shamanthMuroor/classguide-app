@@ -4,7 +4,7 @@ import StudList from './students/studentList/StudList';
 import Search from './students/studentList/Search';
 import Tags from './students/studentList/Tags';
 import StudProfile from './students/StudProfile';
-import axios from 'axios';
+// import axios from 'axios';
 
 class Students extends React.Component {
     state = { 
@@ -17,8 +17,8 @@ class Students extends React.Component {
     }
 
     componentWillMount = () => {
-        let arr = [];
-        let newArr = [];
+        // let arr = [];
+        // let newArr = [];
         // axios.get("https://globaldb.sionasolutions.com")
         //     .then(value => {
         //         value.data.data.forEach((val, i) => {
@@ -38,7 +38,7 @@ class Students extends React.Component {
                             val = doc.data().student_id;
                         })
                         console.log(val);
-                        if(val=='')
+                        if(val==='')
                             this.props.history.push('./error');
                         else {
                             db.collection("students").where("_id", "==", val).orderBy("regno").limit(3).get()

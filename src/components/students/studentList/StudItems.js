@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 class StudItems extends React.Component {
     handleClick = () => {

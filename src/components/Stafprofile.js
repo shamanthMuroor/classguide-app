@@ -14,7 +14,7 @@ class Stafprofile extends React.Component {
     return new Date().getFullYear();
   }
   render() {
-    const { name , dob, role } = this.state.user;
+    const { name , dob } = this.state.user;
     return (  
       <div className="container card shadow-lg p-3 mb-5 profile">
         <div className="card-body" style={{height: '350px'}}>
