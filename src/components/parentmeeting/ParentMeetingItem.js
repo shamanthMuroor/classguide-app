@@ -1,65 +1,67 @@
 import React from 'react';
-import Modals from './Modals'
+import Modal from 'react-modal';
+import EditForm from './EditForm';
 import '../../styles/style.css'
 
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-40%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
+
+Modal.setAppElement('#root')
+
 class ParentMeetingItem extends React.Component {
-    state = {
-        delId: '',
-        showModal: false
+    constructor() {
+        super();
+
+        this.state = {
+            delModalIsOpen: false,
+            showEdit: false
+        };
+
+        this.openDelModal = this.openDelModal.bind(this);
+        this.closeDelModal = this.closeDelModal.bind(this);
     }
 
-    renderModal = () => {
-        return (
-            <div className="modal fade show" id="exampleModal" tabIndex="-1" role="dialog">
-                {console.log("modal render clicked, id: " + this.props.parentmeeting.id)}
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Confirm Delete</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="alert alert-danger" role="alert">
-                                <i className="fas fa-exclamation-circle"></i><span> Warning: This action cannot be undone!</span>
-                            </div>
-                            Are you sure, you want to delete this meeting permanently?
-                                    </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button
-                                type="button"
-                                className="btn btn-danger"
-                                onClick={() => this.props.delMeeting.bind(this, this.props.parentmeeting.id)}
-                                data-dismiss="modal"
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
+
+    openDelModal() {
+        this.setState({ delModalIsOpen: true });
+    }
+
+    closeDelModal() {
+        this.setState({ delModalIsOpen: false });
+    }
+
+    handleEdit = () => {
+        this.setState({ showEdit: true });
+    }
+
+    hideEdit = () => {
+        this.setState({ showEdit: false });
     }
 
     render() {
-        let { id, reg, date, agenda, attended, description } = this.props.parentmeeting;        
+        let { id, reg, date, agenda, attended, description } = this.props.parentmeeting;
         date = date.split("-").reverse().join("-");
         return (
             <React.Fragment>
-                {this.state.showModal && this.renderModal() }
-                <div className="mt-4 container headMeetingItems">
+                <div key={id} className="mt-4 container headMeetingItems">
                     <div className="row pt-2">
                         <div className="col pr-2">
                             <button
                                 type="button"
                                 className="text-danger"
-                                // data-toggle="tooltip" 
-                                // data-placement="bottom" 
-                                // title="Delete this meeting"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Delete this meeting"
                                 // onClick={this.props.delMeeting.bind(this, id)} 
-                                onClick={() => this.setState({showModal: true})}
+                                onClick={this.openDelModal}
                                 style={{ background: 'transparent', border: 'none', float: 'right' }}
                             >
                                 <span className="mb-0" aria-hidden="true">
@@ -69,14 +71,14 @@ class ParentMeetingItem extends React.Component {
                             <button
                                 type="button"
                                 className="text-secondary mr-2"
-                                onClick={this.props.editMeeting.bind(this, id)} 
-                                style={{ background: 'transparent', border: 'none', float: 'right'}}
+                                onClick={this.handleEdit}
+                                style={{ background: 'transparent', border: 'none', float: 'right' }}
                             >
                                 <span className="mb-0" aria-hidden="true">
                                     <i className="far fa-edit"></i>
                                 </span>
                             </button>
-                        
+
                         </div>
                     </div>
 
@@ -123,7 +125,7 @@ class ParentMeetingItem extends React.Component {
                             </div>
                             <div className="col-md-10">
                                 <pre style={{
-                                    marginBottom: '0px', 
+                                    marginBottom: '0px',
                                     fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"'
                                 }}
                                 >
@@ -133,7 +135,52 @@ class ParentMeetingItem extends React.Component {
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <Modal
+                        isOpen={this.state.delModalIsOpen}
+                        onRequestClose={this.closeDelModal}
+                        style={customStyles}
+                        contentLabel="Delete Modal"
+                    >
+                        <div className="d-flex justify-content-between">
+                            <h5>Confirm Delete</h5>
+                            <button onClick={this.closeDelModal} style={{ background: 'none', border: 'none' }}>
+                                <span style={{ fontWeight: 'bold', fontSize: '20px' }}>&times;</span>
+                            </button>
+                        </div>
+                        <hr />
+                        <div>
+                            <div className="alert alert-danger" role="alert">
+                                <i className="fas fa-exclamation-circle"></i><span> Warning: This action cannot be undone!</span>
+                            </div>
+                            Are you sure, you want to delete this meeting permanently?
+                        </div>
+                        <hr />
+                        <div className="text-right">
+                            <button type="button" className="btn btn-secondary" onClick={this.closeDelModal}>Close</button>
+                            <button
+                                type="button"
+                                className="btn btn-danger ml-2"
+                                onClick={() => {
+                                    const cb = () => {
+                                        this.closeDelModal();
+                                    }
+                                    this.props.delMeeting(id, cb);
+
+                                }}
+                                disabled={this.props.isDeleting}
+                            >
+                                {this.props.isDeleting ? "Deleting..." : "Delete"}
+                            </button>
+                        </div>
+                    </Modal>
+                </div>
+                <div>
+                    {this.state.showEdit && <EditForm id={id} hideEdit={this.hideEdit} />}
+                </div>
             </React.Fragment>
-    )}
+        )
+    }
 }
 export default ParentMeetingItem;

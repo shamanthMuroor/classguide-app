@@ -9,14 +9,14 @@ class Search extends React.Component {
                         className="form-control search"
                         id="filterInput"
                         type="search"
-                        placeholder="Search name, reg no"
+                        placeholder="Search name, reg no, dob"
                         value={this.props.search}
                         onChange={this.props.filterValue} 
                         onKeyPress={event => {
                             if (event.key === 'Enter') {
                               event.preventDefault();
                             }
-                          }}
+                        }}
                     />
                 </form>
             </React.Fragment>

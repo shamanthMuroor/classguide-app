@@ -92,17 +92,20 @@ function AddLearnerGroups(props) {
                     </div>
                 </div>
                 <div className="form-group" >
-                    <label className="h5">* Measures Taken</label>
+                    <label className="h5">Measures Taken</label>
                     <div>
-                        <input
+                        <textarea
                             className="form-control"
                             id="measures"
                             name="measures"
+                            rows="3"
+                            cols="30"
                             type="text"
                             placeholder="Measures taken"
                             value={props.measures}
                             onChange={props.handleChange}
-                        />
+                        >
+                        </textarea> 
                     </div>
                 </div>
                 <button

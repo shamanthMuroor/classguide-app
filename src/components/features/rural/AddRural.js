@@ -78,7 +78,7 @@ function AddRural(props) {
                     </div>
                 </div>
                 <div className="form-group" >
-                    <label className="h5">* Motivations For Excellence</label>
+                    <label className="h5">Motivations For Excellence</label>
                     <div>
                         <input
                             className="form-control"

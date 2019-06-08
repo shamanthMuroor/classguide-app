@@ -4,7 +4,7 @@ import { db } from '../../App';
 
 const customStyles = {
     content: {
-        top: '340px',
+        top: '300px',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
@@ -22,30 +22,27 @@ Modal.setAppElement('#root')
 class EditForm extends React.Component {
     state = {
         editModalIsOpen: true,
-        showEdit: false,
         lecturer: "lec1",
         sec: "3rd bsc Ecsm",
         id: '',
-        regno: '',
         date: '',
         agenda: '',
-        attended: '',
         description: '',
+        failed: true,
         isLoading: false
     }
 
     componentWillMount = () => {
         console.log(this.props.id)
-        db.collection('parentMeetings').doc(this.state.lecturer)
+        db.collection('classMeetings').doc(this.state.lecturer)
             .collection(this.state.sec).doc(this.props.id).get()
             .then(val => {
                 this.setState({
                     id: this.props.id,
-                    regno: val.data().reg,
                     date: val.data().date,
                     agenda: val.data().agenda,
-                    attended: val.data().attended,
-                    description: val.data().description
+                    description: val.data().description,
+                    failed: false
                 })
             })
             .catch(err => console.log(err))
@@ -68,15 +65,13 @@ class EditForm extends React.Component {
 
     update = (e) => {
         e.preventDefault();
-        if (this.state.regno === "" || this.state.date === "" || this.state.agenda === "" || this.state.attended === "" || this.state.description === "") {
+        if (this.state.date === "" || this.state.agenda === "" || this.state.description === "") {
             this.setState({ error: "Enter valid details" })
         }
         else {
             this.setState({ isLoading: true })
-            db.collection("parentMeetings").doc(this.state.lecturer)
+            db.collection("classMeetings").doc(this.state.lecturer)
                 .collection(this.state.sec).doc(this.props.id).set({
-                    reg: this.state.regno,
-                    attended: this.state.attended,
                     agenda: this.state.agenda,
                     date: this.state.date,
                     description: this.state.description
@@ -112,20 +107,6 @@ class EditForm extends React.Component {
                         </div>
                     }
                     <form>
-                        <div className="form-group">
-                            <div>
-                                <label className="h6">Register Number</label>
-                                <input
-                                    className="form-control"
-                                    id="regno"
-                                    name="regno"
-                                    type="number"
-                                    placeholder="Register Number"
-                                    value={this.state.regno}
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-                        </div>
                         <div className="form-group" >
                             <label className="h6">Date</label>
                             <div>
@@ -137,35 +118,30 @@ class EditForm extends React.Component {
                                     placeholder="Enter date"
                                     value={this.state.date}
                                     onChange={this.handleChange}
+                                    disabled={this.state.failed}
                                 />
                             </div>
                         </div>
                         <div className="form-group" >
                             <label className="h6">Agenda</label>
                             <div>
-                                <input
-                                    className="form-control"
+                                <select className="form-control"
                                     id="agenda"
                                     name="agenda"
-                                    type="text"
-                                    placeholder="Agenda"
                                     value={this.state.agenda}
                                     onChange={this.handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group" >
-                            <label className="h6">Parent/Guardian Attended</label>
-                            <div>
-                                <input
-                                    className="form-control"
-                                    id="attended"
-                                    name="attended"
-                                    type="text"
-                                    placeholder="Enter Parent/Guardian attended"
-                                    value={this.state.attended}
-                                    onChange={this.handleChange}
-                                />
+                                    disabled={this.state.failed}
+                                >
+                                    <option>Select Meeting Agenda</option>
+                                    <option>Planning the activities for the academic year / Getting the student profile entries filled or typed</option>
+                                    <option>Preparation for first internal test / Attendance/Preparation for UTSAV</option>
+                                    <option>Evaluation of first internals / Attendance / Preparation for UTSAV</option>
+                                    <option>Class get together / Planning for Educational tours / Industrial visits / Science Centers</option>
+                                    <option>Preparation for final exam / Preparation for College Fest </option>
+                                    <option>Unplanned meeting 1</option>
+                                    <option>Unplanned meeting 2</option>
+                                    <option>Unplanned meeting 3</option>
+                                </select>
                             </div>
                         </div>
                         <div className="form-group" >
@@ -179,6 +155,7 @@ class EditForm extends React.Component {
                                     placeholder="Enter description"
                                     value={this.state.description}
                                     onChange={this.handleChange}
+                                    disabled={this.state.failed}
                                 />
                             </div>
                         </div>

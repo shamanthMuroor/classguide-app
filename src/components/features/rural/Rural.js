@@ -1,20 +1,46 @@
 import React from 'react';
 import AddRural from './AddRural';
+import Modal from 'react-modal';
+import EditForm from './EditForm';
 import { db } from '../../../App'
 
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-40%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
+
+Modal.setAppElement('#root')
+
 class Rural extends React.Component {
-    state = {
-        showRuralForm: false,
-        regno: '',
-        student_name: '',
-        marks: '',
-        comment: '',
-        motivation: '',
-        students: [],
-        error: '',
-        showSuccess: false,
-        submitting: false,
-        loading: true
+    constructor() {
+        super();
+
+        this.state = {
+            modalIsOpen: false,
+            showEdit: false,
+            showRuralForm: false,
+            regno: '',
+            student_name: '',
+            marks: '',
+            comment: '',
+            motivation: '',
+            students: [],
+            error: '',
+            showSuccess: false,
+            submitting: false,
+            loading: true,
+            isDeleting: false,
+            id: ''
+        };
+
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentWillMount = () => {
@@ -38,6 +64,23 @@ class Rural extends React.Component {
             .catch(err => console.log(err))
     }
 
+    
+    openModal(id) {
+        this.setState({ id: id, modalIsOpen: true });
+    }
+
+    closeModal() {
+        this.setState({ modalIsOpen: false });
+    }
+
+    handleEdit(id) {
+        this.setState({ id: id, showEdit: true });
+    }
+
+    hideEdit = () => {
+        this.setState({ showEdit: false });
+    }
+
     // Handling form field changes
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value })
@@ -46,7 +89,7 @@ class Rural extends React.Component {
     // Adding Rural Students
     addRuralStudent = () => {
         const { regno, student_name, marks, comment, motivation } = this.state;
-        if( regno === '' || student_name === '' || marks === '' || motivation === '')
+        if( regno === '' || student_name === '' || marks === '' )
             this.setState({error: 'Enter valid details'})
         else {
             this.setState({submitting: true})
@@ -80,14 +123,13 @@ class Rural extends React.Component {
     }
 
     // Deleting Rural Student data
-    delRuralStudents = (id) => {
-        // console.log("delete id: " + id)
+    delRuralStudents = () => {
+        this.setState({ isDeleting: true, showSuccess: false })
         db.collection('general').doc('lectureid')
-        .collection('rural').doc(id).delete()
+        .collection('rural').doc(this.state.id).delete()
           .then(() => {
-            console.log(id + " del successful")
-            alert("deleted successfully")
-            this.setState({ students: [...this.state.students.filter(group => group.id !== id)] })
+            console.log(this.state.id + " del successful")
+            this.setState({ students: [...this.state.students.filter(student => student.id !== this.state.id)],isDeleting: false, modalIsOpen: false })
           })
           .catch(err => console.log(err))
     }
@@ -123,7 +165,6 @@ class Rural extends React.Component {
                 <div className="spinner-border" role="status" style={{width: '3rem', height: '3rem'}} />
             </div>
 
-
         let successMsg=             
             <div className="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success!</strong> Rural Student details added successfully
@@ -142,17 +183,27 @@ class Rural extends React.Component {
             html = this.state.students.map((data, i) => {
                 return (
                     <div key={i} className="card mt-3 bg-light">
-                        <div className="card-header d-flex justify-content-between">
+                        <div className="card-header">
                             <small style={{ color: 'gray' }}>{++i}</small>
                             <button
                                     type="button"
                                     className="text-danger"
-                                    onClick={()=>this.delRuralStudents(data.id)} 
-                                    style={{ background: 'transparent', border: 'none'}}
+                                    onClick={()=>this.openModal(data.id)} 
+                                    style={{ background: 'transparent', border: 'none', float: 'right'}}
                                 >
                                     <span className="mb-0" aria-hidden="true">
                                         <i className="far fa-trash-alt"></i>
                                     </span>
+                            </button>
+                            <button
+                                type="button"
+                                className="text-secondary mr-2"
+                                onClick={()=>this.handleEdit(data.id)}
+                                style={{ background: 'transparent', border: 'none', float: 'right' }}
+                            >
+                                <span className="mb-0" aria-hidden="true">
+                                    <i className="far fa-edit"></i>
+                                </span>
                             </button>
                         </div>
                         <div className="card-body d-flex">
@@ -247,6 +298,44 @@ class Rural extends React.Component {
                             <hr />
                             {this.state.showSuccess && successMsg}
                             {this.state.loading ? loader : html}
+
+                                <div>
+                                    <Modal
+                                        isOpen={this.state.modalIsOpen}
+                                        onRequestClose={this.closeModal}
+                                        style={customStyles}
+                                        contentLabel="Delete Modal"
+                                    >
+                                        <div className="d-flex justify-content-between">
+                                            <h5>Confirm Delete</h5>
+                                            <button onClick={this.closeModal} style={{ background: 'none', border: 'none' }}>
+                                                <span style={{ fontWeight: 'bold', fontSize: '20px' }}>&times;</span>
+                                            </button>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <div className="alert alert-danger" role="alert">
+                                                <i className="fas fa-exclamation-circle"></i><span> Warning: This action cannot be undone!</span>
+                                            </div>
+                                            Are you sure, you want to delete this meeting permanently?
+                                        </div>
+                                        <hr />
+                                        <div className="text-right">
+                                            <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger ml-2"
+                                                onClick={this.delRuralStudents}
+                                                disabled={this.state.isDeleting}
+                                            >
+                                                {this.state.isDeleting ? "Deleting..." : "Delete"}
+                                            </button>
+                                        </div>
+                                    </Modal>
+                                </div>
+                                <div>
+                                    {this.state.showEdit && <EditForm id={this.state.id} hideEdit={this.hideEdit} />}
+                                </div>
                         </React.Fragment>
                     )
                 }

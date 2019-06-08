@@ -2,7 +2,6 @@ import React from 'react';
 import '../styles/style.css';
 import ViewParentMeeting from './parentmeeting/ViewParentMeeting';
 import AddParentMeeting from './parentmeeting/AddParentMeeting';
-import EditForm from './parentmeeting/EditForm';
 import {db} from '../App';
 
 class ParentMeetings extends React.Component {
@@ -11,9 +10,9 @@ class ParentMeetings extends React.Component {
     sec: "3rd bsc Ecsm",
     showParentMeetings: false,
     parentmeetings: [],
-    loading: true,
     id: '',
-    showEdit: false
+    loading: true,
+    isDeleting: false
   }
 
   // Displaying all the meetings from the database
@@ -44,40 +43,20 @@ class ParentMeetings extends React.Component {
     this.setState({ parentmeetings: this.state.parentmeetings.concat(newMeeting) })
   }
 
-  // Replace Parent Meeting
-  replaceParentMeeting = (id, reg, agenda, date, attended, description) => {
-    const changedValues = { reg, agenda, date, attended, description }
-    this.setState({parentmeetings: [...this.state.parentmeetings.map(meeting => meeting.id === id ? changedValues : meeting )] })
-    // console.log(this.state.parentmeetings)
-  //   const { meeting } = { id, reg, agenda, date, attended, description }
-    // this.setState({ parentmeetings: [...this.state.parentmeetings.filter(meeting => meeting.id !== id)] })
-    // this.setState({parentmeetings: this.state.parentmeetings.concat(changedValues)}) 
-    console.log(this.state.parentmeetings)
-  }
-
     // Delete a meeting
-    delMeeting = (id) => {
-      console.log("Final Delete id: " + id)
-      // db.collection('parentMeetings').doc(this.state.lecturer)
-      //   .collection(this.state.sec).doc(id).delete()
-      //     .then(() => {
-      //       console.log(id + " del successful")
-      //       this.setState({ parentmeetings: [...this.state.parentmeetings.filter(meeting => meeting.id !== id)] })
-      //     })
-      //     .catch(err => console.log(err))
-    }
-
-    editMeeting = (id) => {
-      this.setState({id: id, showEdit: true})
-    }
-
-    hideEdit = () => {
-      this.setState({showEdit: false})
+    delMeeting = (id,cb) => {
+      this.setState({isDeleting: true})
+      db.collection('parentMeetings').doc(this.state.lecturer)
+        .collection(this.state.sec).doc(id).delete()
+          .then(() => {
+            console.log(id + " del successful")
+            this.setState({ parentmeetings: [...this.state.parentmeetings.filter(meeting => meeting.id !== id)], isDeleting: false })
+            cb();
+          })
+          .catch(err => console.log(err))
     }
 
   render() {
-    // console.log(this.state.id)
-    // console.log(this.state.parentmeetings)
     let loader = 
       <div className="text-center" style={{marginBottom: '150px', marginTop: '-25px'}}>
         <div className="spinner-grow mr-1" role="status"> </div>
@@ -86,18 +65,13 @@ class ParentMeetings extends React.Component {
       </div>
     return (
       <div className="container text-center">
-        { this.state.showEdit 
-          ? 
-            <EditForm id={this.state.id} addParentMeeting={this.addParentMeeting} hideEdit={this.hideEdit} replaceParentMeeting={this.replaceParentMeeting} /> 
-          : 
-            <AddParentMeeting addParentMeeting={this.addParentMeeting} /> 
-        }
+        <AddParentMeeting addParentMeeting={this.addParentMeeting} /> 
 
         { this.state.loading 
           ? 
             loader 
           : 
-            <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting} editMeeting={this.editMeeting} /> 
+            <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting}  isDeleting={this.state.isDeleting} /> 
         }
       </div>
     )

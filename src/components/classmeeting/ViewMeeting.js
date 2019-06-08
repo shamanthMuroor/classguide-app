@@ -10,7 +10,7 @@ class ViewMeeting extends React.Component {
             </React.Fragment>
         if (this.props.meetings.length > 0) {
             html = this.props.meetings.map((meeting, i) => (
-                <MeetingItem key={i} meeting={meeting} delMeeting={this.props.delMeeting} />
+                <MeetingItem key={i} meeting={meeting} delMeeting={this.props.delMeeting} isDeleting={this.props.isDeleting} />
             ))
         }
         return html

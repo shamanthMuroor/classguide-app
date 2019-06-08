@@ -3,6 +3,7 @@ import {db} from '../App';
 import StudList from './students/studentList/StudList';
 import Search from './students/studentList/Search';
 import Tags from './students/studentList/Tags';
+import StudProfile from './students/StudProfile';
 import axios from 'axios';
 
 class Students extends React.Component {
@@ -10,7 +11,9 @@ class Students extends React.Component {
         studs : [],
         search: '',
         error: false,
-        loading: true
+        loading: true,
+        profile: false,
+        reg: ''
     }
 
     componentWillMount = () => {
@@ -26,7 +29,7 @@ class Students extends React.Component {
         //         //Removing duplicate array
         //         newArr = arr.filter(function (item, i, ar) { return ar.indexOf(item) === i; });
 
-                // B.Sc - Computer Sc. | Electronics | Mathematics SEMESTER V A
+        //         B.Sc - Computer Sc. | Electronics | Mathematics SEMESTER V A
                 // newArr[17] and newArr[12]
                 db.collection("staff").where("student_id", "==", "B.Sc - Computer Sc. | Electronics | Mathematics SEMESTER V A").get()
                     .then(value => {
@@ -35,10 +38,10 @@ class Students extends React.Component {
                             val = doc.data().student_id;
                         })
                         console.log(val);
-                        if(val==='')
+                        if(val=='')
                             this.props.history.push('./error');
                         else {
-                            db.collection("students").where("_id", "==", val).orderBy("regno").get()
+                            db.collection("students").where("_id", "==", val).orderBy("regno").limit(3).get()
                                 .then(querySnap => {
                                     querySnap.forEach(val => {
                                         let exarr = [];
@@ -74,6 +77,14 @@ class Students extends React.Component {
         this.setState({search: e.target.name});
     }
 
+    hideProfile = () => {
+        this.setState({profile: false, reg: ''})
+    }
+
+    setReg = (reg) => {
+        this.setState({profile: true, reg: reg})
+    }
+
     render() {      
     let loader = 
     <div className="text-center" style={{marginBottom: '150px', marginTop: '50px'}}>
@@ -86,24 +97,33 @@ class Students extends React.Component {
                 <StudList 
                     studs = {this.state.studs}
                     filteredValue = {this.state.search}
+                    setReg={this.setReg}
                 />
             </React.Fragment>
         )
         return (
             <React.Fragment>
-                <div className="studList">
-                    <h2 className="text-center">Student List</h2>
-                    <div className="my-3">
-                        <Search filterValue={this.updateSearch} search={this.state.search}/>
-                        <div className="d-flex m-2 flex-row-reverse">
-                            <button className="btn btn-small btn-secondary print" onClick={() => window.print()}>PRINT</button>
-                    </div>
-                    </div>
-                    <hr />
-                        <Tags search={this.updateTag}/>
-                    <hr />
-                    {this.state.loading ? loader : html }
-                </div>
+                { 
+                    this.state.profile 
+                    ? 
+                        <StudProfile studDetails={this.state.studs} reg={this.state.reg} hideProfile={this.hideProfile} /> 
+                    : 
+                    (
+                        <div className="studList">
+                            <h2 className="text-center">Student List</h2>
+                            <div className="my-3">
+                                <Search filterValue={this.updateSearch} search={this.state.search}/>
+                                <div className="d-flex m-2 flex-row-reverse">
+                                    <button className="btn btn-small btn-secondary print" onClick={() => window.print()}>PRINT</button>
+                            </div>
+                            </div>
+                            <hr />
+                                <Tags search={this.updateTag}/>
+                            <hr />
+                            {this.state.loading ? loader : html }
+                        </div>
+                    ) 
+                }
             </React.Fragment>
         )
     }

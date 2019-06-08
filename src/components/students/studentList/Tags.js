@@ -10,16 +10,13 @@ class Tags extends React.Component {
                         <button className="btn btn-outline-dark" type="button" name="scst" onClick={this.props.search}>SC/ST</button>
                     </div>
                     <div className="col-sm-6 col-md-2 my-1 ">
-                        <button className="btn btn-outline-dark" name="rural" onClick={this.props.search} type="button">Rural</button>
+                        <button className="btn btn-outline-dark" name="" disabled>Rural</button>
                     </div>
-                    <div className="col-sm-6 col-md-2 my-1 ">
-                        <button className="btn btn-outline-dark" name="urban" onClick={this.props.search} type="button">Urban</button>
-                    </div>
-                    {/* <div className="col-sm-6 col-md-2 my-1" >
-                        <button className="btn btn-outline-dark" name="" type="button">Academic Achievers</button>
-                    </div> */}
                     <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" name="" type="button">Slow learners</button>
+                        <button className="btn btn-outline-dark" name="" type="button" disabled>Slow learners</button>
+                    </div>
+                    <div className="col-sm-6 col-md-2 my-1" >
+                        <button className="btn btn-outline-dark" name="" type="button" disabled>Achievers</button>
                     </div>
                     {/* <div className="col-sm-6 col-md-2 my-1">
                         <button className="btn btn-outline-dark" name="scst" type="button">Peer Group Learning</button>

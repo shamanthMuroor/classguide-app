@@ -3,7 +3,7 @@ import {Route,Redirect} from 'react-router-dom';
 import axios from 'axios';
 import {host} from '../App';
 
-class PrivateRoute extends React.Component {  
+class PrivateStaffRoute extends React.Component {  
     state = {
       user: false,
       done: false
@@ -18,14 +18,15 @@ class PrivateRoute extends React.Component {
           }
         })
           .then(async data => {
-                console.log(data)
+                // console.log(data)
                 await this.setState({user: true,done: true})
           })
           .catch(async err => {
               console.log(err);
-            await this.setState({user: false,done: true})
-            // alert("your login is corrupted");
-            localStorage.removeItem("staffAuth");
+              if(err.response.status === 401) {
+                await this.setState({user: false,done: true}) 
+                localStorage.removeItem("staffAuth");
+              }
           });
       } else {
         localStorage.removeItem("staffAuth"); 
@@ -57,4 +58,4 @@ class PrivateRoute extends React.Component {
     }
   }
 
-export default PrivateRoute;
+export default PrivateStaffRoute;

@@ -10,7 +10,8 @@ class ClassMeetings extends React.Component {
     lecturer: "lec1",
     sec: "3rd bsc Ecsm",
     meetings: [],
-    loading: true
+    loading: true,
+    isDeleting: false
   }
 
   // Displaying all the meetings from the database
@@ -40,17 +41,20 @@ class ClassMeetings extends React.Component {
       lecturer: "",
       sec: "",
       meetings: [],
-      loading: true
+      loading: true,
+      isDeleting: false
     })
   }
 
   // Delete a meeting
-  delMeeting = (id) => {
+  delMeeting = (id,cb) => {
+    this.setState({ isDeleting: true })
     db.collection('classMeetings').doc(this.state.lecturer)
       .collection(this.state.sec).doc(id).delete()
         .then(() => {
           console.log(id + " del successful")
-          this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
+          this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)], isDeleting: false })          
+          cb();
         })
         .catch(err => console.log(err))
   }
@@ -76,7 +80,7 @@ class ClassMeetings extends React.Component {
           ? 
           loader 
           : 
-          <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} /> 
+          <ViewMeeting meetings={this.state.meetings} delMeeting={this.delMeeting} isDeleting={this.state.isDeleting} /> 
         }
       </div>
     )
