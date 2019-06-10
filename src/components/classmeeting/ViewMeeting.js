@@ -6,11 +6,11 @@ class ViewMeeting extends React.Component {
         let html = 
             <React.Fragment>
                 <h3>No Class Meeting data Found</h3>        
-                <small style={{color:'gray'}}>(Note: Maybe also due to network problem)</small>
+                <small style={{color:'gray'}}>(Note: Please check your internet connection)</small>
             </React.Fragment>
         if (this.props.meetings.length > 0) {
             html = this.props.meetings.map((meeting, i) => (
-                <MeetingItem key={i} meeting={meeting} delMeeting={this.props.delMeeting} isDeleting={this.props.isDeleting} />
+                <MeetingItem key={i} meeting={meeting} delMeeting={this.props.delMeeting} isDeleting={this.props.isDeleting} userId={this.props.userId} />
             ))
         }
         return html

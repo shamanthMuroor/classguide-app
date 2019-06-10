@@ -4,20 +4,22 @@ import '../styles/style.css';
 import ViewMeeting from './classmeeting/ViewMeeting';
 import AddMeeting from './classmeeting/AddMeeting';
 import {db} from '../App';
+import jwt_decode from 'jwt-decode';
 
 class ClassMeetings extends React.Component {
   state = {
-    lecturer: "lec1",
-    sec: "3rd bsc Ecsm",
     meetings: [],
     loading: true,
-    isDeleting: false
+    isDeleting: false,
+    user: {}
   }
 
   // Displaying all the meetings from the database
   componentWillMount = () => {
-    db.collection('classMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).orderBy("date").get()
+    let val = JSON.parse(localStorage.getItem("staffAuth"))
+    this.setState({user: jwt_decode(val.token)})
+    db.collection('general').doc(jwt_decode(val.token).id)
+      .collection('classMeetings').orderBy("date").get()
         .then(res => { 
           if(res.size > 0 ) {
             res.forEach(val => {
@@ -49,10 +51,10 @@ class ClassMeetings extends React.Component {
   // Delete a meeting
   delMeeting = (id,cb) => {
     this.setState({ isDeleting: true })
-    db.collection('classMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).doc(id).delete()
+    db.collection('general').doc(this.state.user.id)
+      .collection('classMeetings').doc(id).delete()
         .then(() => {
-          console.log(id + " del successful")
+          // console.log(id + " del successful")
           this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)], isDeleting: false })          
           cb();
         })
@@ -66,6 +68,7 @@ class ClassMeetings extends React.Component {
   }
 
   render() {    
+    // console.log(this.state.user)
     let loader = 
       <div className="text-center" style={{marginBottom: '150px', marginTop: '-25px'}}>
         <div className="spinner-grow mr-1" role="status"> </div>
@@ -74,13 +77,13 @@ class ClassMeetings extends React.Component {
       </div>
     return (
       <div className="container text-center">
-        <AddMeeting addMeeting={this.addMeeting} />
+        <AddMeeting addMeeting={this.addMeeting} userId={this.state.user.id} />
         { 
           this.state.loading 
           ? 
           loader 
           : 
-          <ViewMeeting meetings={this.state.meetings} delMeeting={this.delMeeting} isDeleting={this.state.isDeleting} /> 
+          <ViewMeeting meetings={this.state.meetings} delMeeting={this.delMeeting} isDeleting={this.state.isDeleting} userId={this.state.user.id} /> 
         }
       </div>
     )

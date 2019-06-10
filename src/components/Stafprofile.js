@@ -13,9 +13,11 @@ class Stafprofile extends React.Component {
   getYear() {
     return new Date().getFullYear();
   }
+
   render() {
     const { name , dob } = this.state.user;
-    return (  
+
+    let html =
       <div className="container card shadow-lg p-3 mb-5 profile">
         <div className="card-body" style={{height: '350px'}}>
           <div className="profilepic">
@@ -31,6 +33,10 @@ class Stafprofile extends React.Component {
           </div>
         </div>	       
       </div>
+    return (  
+      <React.Fragment>
+        {html}
+      </React.Fragment>
     )
   }
 }

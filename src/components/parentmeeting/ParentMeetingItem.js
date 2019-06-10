@@ -177,7 +177,7 @@ class ParentMeetingItem extends React.Component {
                     </Modal>
                 </div>
                 <div>
-                    {this.state.showEdit && <EditForm id={id} hideEdit={this.hideEdit} />}
+                    {this.state.showEdit && <EditForm id={id} hideEdit={this.hideEdit} userId={this.props.userId} />}
                 </div>
             </React.Fragment>
         )

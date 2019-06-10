@@ -1,7 +1,6 @@
 import React from 'react';
-import Navbar from './general/Navbar';
-// import Footer from './general/Footer';
-import { db, auth } from '../App'
+import { db, auth } from '../App';
+import axios from 'axios';
 
 class AdminPanel extends React.Component {
     state = {
@@ -16,27 +15,31 @@ class AdminPanel extends React.Component {
                 let staffarr = [];
                 values.forEach(val => {
                     staffarr.push({
-                        id: val.id,
+                        _id: val.id, 
                         ...val.data()
                     })
                 })
-            this.setState({staffDetails: staffarr})
-            console.log("staff data done")
-            })
-            .catch(err => console.log(err))
+                axios.get("https://globaldb.sionasolutions.com/student-data")
+                .then((res) => {
+                    // console.log(res.data.data);
+                    let arr = res.data.data;
+                    arr = arr.map(val => {
+                        return {
+                            ...val,
+                            _id: val.course + val.Batch
+                        }
+                    })  
+                    arr = [...new Set(arr.map(item => item._id))];
+                    // let val = staffarr.length === arr.length && arr.every(function(value, index) { return value === staffarr[index]._id});
+                    // // console.log(val);
+                    this.setState({studentClass: arr,staffDetails: staffarr})
 
-        // let arr = [];
-        // let newArr = [];
-        // db.collection('students').get()
-        //     .then((values)=> {
-        //         values.forEach(val => {
-        //             arr.push({...val.data(),_id: val._id})
-        //         })
-        //         newArr = arr.filter(function (item, i, ar) { return ar.indexOf(item) === i; });
-        //         this.setState({studentClass: newArr})
-        //         console.log("class data done")
-        //     })
-        //     .catch(err => console.log(err))
+                })
+                .catch(err => {
+                    console.log(err);
+                }) 
+            })
+            .catch(err => console.log(err));
     }  
     
     handleLogout = () => {
@@ -50,36 +53,38 @@ class AdminPanel extends React.Component {
 
       handleChange = event => {
           this.setState({ [event.target.name]: event.target.value })
-    }
+        }
 
-      handleSubmit = () => {
-          console.log(this.state.staffValue)
-          console.log(this.state.classValue)
-        // alert('staff: ' + this.state.staffValue + "class" + this.state.classValue);
-        // event.preventDefault();
+      handleSubmit = (e) => {
+        let value = this.state.staffDetails;
+        value = value.filter(val => {
+            return val._id === this.state.staffValue;
+        })
+            console.log(this.state.classValue)
+            e.preventDefault();
 
-        // db.collection('staffData').doc().set({
-        //     // student_id: this.state.classValue;
-        // })
+        db.collection('staffData').doc(this.state.staffValue).set({
+            ...value[0],
+            studentId: this.state.classValue
+        }).then(() => alert("done"))
+        .catch(err => console.log(err))
       }
 
   render() {
       let staffcol = this.state.staffDetails.map((val, i) => {
-          return(
-            <option key={i}>{val.name}</option>
-          )
+            return(
+                <option key={i} value={val._id}>{val.name}</option>
+            ) 
         })
 
         let classcol = this.state.studentClass.map((cval, i) => {
             return(
-                <option key={i} value={cval.id}>{cval}</option>
+                <option key={i} value={cval._id}>{cval}</option>
             )
           })
 
-          console.log(this.state)
 return (
     <React.Fragment>
-    <Navbar logout={this.handleLogout}/>            
     <div className="container shadow-lg p-3" style={{ marginTop: '120px' }}>
         <div className="card-body">
             <form>

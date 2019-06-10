@@ -23,10 +23,8 @@ class EditForm extends React.Component {
     state = {
         editModalIsOpen: true,
         showEdit: false,
-        lecturer: "lec1",
-        sec: "3rd bsc Ecsm",
         id: '',
-        regno: '',
+        reg: '',
         date: '',
         agenda: '',
         attended: '',
@@ -35,13 +33,12 @@ class EditForm extends React.Component {
     }
 
     componentWillMount = () => {
-        console.log(this.props.id)
-        db.collection('parentMeetings').doc(this.state.lecturer)
-            .collection(this.state.sec).doc(this.props.id).get()
+        db.collection('general').doc(this.props.userId)
+          .collection("parentMeetings").doc(this.props.id).get()
             .then(val => {
                 this.setState({
                     id: this.props.id,
-                    regno: val.data().reg,
+                    reg: val.data().reg,
                     date: val.data().date,
                     agenda: val.data().agenda,
                     attended: val.data().attended,
@@ -68,14 +65,14 @@ class EditForm extends React.Component {
 
     update = (e) => {
         e.preventDefault();
-        if (this.state.regno === "" || this.state.date === "" || this.state.agenda === "" || this.state.attended === "" || this.state.description === "") {
+        if (this.state.reg === "" || this.state.date === "" || this.state.agenda === "" || this.state.attended === "" || this.state.description === "") {
             this.setState({ error: "Enter valid details" })
         }
         else {
             this.setState({ isLoading: true })
-            db.collection("parentMeetings").doc(this.state.lecturer)
-                .collection(this.state.sec).doc(this.props.id).set({
-                    reg: this.state.regno,
+            db.collection('general').doc(this.props.userId)
+              .collection("parentMeetings").doc(this.props.id).set({
+                    reg: this.state.reg,
                     attended: this.state.attended,
                     agenda: this.state.agenda,
                     date: this.state.date,
@@ -106,22 +103,17 @@ class EditForm extends React.Component {
                         </button>
                     </div>
                     <hr style={{ margin: '4px' }} />
-                    {
-                        this.state.error && <div className="alert alert-danger" role="alert">
-                            {this.state.error}
-                        </div>
-                    }
                     <form>
                         <div className="form-group">
                             <div>
                                 <label className="h6">Register Number</label>
                                 <input
                                     className="form-control"
-                                    id="regno"
-                                    name="regno"
+                                    id="reg"
+                                    name="reg"
                                     type="number"
                                     placeholder="Register Number"
-                                    value={this.state.regno}
+                                    value={this.state.reg}
                                     onChange={this.handleChange}
                                 />
                             </div>
@@ -182,6 +174,11 @@ class EditForm extends React.Component {
                                 />
                             </div>
                         </div>
+                        {
+                            this.state.error && <div className="alert alert-danger" role="alert">
+                                {this.state.error}
+                            </div>
+                        }
                         <div className="text-right">
                             <button type="button" className="btn btn-secondary" onClick={this.closeEditModal}>Close</button>
                             <button

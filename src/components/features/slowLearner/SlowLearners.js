@@ -3,6 +3,7 @@ import AddLearnerGroups from './AddLearnerGroups';
 import Modal from 'react-modal';
 import EditForm from './EditForm';
 import { db } from '../../../App'
+import jwt_decode from 'jwt-decode'
 
 const customStyles = {
     content: {
@@ -38,7 +39,8 @@ class SlowLearners extends React.Component {
             submitting: false,
             loading: true,
             isDeleting: false,
-            id: ''
+            id: '',
+            user: {}
         };
 
         this.openModal = this.openModal.bind(this);
@@ -48,24 +50,28 @@ class SlowLearners extends React.Component {
 
     
     componentWillMount = () => {
-        db.collection('general').doc('lectureid')
-            .collection('slowLearner').orderBy('regno').get()
-            .then(val => {
-                if (val.size > 0) {
-                    val.forEach(values => {
-                        let arr = []
-                        arr.push({
-                            id: values.id,
-                            ...values.data()
+        if(localStorage.staffAuth) {
+            let val = JSON.parse(localStorage.getItem("staffAuth"))
+            this.setState({user: jwt_decode(val.token)})
+            db.collection('general').doc(jwt_decode(val.token).id)
+                .collection('slowLearner').orderBy('regno').get()
+                .then(val => {
+                    if (val.size > 0) {
+                        val.forEach(values => {
+                            let arr = []
+                            arr.push({
+                                id: values.id,
+                                ...values.data()
+                            })
+                            this.setState({ groups: this.state.groups.concat(arr), loading: false })
                         })
-                        this.setState({ groups: this.state.groups.concat(arr), loading: false })
-                    })
-                }
-                else {
-                    this.setState({ loading: false })
-                }
-            })
-            .catch(err => console.log(err))
+                    }
+                    else {
+                        this.setState({ loading: false })
+                    }
+                })
+                .catch(err => console.log(err))
+        }
     }
     
     openModal(id) {
@@ -96,7 +102,7 @@ class SlowLearners extends React.Component {
             this.setState({ error: 'Enter valid details' })
         else {
             this.setState({ submitting: true })
-            db.collection('general').doc('lectureid')
+            db.collection('general').doc(this.state.user.id)
                 .collection('slowLearner').add({
                     regno: this.state.regno,
                     student_learner: this.state.student_learner,
@@ -107,7 +113,7 @@ class SlowLearners extends React.Component {
                 })
                 .then((docRef) => {
                     const { id } = docRef;
-                    console.log("adding id: " + id)
+                    // console.log("adding id: " + id)
                     const group = { id, regno, student_guide, student_learner, marks, comment, measures };
                     this.setState({
                         showPeers: false,
@@ -130,7 +136,7 @@ class SlowLearners extends React.Component {
     // Deleting Group
     delPeerGroup = () => {
         this.setState({ isDeleting: true, showSuccess: false })
-        db.collection('general').doc('lectureid')
+        db.collection('general').doc(this.state.user.id)
             .collection('slowLearner').doc(this.state.id).delete()
             .then(() => {
                 console.log(this.state.id + " del successful")
@@ -188,7 +194,7 @@ class SlowLearners extends React.Component {
             </div>
 
         let html =
-            <div className="my-5">
+            <div style={{margin: '50px 20px 100px 20px', padding: '20px'}}>
                 <h3>No data Found</h3>
                 <small style={{ color: 'gray' }}>(Note: Maybe also due to network problem)</small>
             </div>
@@ -327,12 +333,6 @@ class SlowLearners extends React.Component {
                                 <div className="m-2">
                                     <div className="d-flex justify-content-between">
                                         <button
-                                            className="btn btn-secondary"
-                                            onClick={this.showLearnerForm}
-                                        >
-                                            + Add Slow Learners
-                                    </button>
-                                        <button
                                             className="btn btn-secondary ml-2"
                                             onClick={this.togglePeerGroup}
                                         >
@@ -349,6 +349,12 @@ class SlowLearners extends React.Component {
                                                         </h6>
                                                     )
                                             }
+                                        </button>
+                                        <button
+                                            className="btn btn-secondary"
+                                            onClick={this.showLearnerForm}
+                                        >
+                                            + Add Slow Learners
                                         </button>
                                     </div>
                                 </div>
@@ -391,7 +397,7 @@ class SlowLearners extends React.Component {
                                     </Modal>
                                 </div>
                                 <div>
-                                    {this.state.showEdit && <EditForm id={this.state.id} hideEdit={this.hideEdit} />}
+                                    {this.state.showEdit && <EditForm id={this.state.id} hideEdit={this.hideEdit} userId={this.state.user.id} />}
                                 </div>
                             </React.Fragment>
                         )

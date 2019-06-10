@@ -8,8 +8,6 @@ import '../../../styles/style.css';
 
 class MasterForm extends React.Component {
     state = {
-        lecturer: "lec1",
-        sec: "3rd bsc Ecsm",
         currentStep: 1,
         date: '',
         agenda: '',
@@ -99,8 +97,8 @@ class MasterForm extends React.Component {
         }
         else {
             this.setState({ isLoading: true })
-            db.collection("classMeetings").doc(this.state.lecturer)
-                .collection(this.state.sec).add({
+            db.collection('general').doc(this.props.userId)
+              .collection('classMeetings').add({
                     agenda: this.state.agenda,
                     date: this.state.date,
                     description: this.state.description

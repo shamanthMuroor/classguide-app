@@ -1,13 +1,15 @@
 import React from 'react';
 
-
 class Tags extends React.Component {
     render() {
         return (
             <React.Fragment>
                 <div className="row m-2 justify-content-center tagBtn1 d-print-none">
                     <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button" name="scst" onClick={this.props.search}>SC/ST</button>
+                        <button className="btn btn-outline-dark" type="button" name="sc" onClick={this.props.search}>SC</button>
+                    </div>
+                    <div className="col-sm-6 col-md-2 my-1">
+                        <button className="btn btn-outline-dark" type="button" name="st" onClick={this.props.search}>ST</button>
                     </div>
                     <div className="col-sm-6 col-md-2 my-1 ">
                         <button className="btn btn-outline-dark" name="" disabled>Rural</button>
@@ -37,7 +39,6 @@ class Tags extends React.Component {
                         <button className="btn btn-outline-dark" name="scst" type="button">Students Not Completed Sahaya Programme</button>
                     </div> */}
                 </div>
-                 {/* </div> */}
             </React.Fragment>
 
         )

@@ -21,7 +21,6 @@ class PrivateAdminRoute extends React.Component {
     }
 
     render() { 
-      console.log(this.state.user + " " + this.props.path)
       return(
         <div>
           {this.state.done &&

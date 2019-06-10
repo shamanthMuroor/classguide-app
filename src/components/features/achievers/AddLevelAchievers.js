@@ -14,14 +14,9 @@ function AddLevelAchievers(props) {
             >
                 <p aria-hidden="true">&times;</p>
             </button>
-            <form>
+            <form style={{ marginTop: '100px' }}>
                 <h3 className="text-center">Add Level Achievers</h3>
                 <small style={{color: 'gray'}}>All fields are compulsory!</small>
-                {
-                    props.error && <div className="alert alert-danger" role="alert">
-                        {props.error}
-                    </div>
-                }
                 <div className="form-group mt-3" >
                     <label className="h5">Register Number</label>
                     <div>
@@ -51,40 +46,57 @@ function AddLevelAchievers(props) {
                     </div>
                 </div>
                 <div className="form-group" >
-                    <label className="h5">Marks</label>
+                    <label className="h5">Area of Excellence/ Participation</label>
                     <div>
                         <input
                             className="form-control"
-                            id="marks"
-                            name="marks"
-                            type="number"
-                            placeholder="Enter Marks(%)"
-                            value={props.marks}
+                            id="excellence"
+                            name="excellence"
+                            type="text"
+                            placeholder="Area of excellence"
+                            value={props.excellence}
                             onChange={props.handleChange}
                         />
                     </div>
                 </div>
                 <div className="form-group" >
-                    <label className="h5">Motivation</label>
+                    <label className="h5">Participation/ Prizes won</label>
                     <div>
                         <input
                             className="form-control"
-                            id="motivation"
-                            name="motivation"
+                            id="prizes"
+                            name="prizes"
                             type="text"
-                            placeholder="Measures taken achieve Higher levels "
-                            value={props.motivation}
+                            placeholder="Prizes/participation"
+                            value={props.prizes}
                             onChange={props.handleChange}
                         />
                     </div>
                 </div>
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={props.addLevelAchievers} 
-                >
-                    Submit
-                </button>
+                {
+                    props.error && <div className="alert alert-danger my-2" role="alert">
+                        {props.error}
+                    </div>
+                }
+                <div className="text-right">
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={props.addLevelAchievers} 
+                        disabled={props.submitting}
+                    >
+                    { 
+                        props.submitting 
+                        ? 
+                        <React.Fragment>
+                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            <span> Submitting</span>
+                        </React.Fragment>
+                        : 
+                        "Submit" 
+                    }
+                    </button>
+                </div>
             </form>
         </React.Fragment>
     )

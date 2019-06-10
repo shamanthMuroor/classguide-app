@@ -33,10 +33,9 @@ class EditForm extends React.Component {
     }
 
     componentWillMount = () => {
-        console.log(this.props.id)
-        db.collection('classMeetings').doc(this.state.lecturer)
-            .collection(this.state.sec).doc(this.props.id).get()
-            .then(val => {
+        db.collection('general').doc(this.props.userId)
+        .collection("classMeetings").doc(this.props.id).get()
+        .then(val => {
                 this.setState({
                     id: this.props.id,
                     date: val.data().date,
@@ -70,14 +69,14 @@ class EditForm extends React.Component {
         }
         else {
             this.setState({ isLoading: true })
-            db.collection("classMeetings").doc(this.state.lecturer)
-                .collection(this.state.sec).doc(this.props.id).set({
+            db.collection('general').doc(this.props.userId)
+              .collection("classMeetings").doc(this.props.id).set({
                     agenda: this.state.agenda,
                     date: this.state.date,
                     description: this.state.description
                 })
                 .then(() => {
-                    console.log("Updated successfully")
+                    // console.log("Updated successfully")
                     this.props.hideEdit();
                     window.location.reload();
                 })

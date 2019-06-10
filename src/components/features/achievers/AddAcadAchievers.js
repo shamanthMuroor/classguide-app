@@ -14,14 +14,9 @@ function AddAcadAchievers(props) {
             >
                 <p aria-hidden="true">&times;</p>
             </button>
-            <form>
+            <form style={{ marginTop: '100px' }}>
                 <h3 className="text-center">Add Academic Achiever</h3>
                 <small style={{color: 'gray'}}>All fields are compulsory!</small>
-                {
-                    props.error && <div className="alert alert-danger" role="alert">
-                        {props.error}
-                    </div>
-                }
                 <div className="form-group mt-3" >
                     <label className="h5">Register Number</label>
                     <div>
@@ -72,19 +67,36 @@ function AddAcadAchievers(props) {
                             id="motivation"
                             name="motivation"
                             type="text"
-                            placeholder="Measures taken achieve Higher levels "
+                            placeholder="Measures taken to achieve Higher levels "
                             value={props.motivation}
                             onChange={props.handleChange}
                         />
                     </div>
                 </div>
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={props.addAcadAchievers} 
-                >
-                    Submit
-                </button>
+                {
+                    props.error && <div className="alert alert-danger my-2" role="alert">
+                        {props.error}
+                    </div>
+                }
+                <div className="text-right">
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={props.addAcadAchievers} 
+                        disabled={props.submitting}
+                    >
+                    { 
+                        props.submitting 
+                        ? 
+                        <React.Fragment>
+                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            <span> Submitting</span>
+                        </React.Fragment>
+                        : 
+                        "Submit" 
+                    }
+                    </button>
+                </div>
             </form>
         </React.Fragment>
     )

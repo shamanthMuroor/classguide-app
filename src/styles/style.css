@@ -58,56 +58,38 @@ a:hover {
 }
 
 
-
 /* login */
+.loginBackground {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: url(../images/login.png);
+    background-repeat: no-repeat;
+    background-position: 0px;
+    background-size: cover;    
+    margin-bottom: -48px;
+}
 
-#form-desktop {
-
-    display: none;
+.login-container {
+    background-color:black;
+    border-radius: 20px;
+    padding: 4.1vw;
+    opacity: 0.8;
 }
 
 .form-container {
-    background: white;
-
-    width: auto;
-    height: 100vw;
-
-    padding-top: 40px;
-
-    border-top-left-radius: 30px; 
-    border-top-right-radius: 30px; 
-
+    height: auto;
+    margin-top: 40px;
     position: relative;
-    bottom: 30px;
-
+    bottom: 20px;
 }
 
 .form-container>form{
-   
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    
 }
-
-
-
-.logo-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 30px; 
-
-    background: url(../images/login.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;    
-     
-    height: 350px;
-}
-
 
 
 
@@ -122,9 +104,6 @@ a:hover {
     margin-bottom: 20px;
 }
 /* ------------ */
-
-
-
 
 
 
@@ -335,7 +314,6 @@ footer {
     .form-container {
         border-top-left-radius:0; 
         border-top-right-radius:0; 
-    
     }
 
     /* Footer */
@@ -350,7 +328,7 @@ footer {
         color: rgba(255,255,255,.5);  
     }
 
-    .foot > h5 {
+    .foot > small {
         padding-top:2%;
         color: #F5F2F2;
         font-size: 1.5vw;
@@ -366,54 +344,7 @@ footer {
         padding: 5px;
         font-size: 1.50vw;
     }
-
-    .copyrights {
-    font-size: 1.5vw;
-    }
-
-    
 }
-
-@media (min-width: 760px) {
-
-.copyrights {
-   font-size: 1.5vw;
-}
-
-#form-mobile {
-
-    display: none;
-}
-
-
-#form-desktop {
-
-    display: block;
-}
-
-.logo-container {
-
-    height: 100vh;
-    justify-content: center;
-
-}
-
-.form-container {
-
-    height: auto;
-    background: transparent;
-    
-}
-
-.login-desktop-container {
-
-    background-color:black;
-    border-radius: 20px;
-    padding: 50px;
-    opacity: 0.8;
-}
-}
-
 
 
 /*****  Print Codes ******/
@@ -425,4 +356,31 @@ footer {
         border: none;
     }
 
+    @page {
+        size: auto;
+        margin: 20mm 15mm 10mm 15mm;
+      }
+      html, body {
+          width: 210mm;
+          height: 282mm;
+      }
+      body {
+        margin:0px;
+      }
+
 }
+
+table { page-break-inside:auto }
+tr    { page-break-inside:avoid; page-break-after:auto }
+thead { display:table-header-group }
+
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+    text-align: left;
+  }

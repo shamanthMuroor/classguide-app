@@ -12,9 +12,12 @@ import ClassMeetings from './components/ClassMeetings';
 import ParentMeetings from './components/ParentMeetings';
 import Counselling from './components/features/counselling/Counselling';
 import SlowLearners from './components/features/slowLearner/SlowLearners';
-import Achiever from './components/features/achievers/Achiever';
+import AcadAchievers from './components/features/achievers/AcadAchievers';
+import LevelAchievers from './components/features/achievers/LevelAchievers';
+import NonAcadAchievers from './components/features/achievers/NonAcadAchievers';
 import Rural from './components/features/rural/Rural';
 import Guidelines from './components/general/Guidelines';
+import Reports from './components/general/Reports';
 import Feedback from './components/general/Feedback';
 import SomethingsWrong from './components/general/SomethingsWrong';
 import ErrorPage from './components/general/ErrorPage';
@@ -26,26 +29,26 @@ export let auth=myApp.auth();
 export let host = "https://globaldb.sionasolutions.com";
 
 class App extends React.Component {
-  handleLogout = () => {
+  handleStaffLogout = () => {
+        localStorage.removeItem("staffAuth");
+        this.props.history.push('/login')
+  }
+
+  handleAdminLogout = () => {
+    console.log('reached logout handle')
     auth.onAuthStateChanged((user) => {
       if (user) {
         auth.signOut()
-          .then(function() {
-            console.log("Sign-out successful")
-          })
-      } 
-      else {
-        localStorage.removeItem("staffAuth");
-        this.props.history.push('/login')
       }
     })
+    this.props.history.push('/login')
   }
 
   render() {
     return (
       <React.Fragment>
             <Router>
-              <Navbar logout={this.handleLogout}/>
+              <Navbar staffLogout={this.handleStaffLogout} adminLogout={this.handleAdminLogout} />
               <Switch>
                 <Route path='/login' exact component={Login} />  
                 <PrivateAdminRoute path='/admin' exact component={AdminPanel} />
@@ -56,8 +59,11 @@ class App extends React.Component {
                 <PrivateStaffRoute path='/parent-meetings' exact component={ParentMeetings} />
                 <PrivateStaffRoute path='/counselling' exact component={Counselling} />
                 <PrivateStaffRoute path='/slow-learners' exact component={SlowLearners} />
-                <PrivateStaffRoute path='/achievers' exact component={Achiever} />
+                <PrivateStaffRoute path='/academic-achievers' exact component={AcadAchievers} />
+                <PrivateStaffRoute path='/achievers-levels' exact component={LevelAchievers} />
+                <PrivateStaffRoute path='/non-academic-achievers' exact component={NonAcadAchievers} />
                 <PrivateStaffRoute path='/rural' exact component={Rural} />
+                <PrivateStaffRoute path='/reports' exact component={Reports} />   
                 <PrivateStaffRoute path='/feedback' exact component={Feedback} />             
                 <Route path='/guidelines' exact component={Guidelines} />
                 <Route path='/error' exact component={SomethingsWrong} />

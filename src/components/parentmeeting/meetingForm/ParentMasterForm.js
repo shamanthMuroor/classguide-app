@@ -8,8 +8,6 @@ import '../../../styles/style.css';
 
 class ParentMasterForm extends React.Component {
     state = {
-        lecturer: "lec1",
-        sec: "3rd bsc Ecsm",
         currentStep: 1,
         reg: '',
         error: false,
@@ -106,8 +104,8 @@ class ParentMasterForm extends React.Component {
         }
         else {
             this.setState({ isLoading: true })
-            db.collection("parentMeetings").doc(this.state.lecturer)
-                .collection(this.state.sec).add({
+            db.collection('general').doc(this.props.userId)
+              .collection("parentMeetings").add({
                     reg: this.state.reg,
                     attended: this.state.attended,
                     agenda: this.state.agenda,

@@ -3,6 +3,7 @@ import AddRural from './AddRural';
 import Modal from 'react-modal';
 import EditForm from './EditForm';
 import { db } from '../../../App'
+import jwt_decode from 'jwt-decode'
 
 const customStyles = {
     content: {
@@ -36,7 +37,8 @@ class Rural extends React.Component {
             submitting: false,
             loading: true,
             isDeleting: false,
-            id: ''
+            id: '',
+            user: {}
         };
 
         this.openModal = this.openModal.bind(this);
@@ -44,24 +46,28 @@ class Rural extends React.Component {
     }
 
     componentWillMount = () => {
-        db.collection('general').doc('lectureid')
-            .collection('rural').orderBy('regno').get()
-            .then(val => {
-                if(val.size > 0) {
-                    val.forEach(values => {
-                        let arr = []
-                        arr.push({
-                            id: values.id,
-                            ...values.data()
+        if(localStorage.staffAuth) {
+            let val = JSON.parse(localStorage.getItem("staffAuth"))
+            this.setState({user: jwt_decode(val.token)})
+            db.collection('general').doc(jwt_decode(val.token).id)
+                .collection('rural').orderBy('regno').get()
+                .then(val => {
+                    if(val.size > 0) {
+                        val.forEach(values => {
+                            let arr = []
+                            arr.push({
+                                id: values.id,
+                                ...values.data()
+                            })
+                            this.setState({ students: this.state.students.concat(arr), loading: false })
                         })
-                        this.setState({ students: this.state.students.concat(arr), loading: false })
-                    })
-                }
-                else {
-                    this.setState({loading: false})
-                }
-            })
-            .catch(err => console.log(err))
+                    }
+                    else {
+                        this.setState({loading: false})
+                    }
+                })
+                .catch(err => console.log(err))
+        }
     }
 
     
@@ -93,7 +99,7 @@ class Rural extends React.Component {
             this.setState({error: 'Enter valid details'})
         else {
             this.setState({submitting: true})
-            db.collection('general').doc('lectureid')
+            db.collection('general').doc(this.state.user.id)
                 .collection('rural').add({
                     regno: this.state.regno,
                     student_name: this.state.student_name,
@@ -103,7 +109,7 @@ class Rural extends React.Component {
                 })
                 .then((docRef) => {
                     const { id } = docRef;
-                    console.log("adding id: " + id)
+                    // console.log("added id: " + id)
                     const student = { id, regno, student_name, marks, comment, motivation };
                     this.setState({
                         showRuralForm: false,        
@@ -125,7 +131,7 @@ class Rural extends React.Component {
     // Deleting Rural Student data
     delRuralStudents = () => {
         this.setState({ isDeleting: true, showSuccess: false })
-        db.collection('general').doc('lectureid')
+        db.collection('general').doc(this.state.user.id)
         .collection('rural').doc(this.state.id).delete()
           .then(() => {
             console.log(this.state.id + " del successful")
@@ -174,9 +180,9 @@ class Rural extends React.Component {
             </div>
 
         let html =       
-            <div className="my-5">
+            <div style={{margin: '50px 20px 100px 20px', padding: '20px'}}>
                 <h3>No data Found</h3>
-                <small style={{color:'gray'}}>(Note: Maybe also due to network problem)</small>
+                <small style={{color:'gray'}}>(Note: Please check your internet connection)</small>
             </div>
 
         if (this.state.students.length > 0) {
@@ -285,8 +291,8 @@ class Rural extends React.Component {
                                 <h2>Rural Student List</h2>
                             </div>
                             <hr />
-                            <div className="m-2">
-                                <div className="d-flex justify-content-between">
+                            <div style={{margin: '30px 0px'}}>
+                                <div className="text-right">
                                     <button
                                         className="btn btn-secondary"
                                         onClick={this.showRuralForm}
@@ -295,7 +301,6 @@ class Rural extends React.Component {
                                     </button>
                                 </div>   
                             </div>
-                            <hr />
                             {this.state.showSuccess && successMsg}
                             {this.state.loading ? loader : html}
 
@@ -334,7 +339,7 @@ class Rural extends React.Component {
                                     </Modal>
                                 </div>
                                 <div>
-                                    {this.state.showEdit && <EditForm id={this.state.id} hideEdit={this.hideEdit} />}
+                                    {this.state.showEdit && <EditForm id={this.state.id} hideEdit={this.hideEdit} userId={this.state.user.id} />}
                                 </div>
                         </React.Fragment>
                     )

@@ -8,8 +8,7 @@ class StudItems extends React.Component {
 
     render() {
         let listItem = 
-            <div onClick={this.handleClick}>
-            <div className="row bg-light indiStudentLists my-3 shadow-lg">
+            <div className="row bg-light indiStudentLists my-3 shadow-lg" onClick={this.handleClick}>
                 <button className="studItemBtn d-flex overflow-auto" >
                     <div className="col">
                         <span>{this.props.slno}</span>
@@ -39,7 +38,6 @@ class StudItems extends React.Component {
                     </div>
                 </button>
             </div>
-        </div>
     
         return (
             <React.Fragment>

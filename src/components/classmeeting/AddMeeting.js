@@ -50,7 +50,7 @@ class AddMeeting extends React.Component{
                     </button>
                     <h5 style={{ padding: '10px' }}>Add Meeting!</h5>
                 </div>
-                {this.state.showForm && <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} showSuccess={this.showSuccess} />}
+                {this.state.showForm && <MasterForm addMeeting={this.props.addMeeting} hideForm={this.hideForm} showSuccess={this.showSuccess} userId={this.props.userId} />}
             </React.Fragment>
         )
     }

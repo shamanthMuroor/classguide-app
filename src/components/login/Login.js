@@ -1,54 +1,126 @@
 import React from 'react';
 import logo from '../../images/logo.png';
-import AdminLogin from './AdminLogin'
 import axios from 'axios';
-import {host} from '../../App';
+import {host, auth} from '../../App';
 
 class Login extends React.Component {
   state = {
     showAdmin: false,
     username: '',
-    password: ''
+    password: '',
+    adminEmail: '',
+    adminPassword: '',
+    logging: false,
+    error: false
   }
   componentWillMount = () => {
     if(localStorage.staffAuth) {
       this.props.history.push("/")
     }  
   }
-  onSubmit = (e) => {
+
+  onAdminSubmit = (e) => {
+      e.preventDefault();
+    this.setState({error: false, logging: true})
+    auth.signInWithEmailAndPassword(this.state.adminEmail, this.state.adminPassword)
+      .then(()=> {
+        console.log("logged in")
+        this.setState({logging: false})
+        this.props.history.push("/admin")
+      })
+      .catch(err => {
+          this.setState({error: true, logging: false})
+            console.log(err)
+        } );
+  }
+
+  onStaffSubmit = (e) => {
     e.preventDefault();
+    this.setState({error: false, logging: true})
     // console.log("came in")
     axios.post(`${host}/staff-login`,{
       username: this.state.username,
       password: this.state.password
     }).then(value =>  {
-        console.log(value)
+        // console.log(value)
         localStorage.setItem("staffAuth",JSON.stringify(value.data));
-        alert("logged in");
+        this.setState({logging: false})
         this.props.history.push("/")
       })
-    .catch(err => console.log(err.response.msg));
-  }
-
-  pushVal = () => {
-    this.props.history.push("/admin")
+    .catch(err => this.setState({error: true, logging: false}) );
   }
 
   render() {
+    let admin = 
+      <React.Fragment>
+        <div>
+          <div className="loginBackground">
+            <div className="login-container">
+              <img src={logo} alt="logo" />
+              <div className="form-container">
+                <form style={{marginBottom: '10px'}}>
+                {this.state.error && <div className="alert alert-danger" role="alert" style={{padding:'7px'}}>
+                        <i className="fas fa-exclamation-circle"></i> Invalid username or password
+                    </div>}
+                  <div className="form-group">
+                    <input 
+                      type="name" 
+                      className="form-control" 
+                      value={this.state.adminEmail} 
+                      placeholder="Username"
+                      autoFocus
+                      autoComplete="on"
+                      onChange={(e) => this.setState({ adminEmail: e.target.value })} 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input 
+                      type="password" 
+                      className="form-control" 
+                      value={this.state.adminPassword} 
+                      placeholder="Password"
+                      autoComplete="on"
+                      onChange={(e) => this.setState({ adminPassword: e.target.value })} 
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary" onClick={this.onAdminSubmit} disabled={this.state.logging}>
+                    { this.state.logging ? "Logging in" : "Admin Login" }  
+                    </button>
+                </form>
+                <div className="text-center">
+                    <button 
+                        className="btn-sm"
+                        style={{background: 'none', border: 'none', color: 'gray'}}
+                        onClick={()=>this.setState({showAdmin: !this.state.showAdmin})}
+                    >
+                        {this.state.showAdmin ? "Staff Login" : "Admin Login" }
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+
     let staff =
       <React.Fragment>
-        <div className="login-container">
-          <div className="logo-container">
-            <div className="login-desktop-container">
+          <div className="loginBackground">
+            <div className="login-container">
+              <h5 style={{position: 'relative', textAlign: 'center', top: '-10px', color:'#F5F2F2', textShadow: '2px 2px #333333'}}>CLASS GUIDE SYSTEM</h5>
               <img src={logo} alt="logo" />
-              <div className="form-container" id="form-desktop">
-                <form>
+              <div className="form-container">
+                <form style={{marginBottom: '10px'}}>
+                    {this.state.error && <div className="alert alert-danger" role="alert" style={{padding:'7px'}}>
+                        <i className="fas fa-exclamation-circle"></i> Invalid username or password
+                    </div>}
                   <div className="form-group">
                     <input 
                       type="name" 
                       className="form-control" 
                       value={this.state.username} 
                       placeholder="Username"
+                      autoFocus
+                      autoComplete="on"
                       onChange={(e) => this.setState({ username: e.target.value })} 
                     />
                   </div>
@@ -56,47 +128,33 @@ class Login extends React.Component {
                     <input 
                       type="password" 
                       className="form-control" 
-                      value={this.state.username} 
+                      value={this.state.password} 
                       placeholder="Password"
+                      autoComplete="on"
                       onChange={(e) => this.setState({ password: e.target.value })} 
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary" onClick={this.onSubmit}>login</button>
+                  <button type="submit" className="btn btn-primary" onClick={this.onStaffSubmit} disabled={this.state.logging}>
+                    { this.state.logging ? "logging-in" : "login" }
+                  </button>
                 </form>
+                <div className="text-center">
+                    <button 
+                        className="btn-sm"
+                        style={{background: 'none', border: 'none', color: 'gray'}}
+                        onClick={()=>this.setState({showAdmin: !this.state.showAdmin})}
+                    >
+                        {this.state.showAdmin ? "Staff Login" : "Admin Login" }
+                    </button>
+                </div>
               </div>
             </div>
           </div>
-        <div className="form-container" id="form-mobile">
-          <form>
-            <div className="form-group">
-              <input
-                type="name"
-                className="form-control"
-                value={this.state.username}
-                placeholder="Username"
-                onChange={(e) => this.setState({ username: e.target.value })}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="password"
-                className="form-control"
-                value={this.state.username}
-                placeholder="Password"
-                onChange={(e) => this.setState({ password: e.target.value })}
-              />
-            </div>
-            <button type="submit" className="btn btn-primary" onClick={this.onSubmit}>login</button>
-          </form>
-        </div>
-        </div>
       </React.Fragment>
 
     return(
-      <div className="mt-5">
-      <button onClick={()=>this.setState({showAdmin: true})}>Admin Login</button>
-      <button onClick={()=>this.setState({showAdmin: false})}>Staff Login</button>
-      { this.state.showAdmin ? <AdminLogin pushVal={this.pushVal}  /> : staff }
+      <div>
+      { this.state.showAdmin ? admin : staff }
       </div>
     )
 }

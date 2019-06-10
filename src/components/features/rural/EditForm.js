@@ -22,8 +22,6 @@ Modal.setAppElement('#root')
 class EditForm extends React.Component {
     state = {
         editModalIsOpen: true,
-        lecturer: "lec1",
-        sec: "3rd bsc Ecsm",
         id: '',
         regno: '',
         student_name: '',
@@ -35,7 +33,7 @@ class EditForm extends React.Component {
     }
 
     componentWillMount = () => {
-        db.collection('general').doc('lectureid')
+        db.collection('general').doc(this.props.userId)
             .collection('rural').doc(this.props.id).get()
             .then(val => {
                 this.setState({
@@ -73,7 +71,7 @@ class EditForm extends React.Component {
         }
         else {
             this.setState({ isLoading: true })
-            db.collection('general').doc('lectureid')
+            db.collection('general').doc(this.props.userId)
                 .collection('rural').doc(this.props.id).set({
                     regno: this.state.regno,
                     student_name: this.state.student_name,
@@ -100,17 +98,12 @@ class EditForm extends React.Component {
                     contentLabel="Edit Modal"
                 >
                     <div className="d-flex justify-content-between">
-                        <h5>Edit Meeting</h5>
+                        <h5>Edit Rural Student Details</h5>
                         <button onClick={this.closeEditModal} style={{ background: 'none', border: 'none' }}>
                             <span style={{ fontWeight: 'bold', fontSize: '20px' }}>&times;</span>
                         </button>
                     </div>
                     <hr style={{ margin: '4px' }} />
-                    {
-                        this.state.error && <div className="alert alert-danger" role="alert">
-                            {this.state.error}
-                        </div>
-                    }
                     <form>
                         <div className="form-group" >
                     <label className="h6">* Register Number</label>
@@ -187,6 +180,11 @@ class EditForm extends React.Component {
                         />
                     </div>
                 </div>
+                {
+                        this.state.error && <div className="alert alert-danger my-2" role="alert">
+                            {this.state.error}
+                        </div>
+                    }
                         <div className="text-right">
                             <button type="button" className="btn btn-secondary" onClick={this.closeEditModal}>Close</button>
                             <button

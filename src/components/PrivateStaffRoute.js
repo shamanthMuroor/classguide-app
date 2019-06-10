@@ -22,7 +22,7 @@ class PrivateStaffRoute extends React.Component {
                 await this.setState({user: true,done: true})
           })
           .catch(async err => {
-              console.log(err);
+              // console.log(err.response);
               if(err.response.status === 401) {
                 await this.setState({user: false,done: true}) 
                 localStorage.removeItem("staffAuth");

@@ -22,8 +22,6 @@ Modal.setAppElement('#root')
 class EditForm extends React.Component {
     state = {
         editModalIsOpen: true,
-        lecturer: "lec1",
-        sec: "3rd bsc Ecsm",
         id: '',
         regno: '',
         name: '',
@@ -36,7 +34,7 @@ class EditForm extends React.Component {
     }
 
     componentWillMount = () => {
-        db.collection('general').doc('lectureid')
+        db.collection('general').doc(this.props.userId)
         .collection('counselling').doc(this.props.id).get()
             .then(val => {
                 this.setState({
@@ -75,7 +73,7 @@ class EditForm extends React.Component {
         }
         else {
             this.setState({ isLoading: true })
-            db.collection('general').doc('lectureid')
+            db.collection('general').doc(this.props.userId)
                 .collection('counselling').doc(this.props.id).set({
                     regno: this.state.regno,
                     name: this.state.name,
@@ -103,7 +101,7 @@ class EditForm extends React.Component {
                     contentLabel="Edit Modal"
                 >
                     <div className="d-flex justify-content-between">
-                        <h5>Edit Meeting</h5>
+                        <h5>Edit Counselling Details</h5>
                         <button onClick={this.closeEditModal} style={{ background: 'none', border: 'none' }}>
                             <span style={{ fontWeight: 'bold', fontSize: '20px' }}>&times;</span>
                         </button>

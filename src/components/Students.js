@@ -4,7 +4,7 @@ import StudList from './students/studentList/StudList';
 import Search from './students/studentList/Search';
 import Tags from './students/studentList/Tags';
 import StudProfile from './students/StudProfile';
-// import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 class Students extends React.Component {
     state = { 
@@ -17,48 +17,30 @@ class Students extends React.Component {
     }
 
     componentWillMount = () => {
-        // let arr = [];
-        // let newArr = [];
-        // axios.get("https://globaldb.sionasolutions.com")
-        //     .then(value => {
-        //         value.data.data.forEach((val, i) => {
-        //             arr.push(val.course + val.Batch)
-        //             this.setState({loading: true})
-        //         })
-                
-        //         //Removing duplicate array
-        //         newArr = arr.filter(function (item, i, ar) { return ar.indexOf(item) === i; });
-
-        //         B.Sc - Computer Sc. | Electronics | Mathematics SEMESTER V A
-                // newArr[17] and newArr[12]
-                db.collection("staff").where("student_id", "==", "B.Sc - Computer Sc. | Electronics | Mathematics SEMESTER V A").get()
-                    .then(value => {
-                        let val = ''
-                        value.forEach(doc => {
-                            val = doc.data().student_id;
+        if(localStorage.staffAuth) {
+            let user = JSON.parse(localStorage.getItem("staffAuth"));
+            let value = jwt_decode(user.token);
+            // console.log(value);
+            // debugger;
+            db.collection("staffData").doc(value.id).get()
+            .then(res => {
+                db.collection("students").where("_id","==",res.data().studentId).get()
+                    .then((response) => {
+                        let arr = [];
+                        response.forEach(val => {
+                            arr.push({
+                                ...val.data()
+                            })
                         })
-                        console.log(val);
-                        if(val==='')
-                            this.props.history.push('./error');
-                        else {
-                            db.collection("students").where("_id", "==", val).orderBy("regno").limit(3).get()
-                                .then(querySnap => {
-                                    querySnap.forEach(val => {
-                                        let exarr = [];
-                                        exarr.push({
-                                            ...val.data()
-                                        })
-                                        this.setState({ studs: this.state.studs.concat(exarr), loading: false })
-                                    })
-                                })
-                        }
-
+                        // console.log(arr);
+                        this.setState({studs: arr, loading: false})
                     })
-            // })
-            // .catch(err => {
-            //     console.log(err)
-            //     this.props.history.push('./error');
-            // });
+            })
+            .catch(err => {
+                this.setState({loading: false})
+                this.props.history.push('/error')
+            })
+        }
     }
 
     componentWillUnmount = () => {
@@ -93,7 +75,7 @@ class Students extends React.Component {
         <div className="spinner-grow ml-1" role="status"> </div>
     </div>
         let html = (
-            <React.Fragment>
+            <React.Fragment>    
                 <StudList 
                     studs = {this.state.studs}
                     filteredValue = {this.state.search}
@@ -113,11 +95,16 @@ class Students extends React.Component {
                             <h2 className="text-center">Student List</h2>
                             <div className="my-3">
                                 <Search filterValue={this.updateSearch} search={this.state.search}/>
-                                <div className="d-flex m-2 flex-row-reverse">
-                                    <button className="btn btn-small btn-secondary print" onClick={() => window.print()}>PRINT</button>
+                                <div className="d-flex m-2 flex-row-reverse d-print-none">
+                                    <button 
+                                        className="btn btn-small btn-secondary print" 
+                                        onClick={() => window.print()}
+                                    >
+                                        PRINT
+                                    </button>
+                                </div>
                             </div>
-                            </div>
-                            <hr />
+                            <hr className="d-print-none" />
                                 <Tags search={this.updateTag}/>
                             <hr />
                             {this.state.loading ? loader : html }

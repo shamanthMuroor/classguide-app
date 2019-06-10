@@ -16,11 +16,6 @@ function AddRural(props) {
             </button>
             <form style={{ marginTop: '100px' }}>
                 <h3 className="text-center">Add Rural Student Details</h3>
-                {
-                    props.error && <div className="alert alert-danger" role="alert">
-                        {props.error}
-                    </div>
-                }
                 <div className="form-group mt-3" >
                     <label className="h5">* Register Number</label>
                     <div>
@@ -91,23 +86,30 @@ function AddRural(props) {
                         />
                     </div>
                 </div>
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={props.addRuralStudent} 
-                    disabled={props.submitting}
-                >
-                { 
-                    props.submitting 
-                    ? 
-                    <React.Fragment>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                        <span> Submitting</span>
-                    </React.Fragment>
-                    : 
-                    "Submit" 
+                {
+                    props.error && <div className="alert alert-danger my-2" role="alert">
+                        {props.error}
+                    </div>
                 }
-            </button>
+                <div className="text-right">
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={props.addRuralStudent} 
+                        disabled={props.submitting}
+                    >
+                        { 
+                            props.submitting 
+                            ? 
+                            <React.Fragment>
+                                <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                <span> Submitting</span>
+                            </React.Fragment>
+                            : 
+                            "Submit" 
+                        }
+                    </button>
+                </div>
             </form>
         </React.Fragment>
     )

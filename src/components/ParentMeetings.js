@@ -3,11 +3,11 @@ import '../styles/style.css';
 import ViewParentMeeting from './parentmeeting/ViewParentMeeting';
 import AddParentMeeting from './parentmeeting/AddParentMeeting';
 import {db} from '../App';
+import jwt_decode from 'jwt-decode';
 
 class ParentMeetings extends React.Component {
   state = {
-    lecturer: "lec1",
-    sec: "3rd bsc Ecsm",
+    user: {},
     showParentMeetings: false,
     parentmeetings: [],
     id: '',
@@ -17,8 +17,10 @@ class ParentMeetings extends React.Component {
 
   // Displaying all the meetings from the database
   componentWillMount = () => {
-    db.collection('parentMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).orderBy("date").get()
+    let val = JSON.parse(localStorage.getItem("staffAuth"))
+    this.setState({user: jwt_decode(val.token)})
+    db.collection('general').doc(jwt_decode(val.token).id)
+      .collection("parentMeetings").orderBy("date").get()
         .then(res => { 
           if(res.size > 0) {
             res.forEach(val => {
@@ -46,10 +48,10 @@ class ParentMeetings extends React.Component {
     // Delete a meeting
     delMeeting = (id,cb) => {
       this.setState({isDeleting: true})
-      db.collection('parentMeetings').doc(this.state.lecturer)
-        .collection(this.state.sec).doc(id).delete()
+      db.collection('general').doc(this.state.user.id)
+        .collection("parentMeetings").doc(id).delete()
           .then(() => {
-            console.log(id + " del successful")
+            // console.log(id + " del successful")
             this.setState({ parentmeetings: [...this.state.parentmeetings.filter(meeting => meeting.id !== id)], isDeleting: false })
             cb();
           })
@@ -65,13 +67,13 @@ class ParentMeetings extends React.Component {
       </div>
     return (
       <div className="container text-center">
-        <AddParentMeeting addParentMeeting={this.addParentMeeting} /> 
+        <AddParentMeeting addParentMeeting={this.addParentMeeting} userId={this.state.user.id} /> 
 
         { this.state.loading 
           ? 
             loader 
           : 
-            <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting}  isDeleting={this.state.isDeleting} /> 
+            <ViewParentMeeting parentmeetings={this.state.parentmeetings} delMeeting={this.delMeeting}  isDeleting={this.state.isDeleting} userId={this.state.user.id} /> 
         }
       </div>
     )

@@ -22,8 +22,6 @@ Modal.setAppElement('#root')
 class EditForm extends React.Component {
     state = {
         editModalIsOpen: true,
-        lecturer: "lec1",
-        sec: "3rd bsc Ecsm",
         id: '',
         regno: '',
         student_learner: '',
@@ -36,7 +34,7 @@ class EditForm extends React.Component {
     }
 
     componentWillMount = () => {
-        db.collection('general').doc('lectureid')
+        db.collection('general').doc(this.props.userId)
             .collection('slowLearner').doc(this.props.id).get()
             .then(val => {
                 this.setState({
@@ -75,7 +73,7 @@ class EditForm extends React.Component {
         }
         else {
             this.setState({ isLoading: true })
-            db.collection('general').doc('lectureid')
+            db.collection('general').doc(this.props.userId)
                 .collection('slowLearner').doc(this.props.id).set({
                     regno: this.state.regno,
                     student_learner: this.state.student_learner,
@@ -103,111 +101,112 @@ class EditForm extends React.Component {
                     contentLabel="Edit Modal"
                 >
                     <div className="d-flex justify-content-between">
-                        <h5>Edit Meeting</h5>
+                        <h5>Edit Slow learner and Peer Group</h5>
                         <button onClick={this.closeEditModal} style={{ background: 'none', border: 'none' }}>
                             <span style={{ fontWeight: 'bold', fontSize: '20px' }}>&times;</span>
                         </button>
                     </div>
                     <hr style={{ margin: '4px' }} />
+                    <form>
+                        <div className="form-group" >
+                        <label className="h6">* Register Number</label>
+                        <div>
+                            <input
+                                className="form-control"
+                                id="regno"
+                                name="regno"
+                                type="number"
+                                placeholder="Register Number"
+                                value={this.state.regno}
+                                onChange={this.handleChange}
+                                disabled={this.state.failed}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group" >
+                        <label className="h6">* Student Learner's Name</label>
+                        <div>
+                            <input
+                                className="form-control"
+                                id="student_learner"
+                                name="student_learner"
+                                type="text"
+                                placeholder="Student Learner's Name"
+                                value={this.state.student_learner}
+                                onChange={this.handleChange}
+                                disabled={this.state.failed}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group" >
+                        <label className="h6">* Marks</label>
+                        <div>
+                            <input
+                                className="form-control"
+                                id="Marks"
+                                name="marks"
+                                type="number"
+                                placeholder="Enter Marks(%)"
+                                value={this.state.marks}
+                                onChange={this.handleChange}
+                                disabled={this.state.failed}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group" >
+                        <label className="h6">Comment<small style={{color: 'gray'}}> (ex: Subject)</small></label>
+                        <div>
+                            <input
+                                className="form-control"
+                                id="comment"
+                                name="comment"
+                                type="text"
+                                placeholder="Enter Comment"
+                                value={this.state.comment}
+                                onChange={this.handleChange}
+                                disabled={this.state.failed}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group" >
+                        <label className="h6">Student Guide Name</label>
+                        <div>
+                            <input
+                                className="form-control"
+                                id="student_guide"
+                                name="student_guide"
+                                type="text"
+                                placeholder="Student Guide's Name"
+                                value={this.state.student_guide}
+                                onChange={this.handleChange}
+                                disabled={this.state.failed}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group" >
+                        <label className="h6">Measures Taken</label>
+                        <div>
+                            <textarea
+                                className="form-control"
+                                id="measures"
+                                name="measures"
+                                rows="3"
+                                cols="30"
+                                type="text"
+                                placeholder="Measures taken"
+                                value={this.state.measures}
+                                onChange={this.handleChange}
+                                disabled={this.state.failed}
+                            >
+                            </textarea> 
+                        </div>
+                    </div>
+                    
                     {
-                        this.state.error && <div className="alert alert-danger" role="alert">
+                        this.state.error && <div className="alert alert-danger my-2" role="alert">
                             {this.state.error}
                         </div>
                     }
-                    <form>
-                        <div className="form-group" >
-                    <label className="h6">* Register Number</label>
-                    <div>
-                        <input
-                            className="form-control"
-                            id="regno"
-                            name="regno"
-                            type="number"
-                            placeholder="Register Number"
-                            value={this.state.regno}
-                            onChange={this.handleChange}
-                            disabled={this.state.failed}
-                        />
-                    </div>
-                </div>
-                <div className="form-group" >
-                    <label className="h6">* Student Learner's Name</label>
-                    <div>
-                        <input
-                            className="form-control"
-                            id="student_learner"
-                            name="student_learner"
-                            type="text"
-                            placeholder="Student Learner's Name"
-                            value={this.state.student_learner}
-                            onChange={this.handleChange}
-                            disabled={this.state.failed}
-                        />
-                    </div>
-                </div>
-                <div className="form-group" >
-                    <label className="h6">* Marks</label>
-                    <div>
-                        <input
-                            className="form-control"
-                            id="Marks"
-                            name="marks"
-                            type="number"
-                            placeholder="Enter Marks(%)"
-                            value={this.state.marks}
-                            onChange={this.handleChange}
-                            disabled={this.state.failed}
-                        />
-                    </div>
-                </div>
-                <div className="form-group" >
-                    <label className="h6">Comment<small style={{color: 'gray'}}> (ex: Subject)</small></label>
-                    <div>
-                        <input
-                            className="form-control"
-                            id="comment"
-                            name="comment"
-                            type="text"
-                            placeholder="Enter Comment"
-                            value={this.state.comment}
-                            onChange={this.handleChange}
-                            disabled={this.state.failed}
-                        />
-                    </div>
-                </div>
-                <div className="form-group" >
-                    <label className="h6">Student Guide Name</label>
-                    <div>
-                        <input
-                            className="form-control"
-                            id="student_guide"
-                            name="student_guide"
-                            type="text"
-                            placeholder="Student Guide's Name"
-                            value={this.state.student_guide}
-                            onChange={this.handleChange}
-                            disabled={this.state.failed}
-                        />
-                    </div>
-                </div>
-                <div className="form-group" >
-                    <label className="h6">Measures Taken</label>
-                    <div>
-                        <textarea
-                            className="form-control"
-                            id="measures"
-                            name="measures"
-                            rows="3"
-                            cols="30"
-                            type="text"
-                            placeholder="Measures taken"
-                            value={this.state.measures}
-                            onChange={this.handleChange}
-                            disabled={this.state.failed}
-                        >
-                        </textarea> 
-                    </div>
-                </div>
                         <div className="text-right">
                             <button type="button" className="btn btn-secondary" onClick={this.closeEditModal}>Close</button>
                             <button

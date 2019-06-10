@@ -16,14 +16,8 @@ function AddCounselling(props) {
             </button>
             <form style={{ marginTop: '100px' }}>
                 <h3 className="text-center">Add Counselling Details</h3>
-                <small style={{color: 'gray'}}>All fields are compulsory!</small>
-                {
-                    props.error && <div className="alert alert-danger" role="alert">
-                        {props.error}
-                    </div>
-                }
                 <div className="form-group mt-3" >
-                    <label className="h5">Register Number</label>
+                    <label className="h5">* Register Number</label>
                     <div>
                         <input
                             className="form-control"
@@ -37,7 +31,7 @@ function AddCounselling(props) {
                     </div>
                 </div>
                 <div className="form-group" >
-                    <label className="h5">Student Name</label>
+                    <label className="h5">* Student Name</label>
                     <div>
                         <input
                             className="form-control"
@@ -51,7 +45,7 @@ function AddCounselling(props) {
                     </div>
                 </div>
                 <div className="form-group" >
-                    <label className="h5">Marks</label>
+                    <label className="h5">* Marks</label>
                     <div>
                         <input
                             className="form-control"
@@ -65,7 +59,7 @@ function AddCounselling(props) {
                     </div>
                 </div>
                 <div className="form-group" >
-                    <label className="h5">Reason</label>
+                    <label className="h5">* Reason</label>
                     <div>
                         <input
                             className="form-control"
@@ -106,13 +100,30 @@ function AddCounselling(props) {
                         />
                     </div>
                 </div>
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={props.addCounselling} 
-                >
-                    Submit
-                </button>
+                {
+                    props.error && <div className="alert alert-danger my-2" role="alert">
+                        {props.error}
+                    </div>
+                }
+                <div className="text-right">
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={props.addCounselling} 
+                        disabled={props.submitting}
+                    >
+                    { 
+                        props.submitting 
+                        ? 
+                        <React.Fragment>
+                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            <span> Submitting</span>
+                        </React.Fragment>
+                        : 
+                        "Submit" 
+                    }
+                    </button>
+                </div>
             </form>
         </React.Fragment>
     )
