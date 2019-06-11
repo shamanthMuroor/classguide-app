@@ -6,9 +6,26 @@ class StudList extends React.Component {
 		let filteredList
 		if(this.props.tag) {
 			filteredList = this.props.studs.filter((students) => {
-				return (
-					students.Caste.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
-				)
+				if(students.Caste && students.castecatagory) {
+					return (
+						students.Caste.toLowerCase() === 'st' 
+						||
+						students.Caste.toLowerCase() === 'sc' 
+						||
+						students.Caste.toLowerCase() === 'schedule caste' 
+						||
+						students.Caste.toLowerCase() === 'schedule tribe' 
+						||
+						students.Caste.toLowerCase() === 'scheduled caste' 
+						||
+						students.Caste.toLowerCase() === 'scheduled tribe'
+						||
+						students.castecatagory.toLowerCase() === 'st' 
+						||
+						students.castecatagory.toLowerCase() === 'sc' 
+					)
+				}
+				else return null
 			})
 		}
 		else {

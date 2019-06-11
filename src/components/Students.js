@@ -3,7 +3,6 @@ import {db} from '../App';
 import StudList from './students/studentList/StudList';
 import Search from './students/studentList/Search';
 import Tags from './students/studentList/Tags';
-import StudProfile from './students/StudProfile';
 import jwt_decode from 'jwt-decode';
 
 class Students extends React.Component {
@@ -12,8 +11,6 @@ class Students extends React.Component {
         search: '',
         error: false,
         loading: true,
-        profile: false,
-        reg: '',
         tag: false
     }
 
@@ -31,6 +28,7 @@ class Students extends React.Component {
                         let arr = [];
                         response.forEach(val => {
                             arr.push({
+                                id: val.id,
                                 ...val.data()
                             })
                         })
@@ -53,13 +51,6 @@ class Students extends React.Component {
         this.setState({search: e.target.name, tag: true});
     }
 
-    hideProfile = () => {
-        this.setState({profile: false, reg: ''})
-    }
-
-    setReg = (reg) => {
-        this.setState({profile: true, reg: reg})
-    }
 
     render() {      
     let loader = 
@@ -73,7 +64,6 @@ class Students extends React.Component {
                 <StudList 
                     studs = {this.state.studs}
                     filteredValue = {this.state.search}
-                    setReg={this.setReg}
                     tag={this.state.tag}
                 />
             </React.Fragment>
@@ -81,11 +71,6 @@ class Students extends React.Component {
         return (
             <React.Fragment>
                 { 
-                    this.state.profile 
-                    ? 
-                        <StudProfile studDetails={this.state.studs} reg={this.state.reg} hideProfile={this.hideProfile} /> 
-                    : 
-                    (
                         <div className="studList">
                             <h2 className="text-center">Student List</h2>
                             <div className="my-3">
@@ -104,7 +89,7 @@ class Students extends React.Component {
                             <hr />
                             {this.state.loading ? loader : html }
                         </div>
-                    ) 
+                    
                 }
             </React.Fragment>
         )

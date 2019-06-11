@@ -1,15 +1,41 @@
 import React from 'react';
+import { db } from '../../App'
 
 class StudProfile extends React.Component {
-    render() {
-        const { reg } = this.props;
-        let html = this.props.studDetails.map((stud,i) => {
-            if(stud.regno === reg) {
+    state = {
+        studDetails: [],
+        loading: true
+    }
+
+    componentWillMount = () => {
+        const {id}=this.props.match.params
+        db.collection('students').doc(id).get()
+            .then((val)=>{
+                let arr=[]
+                arr.push({
+                    id: val.id,
+                    ...val.data()
+                })
+                this.setState({studDetails: arr, loading: false})
+            })
+    }
+ 
+    render() {   
+        let loader = 
+            <div className="text-center" style={{marginBottom: '250px', marginTop: '250px'}}>
+                <div className="spinner-grow mr-1" role="status"> </div>
+                <div className="spinner-grow mx-2" role="status"> </div>
+                <div className="spinner-grow ml-1" role="status"> </div>
+            </div>
+
+        let html = this.state.studDetails.map((stud,i) => {
                 return (
                     <React.Fragment key={i}>
                         <div className="text-right" style={{margin: "-2vw 5vw 10px 5vw"}}>
-                            <button className="btn btn-secondary d-print-none" onClick={this.props.hideProfile}>Back</button>
                             <button className="btn btn-secondary print d-print-none ml-2" onClick={() => window.print()}>PRINT</button>
+                        </div>
+                        <div className="d-none d-print-block m-5">
+                            <h2 className="text-center">Student Profile</h2>
                         </div>
                         <div className="container card shadow-lg p-3 mb-5 bg-white studProf">
                             <div className="studentDP d-print-none">
@@ -63,15 +89,16 @@ class StudProfile extends React.Component {
                         <hr />
                     </React.Fragment>
                 )
-            }
-            else {
-                return null
-            }
         })
-
         return (
-            <div style={{ marginTop: '110px' }}>
-                {html}
+            <div style={{ marginTop: '110px' }}> 
+                { 
+                    this.state.loading 
+                    ?
+                    loader
+                    :
+                    html
+                }
             </div >
         )
     }

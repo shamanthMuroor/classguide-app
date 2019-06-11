@@ -52,11 +52,11 @@ class PrivateStaffRoute extends React.Component {
             <Route
               path={this.props.path}
               exact
-              render={() => 
+              render={(props) => 
                 this.state.user
                 ?
                 (
-                  <this.props.component />
+                  <this.props.component {...props} />
                 )
                 :
                 (

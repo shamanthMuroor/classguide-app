@@ -2,12 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateStaffRoute from './components/PrivateStaffRoute';
 import PrivateAdminRoute from './components/PrivateAdminRoute';
-import AdminPanel from './components/AdminPanel';
 import Login from './components/login/Login';
 import Navbar from './components/general/Navbar';
 import Footer from './components/general/Footer';
-import Students from './components/Students';
+import AdminPanel from './components/AdminPanel';
 import Stafprofile from './components/Stafprofile';
+import Students from './components/Students';
+import StudProfile from './components/students/StudProfile';
 import ClassMeetings from './components/ClassMeetings';
 import ParentMeetings from './components/ParentMeetings';
 import Counselling from './components/features/counselling/Counselling';
@@ -40,6 +41,7 @@ class App extends React.Component {
 
 						<PrivateStaffRoute path='/' exact component={Stafprofile} />
 						<PrivateStaffRoute path='/students' exact component={Students} />
+						<PrivateStaffRoute path='/students/:id' exact component={StudProfile} />
 						<PrivateStaffRoute path='/class-meetings' exact component={ClassMeetings} />
 						<PrivateStaffRoute path='/parent-meetings' exact component={ParentMeetings} />
 						<PrivateStaffRoute path='/counselling' exact component={Counselling} />
