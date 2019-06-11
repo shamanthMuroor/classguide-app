@@ -12,12 +12,14 @@ class PrivateAdminRoute extends React.Component {
       auth.onAuthStateChanged((user) => {
         if (user) {
           this.setState({user: true, done: true})
-          console.log("user exist")
         } else {
           this.setState({user: false, done: true})
-          console.log("user doesn't exist")
         }
       })
+    }
+
+    componentWillUnmount = () => {
+      this.setState({user: false, done: false})
     }
 
     render() { 

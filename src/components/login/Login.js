@@ -24,7 +24,7 @@ class Login extends React.Component {
     this.setState({error: false, logging: true})
     auth.signInWithEmailAndPassword(this.state.adminEmail, this.state.adminPassword)
       .then(()=> {
-        console.log("logged in")
+        // console.log("logged in")
         this.setState({logging: false})
         this.props.history.push("/admin")
       })
@@ -56,9 +56,9 @@ class Login extends React.Component {
         <div>
           <div className="loginBackground">
             <div className="login-container">
-              <img src={logo} alt="logo" />
               <div className="form-container">
                 <form style={{marginBottom: '10px'}}>
+                <h4 className="text-center" style={{color:'red', margin:'15px'}}>Admin Login</h4>
                 {this.state.error && <div className="alert alert-danger" role="alert" style={{padding:'7px'}}>
                         <i className="fas fa-exclamation-circle"></i> Invalid username or password
                     </div>}
@@ -93,7 +93,7 @@ class Login extends React.Component {
                         style={{background: 'none', border: 'none', color: 'gray'}}
                         onClick={()=>this.setState({showAdmin: !this.state.showAdmin})}
                     >
-                        {this.state.showAdmin ? "Staff Login" : "Admin Login" }
+                        {this.state.showAdmin && <React.Fragment><h6 className="text-white">Not an Admin? <small>Click here</small></h6></React.Fragment> }
                     </button>
                 </div>
               </div>
@@ -144,7 +144,7 @@ class Login extends React.Component {
                         style={{background: 'none', border: 'none', color: 'gray'}}
                         onClick={()=>this.setState({showAdmin: !this.state.showAdmin})}
                     >
-                        {this.state.showAdmin ? "Staff Login" : "Admin Login" }
+                        { !this.state.showAdmin && "Admin Login" }
                     </button>
                 </div>
               </div>

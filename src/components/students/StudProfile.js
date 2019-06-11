@@ -42,7 +42,7 @@ class StudProfile extends React.Component {
                         <div className="container card shadow-lg p-3 mb-5 bg-white studProf">
                             <div className="card-body">
                                 <h5 className="text-center mb-3">Family Background</h5>
-                                <h6>Father'<s></s> Name: {stud.father}</h6>
+                                <h6>Father's Name: {stud.father}</h6>
                                 <h6>Father's Number: {stud.fnumber}</h6>
                                 <h6>Mother's Name: {stud.mother}</h6>
                                 <h6>Mother's Number: {stud.mnumber}</h6>

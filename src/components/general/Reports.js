@@ -69,7 +69,6 @@ class Reports extends React.Component {
     handleDownload = () => {
         this.setState({ generating: true })
 
-
         // Class Meeting
         db.collection('general').doc(this.state.user.id)
             .collection('classMeetings').orderBy("date").get()
@@ -351,6 +350,32 @@ class Reports extends React.Component {
                 )
             })
         }
+
+
+        // SC/ST
+        // let casteList =
+        //     <tr>
+        //         <td>-</td>
+        //         <td>-</td>
+        //         <td>-</td>
+        //         <td>-</td>
+        //     </tr>
+        // if (this.state.slowLearner.length > 0) {
+        //     casteList = this.state.studentList.filter((value, i) => {
+        //         if (value.Caste.toLowerCase().indexOf('sc') !== -1) {
+        //             return (
+        //                 <tr key={i}>
+        //                     <td>{value.name}</td>
+        //                     <td>{value.address}</td>
+        //                     <td>{value.father}</td>
+        //                     <td>{value.fnumber}</td>
+        //                 </tr>
+        //             )
+        //         }
+        //     })
+        // }
+
+
         let acadGroups =
             <tr>
                 <td>-</td>

@@ -13,7 +13,8 @@ class Students extends React.Component {
         error: false,
         loading: true,
         profile: false,
-        reg: ''
+        reg: '',
+        tag: false
     }
 
     componentWillMount = () => {
@@ -24,7 +25,8 @@ class Students extends React.Component {
             // debugger;
             db.collection("staffData").doc(value.id).get()
             .then(res => {
-                db.collection("students").where("_id","==",res.data().studentId).get()
+                db.collection("students").where("_id","==",res.data().studentId)
+                    .orderBy("regno").get()
                     .then((response) => {
                         let arr = [];
                         response.forEach(val => {
@@ -38,25 +40,17 @@ class Students extends React.Component {
             })
             .catch(err => {
                 this.setState({loading: false})
-                this.props.history.push('/error')
             })
         }
     }
 
-    componentWillUnmount = () => {
-        this.setState({
-            studs: [], 
-            search: '',
-            loading: true
-        })
-    }
 
     updateSearch = (e) => {
-        this.setState({search: e.target.value});
+        this.setState({search: e.target.value, tag: false});
     }
 
     updateTag = (e) => {
-        this.setState({search: e.target.name});
+        this.setState({search: e.target.name, tag: true});
     }
 
     hideProfile = () => {
@@ -80,6 +74,7 @@ class Students extends React.Component {
                     studs = {this.state.studs}
                     filteredValue = {this.state.search}
                     setReg={this.setReg}
+                    tag={this.state.tag}
                 />
             </React.Fragment>
         )

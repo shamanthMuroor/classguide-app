@@ -3,20 +3,28 @@ import StudItems from './StudItems';
 
 class StudList extends React.Component {
 	render() {
-		let filteredList = this.props.studs.filter((students) => {
-			return (
-				students.name.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
-				||
-				students.regno.toString().indexOf(this.props.filteredValue) !== -1
-				||
-				students.Caste.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
-				||
-				students.dob.toString().indexOf(this.props.filteredValue) !== -1
-				||
-				students.gender.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
-
-			)
-		})
+		let filteredList
+		if(this.props.tag) {
+			filteredList = this.props.studs.filter((students) => {
+				return (
+					students.Caste.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
+				)
+			})
+		}
+		else {
+			filteredList = this.props.studs.filter((students) => {
+				return (
+					students.name.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
+					||
+					students.regno.toString().indexOf(this.props.filteredValue) !== -1
+					||
+					students.dob.toString().indexOf(this.props.filteredValue) !== -1
+					||
+					students.gender.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
+	
+				)
+			})
+		}
 
 		let studentList =
 			<div style={{ margin: '50px 20px 100px 20px', padding: '20px' }}>

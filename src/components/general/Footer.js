@@ -8,7 +8,7 @@ class Footer extends React.Component {
                     <div className="text-center foot">
                         <div style={{margin: '20px', padding: '10px', color: '#F5F2F2'}}>
                             <h5>St. Aloysius College(Autonomous) Mangaluru</h5>
-                            <small>(Re-accredited by NAAC with 'A' Grade)</small>
+                            <small style={{color: '#f5f2f2c7'}}>(Re-accredited by NAAC with 'A' Grade)</small>
                         </div>
                         <ul className="font-weight-bold footerUL d-print-none" >
                             <li className="active">

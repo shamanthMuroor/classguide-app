@@ -18,6 +18,30 @@ a:hover {
 }
 
 
+/* Loader Code */
+.loader:empty {
+    position: relative;
+    top: calc(50% - 4em);
+    left: calc(30% - 3em);
+    width: 6em;
+    height: 6em;
+    border: 1.1em solid rgba(0, 0, 0, 0.2);
+    border-left: 1.1em solid #000000;
+    border-radius: 50%;
+    animation: load8 1.1s infinite linear;
+    margin: 20vw;
+    margin-top: 5vw;
+  }
+  
+  @keyframes load8 {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
 
 /* Navbar */
 .mainNav {
@@ -328,21 +352,9 @@ footer {
         color: rgba(255,255,255,.5);  
     }
 
-    .foot > small {
-        padding-top:2%;
-        color: #F5F2F2;
-        font-size: 1.5vw;
-    }
-
-    .footerUL {
-        margin-top: 1vw;
-        margin-bottom: 1vw;
-    }
-
     .footerUL > li {
         display: inline;
         padding: 5px;
-        font-size: 1.50vw;
     }
 }
 
