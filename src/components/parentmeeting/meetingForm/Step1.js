@@ -6,9 +6,12 @@ function Step1(props) {
       return null
     } 
     return(
-      <div className="form-group" style={{height:'215px'}} >        
-        <label className="h5">Student Register Number</label>
-        <div style={{padding: '10px'}}>
+      <div className="form-group" style={{height:'245px', margin: '-15px 0px 0px 0px'}} >  
+        {props.error && <div className="alert alert-danger m-1 p-0" role="alert">
+          {props.error}
+        </div>}      
+        <label className="h6">Student Register Number</label>
+        <div style={{padding: '5px'}}>
           <input
             className="form-control"
             id="reg"
@@ -20,8 +23,8 @@ function Step1(props) {
           />
         </div>
         <hr />
-        <label className="h5">Date</label>
-        <div style={{padding: '10px'}}>
+        <label className="h6">Date</label>
+        <div style={{padding: '5px'}}>
           <input
             className="form-control"
             id="Date"
@@ -33,7 +36,7 @@ function Step1(props) {
           />
         </div>
       </div>
-    );
+    )
   }
   
 

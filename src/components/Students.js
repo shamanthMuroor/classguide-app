@@ -1,114 +1,116 @@
 import React from 'react';
-import StudList from './students/StudList';
-import StudProfile from './students/StudProfile';
 import {db} from '../App';
+import StudList from './students/studentList/StudList';
+import Search from './students/studentList/Search';
+import Tags from './students/studentList/Tags';
+import StudProfile from './students/StudProfile';
+import jwt_decode from 'jwt-decode';
 
 class Students extends React.Component {
-    state = {
-        show: false,        
-        info: [],
-        studs : []
+    state = { 
+        studs : [],
+        search: '',
+        error: false,
+        loading: true,
+        profile: false,
+        reg: ''
     }
 
     componentWillMount = () => {
-        db.collection('students').get()
-            .then(res => { res.forEach(val => {
-                let arr = [];
-                arr.push({
-                    id: val.id,
-                    ...val.data() 
-                })
-                this.setState({studs: this.state.studs.concat(arr)})
+        if(localStorage.staffAuth) {
+            let user = JSON.parse(localStorage.getItem("staffAuth"));
+            let value = jwt_decode(user.token);
+            // console.log(value);
+            // debugger;
+            db.collection("staffData").doc(value.id).get()
+            .then(res => {
+                db.collection("students").where("_id","==",res.data().studentId).get()
+                    .then((response) => {
+                        let arr = [];
+                        response.forEach(val => {
+                            arr.push({
+                                ...val.data()
+                            })
+                        })
+                        // console.log(arr);
+                        this.setState({studs: arr, loading: false})
+                    })
             })
-        })
-        .catch(err => console.log(err))
-    }
-
-    viewStudDetails = () => {
-        return (console.log("hello"))
-    }
-    
-
-    // Viewing Student Profile
-    view = (ids) => {
-        console.log('id:' + ids)
-        db.collection('students').doc(ids).get()
-        .then(data => {
-            let details = [];
-            details.push({
-                id: data.id,
-                ...data.data() 
+            .catch(err => {
+                this.setState({loading: false})
+                this.props.history.push('/error')
             })
-            this.setState({info: details, show: true})
-            // console.log(this.state.info)
+        }
+    }
+
+    componentWillUnmount = () => {
+        this.setState({
+            studs: [], 
+            search: '',
+            loading: true
         })
-    .catch(err => console.log(err))
     }
 
-    // Function to hide Student Profile
-    hideStudProfile = () => {
-        this.setState({show: false})
+    updateSearch = (e) => {
+        this.setState({search: e.target.value});
     }
 
-    render() {
-        // console.log(this.state.studs)
+    updateTag = (e) => {
+        this.setState({search: e.target.name});
+    }
+
+    hideProfile = () => {
+        this.setState({profile: false, reg: ''})
+    }
+
+    setReg = (reg) => {
+        this.setState({profile: true, reg: reg})
+    }
+
+    render() {      
+    let loader = 
+    <div className="text-center" style={{marginBottom: '150px', marginTop: '50px'}}>
+        <div className="spinner-grow mr-1" role="status"> </div>
+        <div className="spinner-grow mx-2" role="status"> </div>
+        <div className="spinner-grow ml-1" role="status"> </div>
+    </div>
         let html = (
-            <React.Fragment>
-                <h2 className="text-center">Student List</h2>
-                <div className="my-2">
-                    <form className="form-inline d-flex justify-content-center">
-                        <input className="form-control mt-2 mr-md-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-dark mt-2" type="submit">Search</button>
-                    </form>
-                </div>
-                <hr />
-                <div className="row m-2 justify-content-center tagBtn1">
-                    <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button">SC/ST Students</button>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1 ">
-                        <button className="btn btn-outline-dark" type="button">Rural Students</button>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1" >
-                        <button className="btn btn-outline-dark" type="button">Academic Achievers</button>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button">Slow learners</button>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button">Peer Group Learning</button>
-                    </div>
-                    <div className="col-sm-6 col-md-2 my-1">
-                        <button className="btn btn-outline-dark" type="button">Attendance shortage</button>
-                    </div>
-                </div>
-                <div className="row m-2 mb-5 justify-content-center tagBtn2">
-                    <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Student achievers (Non Academic Areas)</button>
-                    </div>
-                    <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Student achievers</button>
-                    </div>
-                    <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Students with special attention/ Counselling</button>
-                    </div>
-                    <div className="col-md-3 m-1">
-                        <button className="btn btn-outline-dark" type="button">Students Not Completed Sahaya Programme</button>
-                    </div>
-                </div>
-                <hr />
+            <React.Fragment>    
                 <StudList 
                     studs = {this.state.studs}
-                    viewStudDetails = {this.viewStudDetails}
-                    view={this.view} 
+                    filteredValue = {this.state.search}
+                    setReg={this.setReg}
                 />
             </React.Fragment>
         )
         return (
             <React.Fragment>
-                <div className="studList">
-                    {this.state.show ? <StudProfile info={this.state.info} hideStudProfile={this.hideStudProfile} /> : html } 
-                </div>
+                { 
+                    this.state.profile 
+                    ? 
+                        <StudProfile studDetails={this.state.studs} reg={this.state.reg} hideProfile={this.hideProfile} /> 
+                    : 
+                    (
+                        <div className="studList">
+                            <h2 className="text-center">Student List</h2>
+                            <div className="my-3">
+                                <Search filterValue={this.updateSearch} search={this.state.search}/>
+                                <div className="d-flex m-2 flex-row-reverse d-print-none">
+                                    <button 
+                                        className="btn btn-small btn-secondary print" 
+                                        onClick={() => window.print()}
+                                    >
+                                        PRINT
+                                    </button>
+                                </div>
+                            </div>
+                            <hr className="d-print-none" />
+                                <Tags search={this.updateTag}/>
+                            <hr />
+                            {this.state.loading ? loader : html }
+                        </div>
+                    ) 
+                }
             </React.Fragment>
         )
     }

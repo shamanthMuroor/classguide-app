@@ -4,63 +4,87 @@ import '../styles/style.css';
 import ViewMeeting from './classmeeting/ViewMeeting';
 import AddMeeting from './classmeeting/AddMeeting';
 import {db} from '../App';
+import jwt_decode from 'jwt-decode';
 
 class ClassMeetings extends React.Component {
   state = {
-    lecturer: "lec1",
-    sec: "3rd bsc Ecsm",
-    meetings: []
+    meetings: [],
+    loading: true,
+    isDeleting: false,
+    user: {}
   }
 
   // Displaying all the meetings from the database
   componentWillMount = () => {
-    db.collection('classMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).get()
-        .then(res => { res.forEach(val => {
-          let arr = [];
-          arr.push({
-            id: val.id,
-            ...val.data() 
+    let val = JSON.parse(localStorage.getItem("staffAuth"))
+    this.setState({user: jwt_decode(val.token)})
+    db.collection('general').doc(jwt_decode(val.token).id)
+      .collection('classMeetings').orderBy("date").get()
+        .then(res => { 
+          if(res.size > 0 ) {
+            res.forEach(val => {
+            let arr = [];
+            arr.push({
+              id: val.id,
+              ...val.data() 
+            })
+            this.setState({meetings: this.state.meetings.concat(arr), loading: false})
+            })
+          }
+          else {
+            this.setState({loading: false})
+          }
         })
-          // console.log((val.id))
-          // console.log((val.data().agenda))
-          //  this.setState({meetings: [this.state.meetings, val.data()]} )
-          this.setState({meetings: this.state.meetings.concat(arr)} )
-        })
-      })
-      .catch(err => console.log(err))
+        .catch(err => console.log(err))
+  }
+
+  componentWillUnmount = () => {
+    this.setState({
+      lecturer: "",
+      sec: "",
+      meetings: [],
+      loading: true,
+      isDeleting: false
+    })
   }
 
   // Delete a meeting
-  delMeeting = (id) => {
-    db.collection('classMeetings').doc(this.state.lecturer)
-      .collection(this.state.sec).doc(id).delete()
+  delMeeting = (id,cb) => {
+    this.setState({ isDeleting: true })
+    db.collection('general').doc(this.state.user.id)
+      .collection('classMeetings').doc(id).delete()
         .then(() => {
-          alert('Deleted successfully')
-          console.log(id + " del successful")
-          this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)] })
+          // console.log(id + " del successful")
+          this.setState({ meetings: [...this.state.meetings.filter(meeting => meeting.id !== id)], isDeleting: false })          
+          cb();
         })
         .catch(err => console.log(err))
   }
 
   // Add Meeting
-  addMeeting = (id, agenda, date, minutes) => {
-    const newMeeting = {
-      id,
-      agenda, 
-      date, 
-      minutes
-    }
-    this.setState({meetings: this.state.meetings.concat(newMeeting) })
+  addMeeting = (id, agenda, date, description) => {
+    const newMeeting = { id, agenda, date, description }
+    this.setState({meetings: this.state.meetings.concat(newMeeting)})
   }
 
-  render() {
+  render() {    
+    // console.log(this.state.user)
+    let loader = 
+      <div className="text-center" style={{marginBottom: '150px', marginTop: '-25px'}}>
+        <div className="spinner-grow mr-1" role="status"> </div>
+        <div className="spinner-grow mx-2" role="status"> </div>
+        <div className="spinner-grow ml-1" role="status"> </div>
+      </div>
     return (
-      <div>
-        <AddMeeting addMeeting={this.addMeeting} />
-        <div>
-          <ViewMeeting meetings={this.state.meetings} delMeeting = {this.delMeeting} />
-        </div>
+      <div className="container text-center">
+        <AddMeeting addMeeting={this.addMeeting} userId={this.state.user.id} />
+        { 
+          this.state.loading 
+          ? 
+          loader 
+          : 
+          <ViewMeeting meetings={this.state.meetings} delMeeting={this.delMeeting} isDeleting={this.state.isDeleting} userId={this.state.user.id} /> 
+        }
       </div>
     )
   }

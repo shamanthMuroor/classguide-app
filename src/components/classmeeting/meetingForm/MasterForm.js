@@ -8,28 +8,43 @@ import '../../../styles/style.css';
 
 class MasterForm extends React.Component {
     state = {
-        lecturer: "lec1",
-        sec: "3rd bsc Ecsm",
         currentStep: 1,
         date: '',
         agenda: '',
-        description: ''
+        description: '',
+        isLoading: false
     }
 
+    // Code to increment currentStep and validate form fields
     _next = () => {
-        let currentStep = this.state.currentStep
-        currentStep = currentStep >= 2 ? 3 : currentStep + 1
-        this.setState({
-            currentStep: currentStep
-        })
+        this.setState({error: false})
+        if(this.state.currentStep === 1) {
+            if(this.state.date === "") {
+                this.setState({error: "Enter valid date"})
+            }
+            else {
+                let currentStep = this.state.currentStep
+                currentStep = currentStep >= 2 ? 3 : currentStep + 1
+                this.setState({ currentStep: currentStep })
+            }                 
+        }
+        else if(this.state.currentStep === 2) {
+            if(this.state.agenda === "" || this.state.agenda === "Select Meeting Agenda") {
+                this.setState({ error: "Enter valid agenda" })
+            }
+            else {
+                let currentStep = this.state.currentStep
+                currentStep = currentStep >= 2 ? 3 : currentStep + 1
+                this.setState({ currentStep: currentStep })
+            }
+        }
     }
 
+    // Code to decrement currentStep
     _prev = () => {
         let currentStep = this.state.currentStep
         currentStep = currentStep <= 1 ? 1 : currentStep - 1
-        this.setState({
-            currentStep: currentStep
-        })
+        this.setState({ currentStep: currentStep })
     }
 
     // functions for button
@@ -67,36 +82,48 @@ class MasterForm extends React.Component {
         return null;
     }
 
+    // Handling form field changes
     handleChange = event => {
-        // console.log(event.target.value)
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
 
+    // Form submit section
     handleSubmit = (e) => {
         e.preventDefault();
-        db.collection("classMeetings").doc(this.state.lecturer)
-            .collection(this.state.sec).add({
-                agenda: this.state.agenda,
-                date: this.state.date,
-                description: this.state.description
-        })
-        .then((docRef) => {
-            alert("Meeting added successfully")
-            console.log("Added id: " + docRef.id)
-            this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
-            this.setState({
-                currentStep: 1,
-                date: '',
-                agenda: '',
-                description: ''
-            })
-            this.props.hideForm();
-        })
-        .catch(err => console.log(err))
+        if (this.state.description === "") {
+            this.setState({ error: "Enter valid Description" })
+        }
+        else {
+            this.setState({ isLoading: true })
+            db.collection('general').doc(this.props.userId)
+              .collection('classMeetings').add({
+                    agenda: this.state.agenda,
+                    date: this.state.date,
+                    description: this.state.description
+                })
+                .then((docRef) => {
+                    // console.log("Added id: " + docRef.id)
+                    this.props.addMeeting(docRef.id, this.state.agenda, this.state.date, this.state.description)
+                    this.setState({
+                        currentStep: 1,
+                        date: '',
+                        agenda: '',
+                        description: '',
+                        isLoading: false
+                    })
+                    this.props.showSuccess()
+                    this.props.hideForm();
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.props.history.push('/error');
+                })
+        }
     }
 
+    // Close Form on Close button
     changeForm = () => {
         this.setState({
             currentStep: 1,
@@ -125,23 +152,27 @@ class MasterForm extends React.Component {
                             title="Close"
                             onClick={this.changeForm}
                         >
-                            <p aria-hidden="true"><small class="align-middle" style={{fontSize: '14px'}}>Close</small>&times;</p>
+                            <p aria-hidden="true"><small className="align-middle" style={{fontSize: '14px'}}>Close</small>&times;</p>
                         </button>
                         </div>
                         <Step1
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             date={this.state.date} 
+                            error={this.state.error} 
                         />
                         <Step2
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             agenda={this.state.agenda}
+                            error={this.state.error} 
                         />
                         <Step3
                             currentStep={this.state.currentStep}
                             handleChange={this.handleChange}
                             description={this.state.description}
+                            error={this.state.error} 
+                            isLoading={this.state.isLoading}
                         />
                         {this.previousButton()}
                         {this.nextButton()}
