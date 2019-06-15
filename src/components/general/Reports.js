@@ -19,6 +19,10 @@ Modal.setAppElement('#root')
 
 class Reports extends React.Component {
     state = {
+        crOne: '',
+        crTwo: '',
+        error: false,
+        crnames: false,
         modalIsOpen: false,
         report: false,
         user: {},
@@ -60,11 +64,27 @@ class Reports extends React.Component {
     }
 
     openModal = () => {
-        this.setState({ report: true, modalIsOpen: true });
+        this.setState({ report: true, modalIsOpen: true, crnames: false });
     }
 
     closeModal = () => {
-        this.setState({ modalIsOpen: false });
+        this.setState({ modalIsOpen: false, crnames: false, error: false });
+    }
+
+    // Handling form field changes
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    // Submitting cr names
+    handleSubmit = e => {
+        e.preventDefault()
+        if( this.state.crOne === '' )
+            this.setState({ error: true, crnames: false  })
+        else
+            this.setState({ crnames: true, error: false })
     }
 
     handleDownload = () => {
@@ -459,17 +479,6 @@ class Reports extends React.Component {
 
         return (
             <div className="container">
-                <div className="card d-print-none" style={{ margin: "130px 10px 130px 10px", padding: '50px' }}>
-                    <div className="card-header">
-                        <h3 className="text-center">Generating Report</h3>
-                    </div>
-                    <div className="card-body text-center">
-                        <button type="button" className="btn btn-primary mb-2" onClick={this.openModal}>
-                            Generate Report
-                        </button>
-                    </div>
-                </div>
-
                 {/* First Page for Report */}
                 <div className="d-none d-print-block text-center" style={{ marginTop: "100px" }}>
                     <div>
@@ -493,11 +502,11 @@ class Reports extends React.Component {
                             </tr>
                             <tr>
                                 <th>Class Rep: </th>
-                                <td>-</td>
+                                <td>{this.state.crOne}</td>
                             </tr>
                             <tr>
                                 <th></th>
-                                <td>-</td>
+                                <td>{this.state.crTwo}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -709,6 +718,18 @@ class Reports extends React.Component {
                         </tbody>
                     </table>
                 </div>
+                {/* End of Report */}
+                
+                <div className="card d-print-none" style={{ margin: "130px 10px 130px 10px", padding: '50px' }}>
+                    <div className="card-header">
+                        <h3 className="text-center">Generating Report</h3>
+                    </div>
+                    <div className="card-body text-center">
+                        <button type="button" className="btn btn-primary mb-2" onClick={this.openModal}>
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
 
                 <div>
                     <Modal
@@ -718,30 +739,73 @@ class Reports extends React.Component {
                         contentLabel="Confirm Modal"
                     >
                         <div className="d-flex justify-content-between">
-                            <h5>Confirm To Generate Reports</h5>
+                            { !this.state.crnames ? <h5>Add Class Rep Names</h5> : <h5>Confirm To Generate Reports</h5> }
                             <button onClick={this.closeModal} style={{ background: 'none', border: 'none' }}>
                                 <span style={{ fontWeight: 'bold', fontSize: '20px' }}>&times;</span>
                             </button>
                         </div>
                         <hr />
-                        <div>
-                            <div className="alert alert-warning" role="alert">
-                                <i className="fas fa-exclamation-circle"></i><span> Warning: This action will cost high amount of internet data!</span>
-                            </div>
-                            Are you sure, you want to generate the report?
-                        </div>
-                        <hr />
-                        <div className="text-right">
-                            <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
-                            <button
-                                type="button"
-                                className="btn btn-danger ml-2"
-                                onClick={this.handleDownload}
-                                disabled={this.state.generating}
-                            >
-                                {this.state.generating ? "Generating..." : "Generate"}
-                            </button>
-                        </div>
+                        {
+                            !this.state.crnames 
+                            ? 
+                            (
+                                <React.Fragment>
+                                    <div className="form-group">
+                                        <form>
+                                            <label>* Class Representative Name: </label>
+                                            <input 
+                                                className="form-control"
+                                                name="crOne"
+                                                type="text"
+                                                placeholder="Enter Class Rep name"
+                                                value={this.crOne} 
+                                                onChange={this.handleChange} 
+                                            />
+                                            <br/>
+                                            <label>Second Class Representative Name:</label>
+                                            <input 
+                                                className="form-control"
+                                                name="crTwo"
+                                                type="text"
+                                                placeholder="Enter 2nd Class Rep name"
+                                                value={this.crTwo} 
+                                                onChange={this.handleChange} 
+                                            />           
+                                            <hr/>                             
+                                            {this.state.error && <div className="alert alert-danger m-1 p-0" role="alert">
+                                                Enter valid details
+                                            </div>}  
+                                            <button className="btn btn-success" style={{float:'right'}} onClick={this.handleSubmit}>
+                                                Submit
+                                            </button>
+                                        </form>
+                                    </div>
+                                </React.Fragment>
+                            )
+                            :
+                            (
+                                <React.Fragment>
+                                    <div>
+                                        <div className="alert alert-warning" role="alert">
+                                            <i className="fas fa-exclamation-circle"></i><span> Warning: This action will cost high amount of internet data!</span>
+                                        </div>
+                                        Are you sure, you want to generate the report?
+                                    </div>
+                                    <hr />
+                                    <div className="text-right">
+                                        <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-danger ml-2"
+                                            onClick={this.handleDownload}
+                                            disabled={this.state.generating}
+                                        >
+                                            {this.state.generating ? "Generating..." : "Generate"}
+                                        </button>
+                                    </div>                            
+                                </React.Fragment>                            
+                            )    
+                        }
                     </Modal>
                 </div>
             </div>

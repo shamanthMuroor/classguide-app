@@ -30,6 +30,7 @@ class Navbar extends React.Component {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
 				auth.signOut()
+                this.setState({ admin: false })
 			}
 		})
 		this.props.history.push('/login')
