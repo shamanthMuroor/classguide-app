@@ -103,7 +103,7 @@ class ParentMeetingItem extends React.Component {
                         <hr />
                         <div className="row">
                             <div className="col-md-2">
-                                <span style={{ fontWeight: 'bold', color: 'gray' }}>Parent/Guardian Name: </span>
+                                <span style={{ fontWeight: 'bold', color: 'gray' }}>Relationship with student: </span>
                             </div>
                             <div className="col-md-10">
                                 <span>{attended}</span>

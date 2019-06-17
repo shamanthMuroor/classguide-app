@@ -4,7 +4,7 @@ import { db } from '../../App';
 
 const customStyles = {
     content: {
-        top: '340px',
+        top: '350px',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
@@ -103,6 +103,7 @@ class EditForm extends React.Component {
                         </button>
                     </div>
                     <hr style={{ margin: '4px' }} />
+                    <small style={{color: 'gray'}}>All fields are compulsory!</small>
                     <form>
                         <div className="form-group">
                             <div>
@@ -147,17 +148,20 @@ class EditForm extends React.Component {
                             </div>
                         </div>
                         <div className="form-group" >
-                            <label className="h6">Parent/Guardian Attended</label>
+                            <label className="h6">Relationship with student</label>
                             <div>
-                                <input
+                                <select
                                     className="form-control"
                                     id="attended"
                                     name="attended"
-                                    type="text"
-                                    placeholder="Enter Parent/Guardian attended"
                                     value={this.state.attended}
                                     onChange={this.handleChange}
-                                />
+                                >
+                                    <option>Select relationship</option>
+                                    <option>Parent</option>
+                                    <option>Brother/Sister</option>
+                                    <option>Guardian</option>
+                                </select>
                             </div>
                         </div>
                         <div className="form-group" >

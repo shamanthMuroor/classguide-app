@@ -32,7 +32,7 @@ class ParentMasterForm extends React.Component {
             }                 
         }
         else if(this.state.currentStep === 2) {
-            if(this.state.agenda === "" || this.state.attended === "") {
+            if(this.state.agenda === "" || this.state.attended === "" || this.state.attended === "Select relationship") {
                 this.setState({ error: "Enter valid details" })
             }
             else {
