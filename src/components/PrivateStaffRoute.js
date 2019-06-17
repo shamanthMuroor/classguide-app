@@ -6,7 +6,8 @@ import {host} from '../App';
 class PrivateStaffRoute extends React.Component {  
     state = {
       user: false,
-      done: false
+      done: false,
+      loading: true
     }
     componentWillMount = async () => {
       if(localStorage.staffAuth) {
@@ -19,14 +20,14 @@ class PrivateStaffRoute extends React.Component {
         })
           .then(async data => {
                 // console.log(data)
-                await this.setState({user: true,done: true})
+                await this.setState({user: true,done: true, loading: false})
           })
           .catch(async err => {
               // console.log(err.response);
-              if(err.response.status === 401) {
+              // if(err.response.status === 401) {
                 await this.setState({user: false,done: true}) 
                 localStorage.removeItem("staffAuth");
-              }
+              // }
           });
       } else {
         localStorage.removeItem("staffAuth"); 
@@ -36,15 +37,26 @@ class PrivateStaffRoute extends React.Component {
     render() { 
       return(
         <div>
+          { 
+            this.state.loading 
+            && 
+            <React.Fragment>
+              <div className="d-md-none" style={{marginTop: '150px'}}></div>
+              <h5 style={{marginTop: "15vw", textAlign:'center', padding: '5px'}}>
+                Wait a moment while we load your app
+              </h5>
+              <div className="loader"></div>
+            </React.Fragment>
+          }
           {this.state.done &&
             <Route
               path={this.props.path}
               exact
-              render={() => 
+              render={(props) => 
                 this.state.user
                 ?
                 (
-                  <this.props.component />
+                  <this.props.component {...props} />
                 )
                 :
                 (

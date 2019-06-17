@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, Link} from 'react-router-dom';  
+import {NavLink, Link, withRouter} from 'react-router-dom';  
 import logo from '../../images/aloylogo.png'; 
 import { auth } from '../../App'
     
@@ -20,6 +20,21 @@ class Navbar extends React.Component {
             }
         })
     }
+
+    handleStaffLogout = () => {
+		localStorage.removeItem("staffAuth");
+		this.props.history.push('/login')
+	}
+
+	handleAdminLogout = () => {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				auth.signOut()
+                this.setState({ admin: false })
+			}
+		})
+		this.props.history.push('/login')
+	}
 
     render() {
         return (
@@ -142,12 +157,12 @@ class Navbar extends React.Component {
                                 this.state.admin
                                 ? 
                                 (
-                                    <Link className="nav-link" exact="true" to="#" onClick={this.props.adminLogout} style={{fontWeight: '600'}}>Logout</Link>
+                                    <Link className="nav-link" exact="true" to="#" onClick={this.handleAdminLogout} style={{fontWeight: '600'}}>Logout</Link>
                                     
                                 ) 
                                 : 
                                 (
-                                    <Link className="nav-link" exact="true" to="#" onClick={this.props.staffLogout} style={{fontWeight: '600'}}>Logout</Link>
+                                    <Link className="nav-link" exact="true" to="#" onClick={this.handleStaffLogout} style={{fontWeight: '600'}}>Logout</Link>
                                 )
                             }
                         </div>
@@ -164,4 +179,4 @@ const NavStyle ={
 }
 
 
-export default Navbar;
+export default withRouter(Navbar);

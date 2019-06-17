@@ -100,6 +100,7 @@ class EditForm extends React.Component {
                         </button>
                     </div>
                     <hr style={{ margin: '4px' }} />
+                    <small style={{color: 'gray', padding:'10px'}}>All fields are compulsory!</small>
                     {
                         this.state.error && <div className="alert alert-danger" role="alert">
                             {this.state.error}

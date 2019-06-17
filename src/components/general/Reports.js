@@ -19,6 +19,10 @@ Modal.setAppElement('#root')
 
 class Reports extends React.Component {
     state = {
+        crOne: '',
+        crTwo: '',
+        error: false,
+        crnames: false,
         modalIsOpen: false,
         report: false,
         user: {},
@@ -32,7 +36,8 @@ class Reports extends React.Component {
         acadGroups: [],
         levelGroups: [],
         nonAcadGroups: [],
-        studentList: []
+        studentList: [],
+        casteList: []
     };
 
     componentWillMount = () => {
@@ -55,20 +60,35 @@ class Reports extends React.Component {
                         })
                         this.setState({ studentList: this.state.studentList.concat(arr) })
                     })
-            })
+                })
     }
 
     openModal = () => {
-        this.setState({ report: true, modalIsOpen: true });
+        this.setState({ report: true, modalIsOpen: true, crnames: false });
     }
 
     closeModal = () => {
-        this.setState({ modalIsOpen: false });
+        this.setState({ modalIsOpen: false, crnames: false, error: false });
+    }
+
+    // Handling form field changes
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    // Submitting cr names
+    handleSubmit = e => {
+        e.preventDefault()
+        if( this.state.crOne === '' )
+            this.setState({ error: true, crnames: false  })
+        else
+            this.setState({ crnames: true, error: false })
     }
 
     handleDownload = () => {
         this.setState({ generating: true })
-
 
         // Class Meeting
         db.collection('general').doc(this.state.user.id)
@@ -140,6 +160,23 @@ class Reports extends React.Component {
                 })
             })
 
+        // Caste
+        let list = []
+        if (this.state.studentList.length > 0) {
+            list = this.state.studentList.filter((value, i) => {
+                if (value.Caste) {
+                    if ( value.Caste.toLowerCase() === 'sc' || value.Caste.toLowerCase() === 'st' || value.Caste.toLowerCase() === 'schedule caste' || value.Caste.toLowerCase() === 'schedule tribe' || value.Caste.toLowerCase() === 'scheduled caste' || value.Caste.toLowerCase() === 'scheduled tribe' || value.castecatagory.toLowerCase() === 'st' ||  value.castecatagory.toLowerCase() === 'sc'  ) {
+                        return value
+                    }
+                    else
+                        return null
+                }
+                else
+                    return null
+            })
+            this.setState({ casteList: list })
+        }    
+
         // Academic Achievers
         db.collection('general').doc(this.state.user.id)
             .collection('academic').orderBy('regno').get()
@@ -198,6 +235,7 @@ class Reports extends React.Component {
             levelGroups: [],
             nonAcadGroups: [],
             studentList: [],
+            casteList: [],
             generating: false
         })
     }
@@ -223,9 +261,9 @@ class Reports extends React.Component {
                     return (
                         <tr key={i}>
                             <td>{++i}</td>
+                            <td>{value.regno}</td>
                             <td>{value.name}</td>
                             <td>{value.address}</td>
-                            <td>-</td>
                             <td>-</td>
                             <td>{value.father}</td>
                             <td>-</td>
@@ -351,6 +389,30 @@ class Reports extends React.Component {
                 )
             })
         }
+
+
+        // SC/ST
+        let casteStudents =
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        if (this.state.casteList.length > 0) {
+            casteStudents = this.state.casteList.map((value, i) => {
+                return (
+                    <tr key={i}>
+                        <td>{++i}</td>
+                        <td>{value.regno}</td>
+                        <td>{value.name}</td>
+                        <td>{value.marks}</td>
+                    </tr>
+                )
+            })
+        }
+
+
         let acadGroups =
             <tr>
                 <td>-</td>
@@ -417,59 +479,40 @@ class Reports extends React.Component {
 
         return (
             <div className="container">
-                <div className="card d-print-none" style={{ margin: "130px 10px 130px 10px", padding: '50px' }}>
-                    <div className="card-header">
-                        <h3 className="text-center">Generating Report</h3>
-                    </div>
-                    <div className="card-body text-center">
-                        <button type="button" className="btn btn-primary mb-2" onClick={this.openModal}>
-                            Generate Report
-                        </button>
-                    </div>
-                </div>
-
                 {/* First Page for Report */}
                 <div className="d-none d-print-block text-center" style={{ marginTop: "100px" }}>
                     <div>
-                        <img src={logo} width="100px" height="100px" alt="College Logo" />
-                        <h5>St. Aloysius College(Autonomous) Mangaluru</h5>
-                        <h6 className="text-center">(Re-accredited by NAAC with 'A' Grade)</h6>
+                        <img src={logo} width="150px" height="150px" alt="College Logo" />
+                        <h4>St. Aloysius College(Autonomous) Mangaluru</h4>
+                        <h5 className="text-center">(Re-accredited by NAAC with 'A' Grade)</h5>
                     </div>
                     <div className="text-center" style={{ marginTop: "130px" }}>
-                        <h2>Class Guide System</h2>
+                        <h1>Class Guide System</h1>
                         <h4>Activity Report ({this.getYear()}-{this.getYear() + 1})</h4>
                     </div>
-                    <div className="">
-                        <div className="d-flex" style={{ marginTop: "130px" }}>
-                            <div className="mr-3 p-4">
-                                <h5>Class: </h5>
-                            </div>
-                            <div className="p-4">
-                                <h5>{this.state.guideClass}</h5>
-                            </div>
-                        </div>
-                        <div className="d-flex">
-                            <div className="mr-3 p-4">
-                                <h5>Class Guide: </h5>
-                            </div>
-                            <div className="p-4">
-                                <h5>{this.state.user.name}</h5>
-                            </div>
-                        </div>
-                        <div className="d-flex">
-                            <div className="mr-3 p-4">
-                                <h5>Class Rep: </h5>
-                            </div>
-                            <div className="p-4">
-                                <h5>-</h5>
-                                <h5>-</h5>
-                            </div>
-                        </div>
-
-                    </div>
+                    <table className="table table-borderless" style={{ width: '80%', marginTop: "200px", border: 'none' }}>
+                        <tbody>
+                            <tr>
+                                <th>Class: </th>
+                                <td>{this.state.guideClass}</td>
+                            </tr>
+                            <tr>
+                                <th>Class Guide: </th>
+                                <td>{this.state.user.name}</td>
+                            </tr>
+                            <tr>
+                                <th>Class Rep: </th>
+                                <td>{this.state.crOne}</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>{this.state.crTwo}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div className="d-none d-print-block" style={{ marginTop: "150px", padding: '40px' }}>
+                <div className="d-none d-print-block" style={{ padding: '40px', pageBreakBefore: 'always' }}>
                     <div className="my-5">
                         <h5>I. Class Guide System</h5>
                         <ul type="square">
@@ -513,10 +556,10 @@ class Reports extends React.Component {
                         <thead>
                             <tr>
                                 <th>Sl.no</th>
+                                <th>Reg No.</th>
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>Mobile No.</th>
-                                <th>Residential Address</th>
                                 <th>Parent Name</th>
                                 <th>Parent Occupation</th>
                                 <th>Parent Phone No.</th>
@@ -532,7 +575,7 @@ class Reports extends React.Component {
                         <thead>
                             <tr>
                                 <th>Sl.no</th>
-                                <th>Date</th>
+                                <th>Meeting Date</th>
                                 <th>Agenda</th>
                                 <th>Description</th>
                             </tr>
@@ -547,8 +590,8 @@ class Reports extends React.Component {
                         <thead>
                             <tr>
                                 <th>Sl.no</th>
-                                <th>Reg No</th>
-                                <th>Date</th>
+                                <th>Reg No.</th>
+                                <th>Meeting Date</th>
                                 <th>Agenda</th>
                                 <th>Attended</th>
                                 <th>Description</th>
@@ -612,6 +655,21 @@ class Reports extends React.Component {
                         </tbody>
                     </table>
 
+                    <h4 className="text-center" style={{ marginTop: '100px' }}>List of SC/ST Students</h4>
+                    <table className="mt-4 p-2" style={{ width: "100%" }}>
+                        <thead>
+                            <tr>
+                                <th>Sl.no</th>
+                                <th>Reg No</th>
+                                <th>Name</th>
+                                <th>Marks(%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.report && casteStudents}
+                        </tbody>
+                    </table>
+
                     <h4 className="text-center" style={{ marginTop: '100px' }}>List of Academic Achievers</h4>
                     <table className="mt-4 p-2" style={{ width: "100%" }}>
                         <thead>
@@ -660,6 +718,18 @@ class Reports extends React.Component {
                         </tbody>
                     </table>
                 </div>
+                {/* End of Report */}
+                
+                <div className="card d-print-none" style={{ margin: "130px 10px 130px 10px", padding: '50px' }}>
+                    <div className="card-header">
+                        <h3 className="text-center">Generating Report</h3>
+                    </div>
+                    <div className="card-body text-center">
+                        <button type="button" className="btn btn-primary mb-2" onClick={this.openModal}>
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
 
                 <div>
                     <Modal
@@ -669,30 +739,73 @@ class Reports extends React.Component {
                         contentLabel="Confirm Modal"
                     >
                         <div className="d-flex justify-content-between">
-                            <h5>Confirm To Generate Reports</h5>
+                            { !this.state.crnames ? <h5>Add Class Rep Names</h5> : <h5>Confirm To Generate Reports</h5> }
                             <button onClick={this.closeModal} style={{ background: 'none', border: 'none' }}>
                                 <span style={{ fontWeight: 'bold', fontSize: '20px' }}>&times;</span>
                             </button>
                         </div>
                         <hr />
-                        <div>
-                            <div className="alert alert-warning" role="alert">
-                                <i className="fas fa-exclamation-circle"></i><span> Warning: This action will cost high amount of internet data!</span>
-                            </div>
-                            Are you sure, you want to generate the report?
-                        </div>
-                        <hr />
-                        <div className="text-right">
-                            <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
-                            <button
-                                type="button"
-                                className="btn btn-danger ml-2"
-                                onClick={this.handleDownload}
-                                disabled={this.state.generating}
-                            >
-                                {this.state.generating ? "Generating..." : "Generate"}
-                            </button>
-                        </div>
+                        {
+                            !this.state.crnames 
+                            ? 
+                            (
+                                <React.Fragment>
+                                    <div className="form-group">
+                                        <form>
+                                            <label>* Class Representative Name: </label>
+                                            <input 
+                                                className="form-control"
+                                                name="crOne"
+                                                type="text"
+                                                placeholder="Enter Class Rep name"
+                                                value={this.crOne} 
+                                                onChange={this.handleChange} 
+                                            />
+                                            <br/>
+                                            <label>Second Class Representative Name:</label>
+                                            <input 
+                                                className="form-control"
+                                                name="crTwo"
+                                                type="text"
+                                                placeholder="Enter 2nd Class Rep name"
+                                                value={this.crTwo} 
+                                                onChange={this.handleChange} 
+                                            />           
+                                            <hr/>                             
+                                            {this.state.error && <div className="alert alert-danger m-1 p-0" role="alert">
+                                                Enter valid details
+                                            </div>}  
+                                            <button className="btn btn-success" style={{float:'right'}} onClick={this.handleSubmit}>
+                                                Submit
+                                            </button>
+                                        </form>
+                                    </div>
+                                </React.Fragment>
+                            )
+                            :
+                            (
+                                <React.Fragment>
+                                    <div>
+                                        <div className="alert alert-warning" role="alert">
+                                            <i className="fas fa-exclamation-circle"></i><span> Warning: This action will cost high amount of internet data!</span>
+                                        </div>
+                                        Are you sure, you want to generate the report?
+                                    </div>
+                                    <hr />
+                                    <div className="text-right">
+                                        <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-danger ml-2"
+                                            onClick={this.handleDownload}
+                                            disabled={this.state.generating}
+                                        >
+                                            {this.state.generating ? "Generating..." : "Generate"}
+                                        </button>
+                                    </div>                            
+                                </React.Fragment>                            
+                            )    
+                        }
                     </Modal>
                 </div>
             </div>

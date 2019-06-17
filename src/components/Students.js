@@ -3,7 +3,6 @@ import {db} from '../App';
 import StudList from './students/studentList/StudList';
 import Search from './students/studentList/Search';
 import Tags from './students/studentList/Tags';
-import StudProfile from './students/StudProfile';
 import jwt_decode from 'jwt-decode';
 
 class Students extends React.Component {
@@ -12,8 +11,7 @@ class Students extends React.Component {
         search: '',
         error: false,
         loading: true,
-        profile: false,
-        reg: ''
+        tag: false
     }
 
     componentWillMount = () => {
@@ -24,11 +22,13 @@ class Students extends React.Component {
             // debugger;
             db.collection("staffData").doc(value.id).get()
             .then(res => {
-                db.collection("students").where("_id","==",res.data().studentId).get()
+                db.collection("students").where("_id","==",res.data().studentId)
+                    .orderBy("regno").get()
                     .then((response) => {
                         let arr = [];
                         response.forEach(val => {
                             arr.push({
+                                id: val.id,
                                 ...val.data()
                             })
                         })
@@ -38,34 +38,19 @@ class Students extends React.Component {
             })
             .catch(err => {
                 this.setState({loading: false})
-                this.props.history.push('/error')
             })
         }
     }
 
-    componentWillUnmount = () => {
-        this.setState({
-            studs: [], 
-            search: '',
-            loading: true
-        })
-    }
 
     updateSearch = (e) => {
-        this.setState({search: e.target.value});
+        this.setState({search: e.target.value, tag: false});
     }
 
     updateTag = (e) => {
-        this.setState({search: e.target.name});
+        this.setState({search: e.target.name, tag: true});
     }
 
-    hideProfile = () => {
-        this.setState({profile: false, reg: ''})
-    }
-
-    setReg = (reg) => {
-        this.setState({profile: true, reg: reg})
-    }
 
     render() {      
     let loader = 
@@ -79,18 +64,13 @@ class Students extends React.Component {
                 <StudList 
                     studs = {this.state.studs}
                     filteredValue = {this.state.search}
-                    setReg={this.setReg}
+                    tag={this.state.tag}
                 />
             </React.Fragment>
         )
         return (
             <React.Fragment>
                 { 
-                    this.state.profile 
-                    ? 
-                        <StudProfile studDetails={this.state.studs} reg={this.state.reg} hideProfile={this.hideProfile} /> 
-                    : 
-                    (
                         <div className="studList">
                             <h2 className="text-center">Student List</h2>
                             <div className="my-3">
@@ -109,7 +89,7 @@ class Students extends React.Component {
                             <hr />
                             {this.state.loading ? loader : html }
                         </div>
-                    ) 
+                    
                 }
             </React.Fragment>
         )

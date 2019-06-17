@@ -3,20 +3,45 @@ import StudItems from './StudItems';
 
 class StudList extends React.Component {
 	render() {
-		let filteredList = this.props.studs.filter((students) => {
-			return (
-				students.name.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
-				||
-				students.regno.toString().indexOf(this.props.filteredValue) !== -1
-				||
-				students.Caste.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
-				||
-				students.dob.toString().indexOf(this.props.filteredValue) !== -1
-				||
-				students.gender.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
-
-			)
-		})
+		let filteredList
+		if(this.props.tag) {
+			filteredList = this.props.studs.filter((students) => {
+				if(students.Caste && students.castecatagory) {
+					return (
+						students.Caste.toLowerCase() === 'st' 
+						||
+						students.Caste.toLowerCase() === 'sc' 
+						||
+						students.Caste.toLowerCase() === 'schedule caste' 
+						||
+						students.Caste.toLowerCase() === 'schedule tribe' 
+						||
+						students.Caste.toLowerCase() === 'scheduled caste' 
+						||
+						students.Caste.toLowerCase() === 'scheduled tribe'
+						||
+						students.castecatagory.toLowerCase() === 'st' 
+						||
+						students.castecatagory.toLowerCase() === 'sc' 
+					)
+				}
+				else return null
+			})
+		}
+		else {
+			filteredList = this.props.studs.filter((students) => {
+				return (
+					students.name.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
+					||
+					students.regno.toString().indexOf(this.props.filteredValue) !== -1
+					||
+					students.dob.toString().indexOf(this.props.filteredValue) !== -1
+					||
+					students.gender.toLowerCase().indexOf(this.props.filteredValue.toLowerCase()) !== -1
+	
+				)
+			})
+		}
 
 		let studentList =
 			<div style={{ margin: '50px 20px 100px 20px', padding: '20px' }}>
