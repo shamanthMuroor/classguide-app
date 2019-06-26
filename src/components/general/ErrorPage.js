@@ -20,10 +20,10 @@ const errPage = {
   backgroundColor:'#333333', 
   color:'darkgray', 
   textAlign:'center', 
-  width: '25rem', 
+  width: '90vw', 
   marginTop: '150px', 
   marginBottom: '120px', 
-  padding: '50px'
+  padding: '5vw'
 }
 
 

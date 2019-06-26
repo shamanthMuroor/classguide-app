@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom';
 class SomethingsWrong extends React.Component {
   render() {  
     return ( 
-      <div className="card text-center" style={{margin:'100px'}}>
-        <div className="card-body" style={{padding: "50px"}}>
+      <div className="card text-center" style={{margin:'10vw', marginTop: '150px'}}>
+        <div className="card-body" style={{padding: "5vw"}}>
           <i className="fas fa-exclamation-triangle fa-5x mb-4"></i>
             <h1 className="text-monospace">Oops!</h1>
             <p>Sorry, Something went wrong</p>

@@ -47,8 +47,6 @@ class SlowLearners extends React.Component {
         this.closeModal = this.closeModal.bind(this);
     }
 
-
-    
     componentWillMount = () => {
         if(localStorage.staffAuth) {
             let val = JSON.parse(localStorage.getItem("staffAuth"))
@@ -71,6 +69,8 @@ class SlowLearners extends React.Component {
                     }
                 })
                 .catch(err => console.log(err))
+        } else {
+            this.props.history.push('/error')
         }
     }
     
@@ -180,7 +180,7 @@ class SlowLearners extends React.Component {
 
     render() {
         let loader =
-            <div className="text-center my-5">
+            <div className="text-center" style={{margin: '100px'}}>
                 <div className="spinner-border" role="status" style={{ width: '3rem', height: '3rem' }} />
             </div>
 
@@ -351,7 +351,7 @@ class SlowLearners extends React.Component {
                                             }
                                         </button>
                                         <button
-                                            className="btn btn-secondary"
+                                            className="btn btn-secondary ml-2"
                                             onClick={this.showLearnerForm}
                                         >
                                             + Add Slow Learners

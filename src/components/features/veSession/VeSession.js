@@ -1,8 +1,8 @@
 import React from 'react';
-import AddAcadAchievers from './AddAcadAchievers';
+import AddVeSession from './AddVeSession';
 import Modal from 'react-modal';
-import jwt_decode from 'jwt-decode';
 import { db } from '../../../App'
+import jwt_decode from 'jwt-decode'
 
 const customStyles = {
     content: {
@@ -17,18 +17,13 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
-class AcadAchievers extends React.Component {
-    constructor() {
-        super();
-
-        this.state = {
+class VeSession extends React.Component {
+    state = {
             modalIsOpen: false,
-            showAcad: false,
-            regno: '',
-            name: '',
-            marks: '',
-            motivation: '',
-            acadgroups: [],
+            date: '',
+            agenda: '',
+            description: '',
+            groups: [],
             error: '',
             showSuccess: false,
             submitting: false,
@@ -36,44 +31,41 @@ class AcadAchievers extends React.Component {
             isDeleting: false,
             id: '',
             user: {}
-        };
-
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-    }
+        }
 
     componentWillMount = () => {
         if(localStorage.staffAuth) {
             let val = JSON.parse(localStorage.getItem("staffAuth"))
             this.setState({user: jwt_decode(val.token)})
             db.collection('general').doc(jwt_decode(val.token).id)
-                .collection('academic').get()
-                        .then(values => {
-                            if(values.size > 0) {
-                                values.forEach(val => {
-                                    let arr = []
-                                    arr.push({
-                                        id: val.id,
-                                        ...val.data()
-                                    })
-                                    this.setState({acadgroups: this.state.acadgroups.concat(arr), loading: false})
-                                })
-                            }
-                            else {
-                                this.setState({loading: false})
-                            }
+                .collection('vesession').orderBy('date').get()
+                .then(val => {
+                    if(val.size > 0) {
+                        val.forEach(values => {
+                            let arr = []
+                            arr.push({
+                                id: values.id,
+                                ...values.data()
+                            })
+                            this.setState({ groups: this.state.groups.concat(arr), loading: false })
                         })
-                        .catch(err => console.log(err))
+                    }
+                    else {
+                        this.setState({loading: false})
+                    }
+                })
+                .catch(err => console.log(err))
         } else {
             this.props.history.push('/error')
         }
     }
-   
-    openModal(id) {
+
+
+    openModal = (id) => {
         this.setState({ id: id, modalIsOpen: true });
     }
 
-    closeModal() {
+    closeModal = () => {
         this.setState({ modalIsOpen: false });
     }
 
@@ -82,29 +74,28 @@ class AcadAchievers extends React.Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
-    addAcadAchievers = () => {
-        const { regno, name, marks, motivation } = this.state;
-        if( regno === '' || name === '' || marks === '' )
+    addVeSession = () => {
+        const { date, agenda, description } = this.state;
+        if( date === '' || agenda === '' || description === '' )
             this.setState({error: 'Enter valid details'})
         else {
             this.setState({submitting: true})
             db.collection('general').doc(this.state.user.id)
-                .collection('academic').add({
-                        regno: this.state.regno,
-                        name: this.state.name,
-                        marks: this.state.marks,
-                        motivation: this.state.motivation
+                .collection('vesession').add({
+                    date: this.state.date,
+                    agenda: this.state.agenda,
+                    description: this.state.description
                 })
                 .then((docRef) => {
                     const { id } = docRef;
-                    const group = { id, regno, name, marks, motivation };
+                    // console.log("adding id: " + id)
+                    const group = { id, date, agenda, description };
                     this.setState({
-                        showAcad: false,        
-                        acadgroups: this.state.acadgroups.concat(group),
-                        regno: '',
-                        name: '',
-                        marks: '',
-                        motivation: '',
+                        showVeSession: false,        
+                        groups: this.state.groups.concat(group),
+                        date: '',
+                        description: '',
+                        agenda: '',
                         error: '',
                         showSuccess: true,
                         submitting: false
@@ -113,28 +104,27 @@ class AcadAchievers extends React.Component {
         }
     }
 
-    delAcadAchievers = () => {
+    delVeSession = () => {
         this.setState({ isDeleting: true, showSuccess: false })
         db.collection('general').doc(this.state.user.id)
-            .collection('academic').doc(this.state.id).delete()
-                    .then(() => {
-                        // console.log(this.state.id + " del successful")
-                        this.setState({ acadgroups: [...this.state.acadgroups.filter(group => group.id !== this.state.id)] , isDeleting: false, modalIsOpen: false })
-                    })
-                    .catch(err => console.log(err))
+            .collection('vesession').doc(this.state.id).delete()
+            .then(() => {
+                // console.log(this.state.id + " del successful")
+                this.setState({ groups: [...this.state.groups.filter(group => group.id !== this.state.id)], isDeleting: false, modalIsOpen: false  })
+            })
+            .catch(err => console.log(err))
     }
 
-    showAcadForm = () => {
-        this.setState({ showAcad: true })
+    showAddVeSession = () => {
+        this.setState({ showVeSession: true })
     }
 
-    hideAcadAchievers = () => {
+    hideVeSession = () => {
         this.setState({ 
-            showAcad: false,
-            regno: '',
-            name: '',
-            marks: '',
-            motivation: '',
+            showVeSession: false,
+            date: '',
+            agenda: '',
+            description: '',
             error: ''
         })
     }
@@ -144,23 +134,23 @@ class AcadAchievers extends React.Component {
             <div className="text-center" style={{margin: '100px'}}>
                 <div className="spinner-border" role="status" style={{width: '3rem', height: '3rem'}} />
             </div>
-
+            
         let successMsg=             
-            <div className="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> Academic Achiever Details added successfully
-                <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.hideSuccess}>
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div className="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> Value Education Session added successfully
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.hideSuccess}>
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
 
-        let html =       
+        let html =   
             <div style={{margin: '50px 20px 100px 20px', padding: '20px'}}>
                 <h3>No data Found!</h3>
                 <small style={{color:'gray'}}>(Note: Please check your internet connection)</small>
             </div>
-                        
-        if (this.state.acadgroups.length > 0) {
-            html = this.state.acadgroups.map((data, i) => {
+
+        if (this.state.groups.length > 0) {
+            html = this.state.groups.map((data, i) => {
                 return (
                     <div key={i} className="card mt-3 bg-light">
                     <div className="card-header">
@@ -178,87 +168,77 @@ class AcadAchievers extends React.Component {
                     </div>
                     <div className="card-body d-flex">
                         <div className="row mx-0" style={{ width: '100%' }}>
-                            <div className="col-md-2">
-                                <div>
-                                    <i className="fas fa-user-circle fa-5x d-none d-md-block"></i>
-                                    <span style={{ fontWeight: 'bold', color: 'gray' }}>Student Name</span>
-                                    <div>{data.name}</div> 
-                                </div>
-                            </div>
-                            <div className="col-md-8">
-                                <hr className="d-md-none" />
+                            <div className="col-md-12">
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Register No: </span>
+                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Date: </span>
                                     </div>
                                     <div className="col-md-9">
-                                        <span>{data.regno}</span>
+                                        <span>{data.date}</span>
                                     </div>
                                 </div>
                                 <hr />
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Marks: </span>
+                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Agenda: </span>
                                     </div>
                                     <div className="col-md-9">
-                                        <span>{data.marks}</span>
+                                        <span>{data.agenda}</span>
                                     </div>
                                 </div>
                                 <hr />
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Motivation: </span>
+                                        <span style={{ fontWeight: 'bold', color: 'gray' }}>Description: </span>
                                     </div>
                                     <div className="col-md-9">
-                                        <span>{data.motivation}</span>
+                                        <span>{data.description}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            )
-        })
-    }
+                )
+            })
+        }
         return (
             <div className="container">
                 {
-                    this.state.showAcad 
+                    this.state.showVeSession 
                     ? 
                     (
-                        <AddAcadAchievers 
+                        <AddVeSession 
                             handleChange={this.handleChange}
-                            regno={this.state.regno}
-                            name={this.state.name}
-                            marks={this.state.marks}
-                            motivation={this.state.motivation}
-                            hideAcadAchievers={this.hideAcadAchievers}
+                            date={this.state.date}
+                            agenda={this.state.agenda}
+                            description={this.state.description}
+                            hideVeSession={this.hideVeSession}
                             error={this.state.error} 
-                            addAcadAchievers={this.addAcadAchievers}
+                            addVeSession={this.addVeSession}
                             submitting={this.state.submitting}
                         />
-
                     ) 
                     : 
                     (
                         <React.Fragment>
                             <div className="text-center" style={{marginTop: '100px'}}>
-                                <h3>Academic Achievers</h3>
+                                <h2>Value Education Session</h2>
                             </div>
-                            <hr />
                             <div style={{margin: '30px 0px'}}>
                                 <div className="text-right">
                                     <button
                                         className="btn btn-secondary"
-                                        onClick={this.showAcadForm}
+                                        onClick={this.showAddVeSession}
                                     >
-                                        + Add Academic Achievers
+                                        + Add group
                                     </button>
                                 </div>   
                             </div>
                             {this.state.showSuccess && successMsg}
                             {this.state.loading ? loader : html}
-                            <div>
+
+                                <div>
                                     <Modal
                                         isOpen={this.state.modalIsOpen}
                                         onRequestClose={this.closeModal}
@@ -276,7 +256,7 @@ class AcadAchievers extends React.Component {
                                             <div className="alert alert-danger" role="alert">
                                                 <i className="fas fa-exclamation-circle"></i><span> Warning: This action cannot be undone!</span>
                                             </div>
-                                            Are you sure, you want to delete this permanently?
+                                            Are you sure, you want to delete this session permanently?
                                         </div>
                                         <hr />
                                         <div className="text-right">
@@ -284,7 +264,7 @@ class AcadAchievers extends React.Component {
                                             <button
                                                 type="button"
                                                 className="btn btn-danger ml-2"
-                                                onClick={this.delAcadAchievers}
+                                                onClick={this.delVeSession}
                                                 disabled={this.state.isDeleting}
                                             >
                                                 {this.state.isDeleting ? "Deleting..." : "Delete"}
@@ -300,4 +280,4 @@ class AcadAchievers extends React.Component {
     }
 }
 
-export default AcadAchievers;
+export default VeSession;

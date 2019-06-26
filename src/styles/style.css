@@ -44,10 +44,6 @@ a:hover {
 
 
 /* Navbar */
-.mainNav {
-    background-color: #333333; 
-}
-
 .navbar-nav .nav-link {
     font-size: 15px;
     font-weight: 500;
@@ -344,7 +340,7 @@ footer {
     footer {
         display: block;
         margin-top: 3rem;
-        background-color: #333333;  
+        background-color: #1e1e1e;  
     }
 
     .foot {

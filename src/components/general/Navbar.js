@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavLink, Link, withRouter} from 'react-router-dom';  
 import logo from '../../images/aloylogo.png'; 
-import { auth } from '../../App'
     
 const hidenav = () =>{
     document.getElementById('menuToggler').className="navbar-collapse collapse topnav";
@@ -9,16 +8,7 @@ const hidenav = () =>{
 
 class Navbar extends React.Component {
     state = {
-        user: false,
-        admin: false
-    }
-
-    componentWillMount = () => {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({ admin: true })
-            }
-        })
+        user: false
     }
 
     handleStaffLogout = () => {
@@ -26,19 +16,9 @@ class Navbar extends React.Component {
 		this.props.history.push('/login')
 	}
 
-	handleAdminLogout = () => {
-		auth.onAuthStateChanged((user) => {
-			if (user) {
-				auth.signOut()
-                this.setState({ admin: false })
-			}
-		})
-		this.props.history.push('/login')
-	}
-
     render() {
         return (
-            <nav className="navbar fixed-top navbar-expand-lg navbar-dark mainNav">           
+            <nav className="navbar fixed-top navbar-dark navbar-expand-lg" style={{ backgroundColor: '#333333' }}>           
                 <button 
                     className="navbar-toggler border-0 " 
                     type="button" 
@@ -52,7 +32,7 @@ class Navbar extends React.Component {
                 </button>
     
                 {/* Action for Menu toggler */}
-                <div className="collapse navbar-collapse topnav" id="menuToggler">
+                <div className="collapse navbar-collapse" id="menuToggler">
                     <Link className="navbar-brand d-none d-lg-flex" to="/">
                         <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="College Logo" />
                         SAC
@@ -70,26 +50,38 @@ class Navbar extends React.Component {
                             </NavLink>
                         </li>
                         <li className="nav-item dropdown">
-                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" exact to="#">
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-toggle="dropdown" exact to="#">
                                 Meetings
                             </NavLink>
                             <div
                                 className="dropdown-menu"
-                                aria-labelledby="navbarDropdown"
+                                aria-labelledby="navbarDropdown1"
                                 style={{ backgroundColor: '#333333', border: 'none' }}
                             >
                                 <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/class-meetings" style={{ color: 'rgba(255,255,255,.5)' }}>
                                     Class Meetings
-                                    </NavLink>
+                                </NavLink>
                                 <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/parent-meetings" style={{ color: 'rgba(255,255,255,.5)' }}>
                                     Parent Meetings
-                                    </NavLink>
+                                </NavLink>
                             </div>
                         </li>
-                        <li className="nav-item">
-                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/counselling">
-                                Counselling
+                        <li className="nav-item dropdown">
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link dropdown-toggle" id="navbarDropdown2" role="button" data-toggle="dropdown" exact to="#">
+                                Programs Organised
                             </NavLink>
+                            <div
+                                className="dropdown-menu"
+                                aria-labelledby="navbarDropdown2"
+                                style={{ backgroundColor: '#333333', border: 'none' }}
+                            >
+                                <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/counselling" style={{ color: 'rgba(255,255,255,.5)' }}>
+                                    Career Guidance Counselling
+                                </NavLink>
+                                <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/ve-session" style={{ color: 'rgba(255,255,255,.5)' }}>
+                                    VE-Sessions
+                                </NavLink>
+                            </div>
                         </li>
                         <li className="nav-item">
                             <NavLink activeClassName="selected" className="nav-link" exact to="/slow-learners">
@@ -97,10 +89,10 @@ class Navbar extends React.Component {
                             </NavLink>
                         </li>
                         <li className="nav-item dropdown">
-                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" exact to="#">
+                            <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link dropdown-toggle" id="navbarDropdown3" role="button" data-toggle="dropdown" exact to="#">
                                 Achievers
                             </NavLink>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{backgroundColor: '#333333', border: 'none'}}>
+                            <div className="dropdown-menu" aria-labelledby="navbarDropdown3" style={{backgroundColor: '#333333', border: 'none'}}>
                                 <NavLink activeClassName="selected" activeStyle={NavStyle} className="nav-link" exact to="/academic-achievers" style={{color: 'rgba(255,255,255,.5)', fontSize: '14px'}}>
                                     Academic Achievers
                                 </NavLink>
@@ -153,18 +145,9 @@ class Navbar extends React.Component {
                                 Feedback
                             </NavLink>
                             <hr className="m-1 mx-3" style={{backgroundColor: '#F5F2F2', opacity:'0.15'}}/>
-                            { 
-                                this.state.admin
-                                ? 
-                                (
-                                    <Link className="nav-link" exact="true" to="#" onClick={this.handleAdminLogout} style={{fontWeight: '600'}}>Logout</Link>
-                                    
-                                ) 
-                                : 
-                                (
-                                    <Link className="nav-link" exact="true" to="#" onClick={this.handleStaffLogout} style={{fontWeight: '600'}}>Logout</Link>
-                                )
-                            }
+                            <Link className="nav-link" exact="true" to="#" onClick={this.handleStaffLogout} style={{fontWeight: '600'}}>
+                                Logout
+                            </Link>
                         </div>
                     </li>
                 </ul>

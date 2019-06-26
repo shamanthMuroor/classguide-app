@@ -31,6 +31,7 @@ class Reports extends React.Component {
         meetings: [],
         parentmeetings: [],
         counselling: [],
+        vesession: [],
         rural: [],
         slowLearner: [],
         acadGroups: [],
@@ -41,26 +42,29 @@ class Reports extends React.Component {
     };
 
     componentWillMount = () => {
-        let val = JSON.parse(localStorage.getItem("staffAuth"))
-        this.setState({ user: jwt_decode(val.token) })
+        if (localStorage.staffAuth) {
+            let val = JSON.parse(localStorage.getItem("staffAuth"))
+            this.setState({ user: jwt_decode(val.token) })
 
-        
-        // Student List
-        db.collection("staffData").doc(jwt_decode(val.token).id).get()
-            .then(res => {
-                this.setState({ guideClass: res.data().studentId })
-                db.collection("students").where("_id", "==", res.data().studentId).get()
-                    .then((response) => {
-                        let arr = [];
-                        response.forEach(val => {
-                            arr.push({
-                                id: val.id,
-                                ...val.data()
+            // Student List
+            db.collection("staffData").doc(jwt_decode(val.token).id).get()
+                .then(res => {
+                    this.setState({ guideClass: res.data().studentId })
+                    db.collection("students").where("_id", "==", res.data().studentId).get()
+                        .then((response) => {
+                            let arr = [];
+                            response.forEach(val => {
+                                arr.push({
+                                    id: val.id,
+                                    ...val.data()
+                                })
                             })
+                            this.setState({ studentList: this.state.studentList.concat(arr) })
                         })
-                        this.setState({ studentList: this.state.studentList.concat(arr) })
-                    })
                 })
+        }
+        else
+            this.props.history.push('/error')
     }
 
     openModal = () => {
@@ -81,8 +85,8 @@ class Reports extends React.Component {
     // Submitting cr names
     handleSubmit = e => {
         e.preventDefault()
-        if( this.state.crOne === '' )
-            this.setState({ error: true, crnames: false  })
+        if (this.state.crOne === '')
+            this.setState({ error: true, crnames: false })
         else
             this.setState({ crnames: true, error: false })
     }
@@ -132,6 +136,20 @@ class Reports extends React.Component {
                 })
             })
 
+        // VE Session
+        db.collection('general').doc(this.state.user.id)
+            .collection('vesession').orderBy('regno').get()
+            .then(val => {
+                let arr = []
+                val.forEach(values => {
+                    arr.push({
+                        id: values.id,
+                        ...values.data()
+                    })
+                    this.setState({ vesession: this.state.vesession.concat(arr) })
+                })
+            })
+
         // Rural
         db.collection('general').doc(this.state.user.id)
             .collection('rural').orderBy('regno').get()
@@ -165,7 +183,7 @@ class Reports extends React.Component {
         if (this.state.studentList.length > 0) {
             list = this.state.studentList.filter((value, i) => {
                 if (value.Caste) {
-                    if ( value.Caste.toLowerCase() === 'sc' || value.Caste.toLowerCase() === 'st' || value.Caste.toLowerCase() === 'schedule caste' || value.Caste.toLowerCase() === 'schedule tribe' || value.Caste.toLowerCase() === 'scheduled caste' || value.Caste.toLowerCase() === 'scheduled tribe' || value.castecatagory.toLowerCase() === 'st' ||  value.castecatagory.toLowerCase() === 'sc'  ) {
+                    if (value.Caste.toLowerCase() === 'sc' || value.Caste.toLowerCase() === 'st' || value.Caste.toLowerCase() === 'schedule caste' || value.Caste.toLowerCase() === 'schedule tribe' || value.Caste.toLowerCase() === 'scheduled caste' || value.Caste.toLowerCase() === 'scheduled tribe' || value.castecatagory.toLowerCase() === 'st' || value.castecatagory.toLowerCase() === 'sc') {
                         return value
                     }
                     else
@@ -175,7 +193,7 @@ class Reports extends React.Component {
                     return null
             })
             this.setState({ casteList: list })
-        }    
+        }
 
         // Academic Achievers
         db.collection('general').doc(this.state.user.id)
@@ -229,6 +247,7 @@ class Reports extends React.Component {
             meetings: [],
             parentmeetings: [],
             counselling: [],
+            vesession: [],
             rural: [],
             slowLearner: [],
             acadGroups: [],
@@ -245,7 +264,7 @@ class Reports extends React.Component {
     }
 
     render() {
-        let students = 
+        let students =
             <tr>
                 <td>-</td>
                 <td>-</td>
@@ -258,21 +277,21 @@ class Reports extends React.Component {
             </tr>
         if (this.state.studentList.length > 0) {
             students = this.state.studentList.map((value, i) => {
-                    return (
-                        <tr key={i}>
-                            <td>{++i}</td>
-                            <td>{value.regno}</td>
-                            <td>{value.name}</td>
-                            <td>{value.address}</td>
-                            <td>-</td>
-                            <td>{value.father}</td>
-                            <td>-</td>
-                            <td>{value.fnumber}</td>
-                        </tr>
-                    )
+                return (
+                    <tr key={i}>
+                        <td>{++i}</td>
+                        <td>{value.regno}</td>
+                        <td>{value.name}</td>
+                        <td>{value.address}</td>
+                        <td>-</td>
+                        <td>{value.father}</td>
+                        <td>-</td>
+                        <td>{value.fnumber}</td>
+                    </tr>
+                )
             })
         }
-        let classmeetings = 
+        let classmeetings =
             <tr>
                 <td>-</td>
                 <td>-</td>
@@ -281,18 +300,18 @@ class Reports extends React.Component {
             </tr>
         if (this.state.meetings.length > 0) {
             classmeetings = this.state.meetings.map((value, i) => {
-                    let date = value.date.split("-").reverse().join("-");
-                    return (
-                        <tr key={i}>
-                            <td>{++i}</td>
-                            <td>{date}</td>
-                            <td>{value.agenda}</td>
-                            <td>{value.description}</td>
-                        </tr>
-                    )
-                })
+                let date = value.date.split("-").reverse().join("-");
+                return (
+                    <tr key={i}>
+                        <td>{++i}</td>
+                        <td>{date}</td>
+                        <td>{value.agenda}</td>
+                        <td>{value.description}</td>
+                    </tr>
+                )
+            })
         }
-        let parentmeetings = 
+        let parentmeetings =
             <tr>
                 <td>-</td>
                 <td>-</td>
@@ -303,20 +322,20 @@ class Reports extends React.Component {
             </tr>
         if (this.state.parentmeetings.length > 0) {
             parentmeetings = this.state.parentmeetings.map((value, i) => {
-                    let date = value.date.split("-").reverse().join("-");
-                    return (
-                        <tr key={i}>
-                            <td>{++i}</td>
-                            <td>{value.reg}</td>
-                            <td>{date}</td>
-                            <td>{value.agenda}</td>
-                            <td>{value.attended}</td>
-                            <td>{value.description}</td>
-                        </tr>
-                    )
-                })
+                let date = value.date.split("-").reverse().join("-");
+                return (
+                    <tr key={i}>
+                        <td>{++i}</td>
+                        <td>{value.reg}</td>
+                        <td>{date}</td>
+                        <td>{value.agenda}</td>
+                        <td>{value.attended}</td>
+                        <td>{value.description}</td>
+                    </tr>
+                )
+            })
         }
-        let counselling = 
+        let counselling =
             <tr>
                 <td>-</td>
                 <td>-</td>
@@ -328,20 +347,39 @@ class Reports extends React.Component {
             </tr>
         if (this.state.counselling.length > 0) {
             counselling = this.state.counselling.map((value, i) => {
-                    return (
-                        <tr key={i}>
-                            <td>{++i}</td>
-                            <td>{value.regno}</td>
-                            <td>{value.name}</td>
-                            <td>{value.marks}</td>
-                            <td>{value.reason}</td>
-                            <td>{value.measures}</td>
-                            <td>{value.output}</td>
-                        </tr>
-                    )
-                })
+                return (
+                    <tr key={i}>
+                        <td>{++i}</td>
+                        <td>{value.regno}</td>
+                        <td>{value.name}</td>
+                        <td>{value.marks}</td>
+                        <td>{value.reason}</td>
+                        <td>{value.measures}</td>
+                        <td>{value.output}</td>
+                    </tr>
+                )
+            })
         }
-        let rural = 
+        let vesession =
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        if (this.state.vesession.length > 0) {
+            vesession = this.state.vesession.map((value, i) => {
+                return (
+                    <tr key={i}>
+                        <td>{++i}</td>
+                        <td>{value.date}</td>
+                        <td>{value.agenda}</td>
+                        <td>{value.description}</td>
+                    </tr>
+                )
+            })
+        }
+        let rural =
             <tr>
                 <td>-</td>
                 <td>-</td>
@@ -389,8 +427,6 @@ class Reports extends React.Component {
                 )
             })
         }
-
-
         // SC/ST
         let casteStudents =
             <tr>
@@ -411,8 +447,6 @@ class Reports extends React.Component {
                 )
             })
         }
-
-
         let acadGroups =
             <tr>
                 <td>-</td>
@@ -456,26 +490,26 @@ class Reports extends React.Component {
             })
         }
         let nonAcadGroups =
-                <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            if (this.state.nonAcadGroups.length > 0) {
-                nonAcadGroups = this.state.nonAcadGroups.map((value, i) => {
-                    return (
-                        <tr>
-                            <td>{++i}</td>
-                            <td>{value.regno}</td>
-                            <td>{value.name}</td>
-                            <td>{value.excellence}</td>
-                            <td>{value.prizes}</td>
-                        </tr>
-                    )
-                })
-            }
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        if (this.state.nonAcadGroups.length > 0) {
+            nonAcadGroups = this.state.nonAcadGroups.map((value, i) => {
+                return (
+                    <tr>
+                        <td>{++i}</td>
+                        <td>{value.regno}</td>
+                        <td>{value.name}</td>
+                        <td>{value.excellence}</td>
+                        <td>{value.prizes}</td>
+                    </tr>
+                )
+            })
+        }
 
         return (
             <div className="container">
@@ -620,6 +654,21 @@ class Reports extends React.Component {
                         </tbody>
                     </table>
 
+                    <h4 className="text-center" style={{ marginTop: '100px' }}>Value Education Sessions</h4>
+                    <table className="mt-4 p-2" style={{ width: "100%" }}>
+                        <thead>
+                            <tr>
+                                <th>Sl.no</th>
+                                <th>Date</th>
+                                <th>Agenda</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.report && vesession}
+                        </tbody>
+                    </table>
+
                     <h4 className="text-center" style={{ marginTop: '100px' }}>List of Rural students</h4>
                     <table className="mt-4 p-2" style={{ width: "100%" }}>
                         <thead>
@@ -719,7 +768,7 @@ class Reports extends React.Component {
                     </table>
                 </div>
                 {/* End of Report */}
-                
+
                 <div className="card d-print-none" style={{ margin: "130px 10px 130px 10px", padding: '50px' }}>
                     <div className="card-header">
                         <h3 className="text-center">Generating Report</h3>
@@ -739,72 +788,72 @@ class Reports extends React.Component {
                         contentLabel="Confirm Modal"
                     >
                         <div className="d-flex justify-content-between">
-                            { !this.state.crnames ? <h5>Add Class Rep Names</h5> : <h5>Confirm To Generate Reports</h5> }
+                            {!this.state.crnames ? <h5>Add Class Rep Names</h5> : <h5>Confirm To Generate Reports</h5>}
                             <button onClick={this.closeModal} style={{ background: 'none', border: 'none' }}>
                                 <span style={{ fontWeight: 'bold', fontSize: '20px' }}>&times;</span>
                             </button>
                         </div>
                         <hr />
                         {
-                            !this.state.crnames 
-                            ? 
-                            (
-                                <React.Fragment>
-                                    <div className="form-group">
-                                        <form>
-                                            <label>* Class Representative Name: </label>
-                                            <input 
-                                                className="form-control"
-                                                name="crOne"
-                                                type="text"
-                                                placeholder="Enter Class Rep name"
-                                                value={this.crOne} 
-                                                onChange={this.handleChange} 
-                                            />
-                                            <br/>
-                                            <label>Second Class Representative Name:</label>
-                                            <input 
-                                                className="form-control"
-                                                name="crTwo"
-                                                type="text"
-                                                placeholder="Enter 2nd Class Rep name"
-                                                value={this.crTwo} 
-                                                onChange={this.handleChange} 
-                                            />           
-                                            <hr/>                             
-                                            {this.state.error && <div className="alert alert-danger m-1 p-0" role="alert">
-                                                Enter valid details
-                                            </div>}  
-                                            <button className="btn btn-success" style={{float:'right'}} onClick={this.handleSubmit}>
-                                                Submit
+                            !this.state.crnames
+                                ?
+                                (
+                                    <React.Fragment>
+                                        <div className="form-group">
+                                            <form>
+                                                <label>* Class Representative Name: </label>
+                                                <input
+                                                    className="form-control"
+                                                    name="crOne"
+                                                    type="text"
+                                                    placeholder="Enter Class Rep name"
+                                                    value={this.crOne}
+                                                    onChange={this.handleChange}
+                                                />
+                                                <br />
+                                                <label>Second Class Representative Name:</label>
+                                                <input
+                                                    className="form-control"
+                                                    name="crTwo"
+                                                    type="text"
+                                                    placeholder="Enter 2nd Class Rep name"
+                                                    value={this.crTwo}
+                                                    onChange={this.handleChange}
+                                                />
+                                                <hr />
+                                                {this.state.error && <div className="alert alert-danger m-1 p-0" role="alert">
+                                                    Enter valid details
+                                            </div>}
+                                                <button className="btn btn-success" style={{ float: 'right' }} onClick={this.handleSubmit}>
+                                                    Submit
                                             </button>
-                                        </form>
-                                    </div>
-                                </React.Fragment>
-                            )
-                            :
-                            (
-                                <React.Fragment>
-                                    <div>
-                                        <div className="alert alert-warning" role="alert">
-                                            <i className="fas fa-exclamation-circle"></i><span> Warning: This action will cost high amount of internet data!</span>
+                                            </form>
                                         </div>
-                                        Are you sure, you want to generate the report?
+                                    </React.Fragment>
+                                )
+                                :
+                                (
+                                    <React.Fragment>
+                                        <div>
+                                            <div className="alert alert-warning" role="alert">
+                                                <i className="fas fa-exclamation-circle"></i><span> Warning: This action will cost high amount of internet data!</span>
+                                            </div>
+                                            Are you sure, you want to generate the report?
                                     </div>
-                                    <hr />
-                                    <div className="text-right">
-                                        <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
-                                        <button
-                                            type="button"
-                                            className="btn btn-danger ml-2"
-                                            onClick={this.handleDownload}
-                                            disabled={this.state.generating}
-                                        >
-                                            {this.state.generating ? "Generating..." : "Generate"}
-                                        </button>
-                                    </div>                            
-                                </React.Fragment>                            
-                            )    
+                                        <hr />
+                                        <div className="text-right">
+                                            <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger ml-2"
+                                                onClick={this.handleDownload}
+                                                disabled={this.state.generating}
+                                            >
+                                                {this.state.generating ? "Generating..." : "Generate"}
+                                            </button>
+                                        </div>
+                                    </React.Fragment>
+                                )
                         }
                     </Modal>
                 </div>
