@@ -64,6 +64,8 @@ class NonAcadAchievers extends React.Component {
                         }
                     })
                     .catch(err => console.log(err))
+        } else {
+            this.props.history.push('/error')
         }
     }
    
@@ -139,7 +141,7 @@ class NonAcadAchievers extends React.Component {
 
     render() {
         let loader = 
-            <div className="text-center my-5">
+            <div className="text-center" style={{margin: '100px'}}>
                 <div className="spinner-border" role="status" style={{width: '3rem', height: '3rem'}} />
             </div>
 

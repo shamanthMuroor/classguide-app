@@ -6,8 +6,12 @@ class Stafprofile extends React.Component {
     user: false
   }
   componentWillMount = () => {
-    let val = JSON.parse(localStorage.getItem("staffAuth"))
-    this.setState({user: jwt_decode(val.token)})
+    if(localStorage.staffAuth) {
+      let val = JSON.parse(localStorage.getItem("staffAuth"))
+      this.setState({user: jwt_decode(val.token)})
+    }
+    else
+      this.props.history.push('/error')
   }
   
   getYear() {

@@ -1,6 +1,7 @@
 import React from 'react';
-import { db, auth } from '../App';
+import { db } from '../App';
 import axios from 'axios';
+import AdminNavbar from './general/AdminNavbar';
 
 class AdminPanel extends React.Component {
     state = {
@@ -43,15 +44,6 @@ class AdminPanel extends React.Component {
             })
             .catch(err => console.log(err));
     }
-
-    handleLogout = () => {
-        auth.signOut()
-            .then(function () {
-                console.log("Sign-out successful")
-            })
-            .catch(err => console.log(err));
-    }
-
 
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value })
@@ -99,13 +91,14 @@ class AdminPanel extends React.Component {
 
         return (
             <React.Fragment>
+                <AdminNavbar />
                 {
                     this.state.loading
                         ?
                         loader
                         :
                         (
-                            <div className="container shadow-lg p-3" style={{ marginTop: '120px' }}>
+                            <div className="container shadow-lg p-3" style={{ marginTop: '70px' }}>
                                 <div className="card-body" style={{ height: '350px' }}>
                                     <h1 className="text-center" style={{ padding: '10px', margin: '10px' }}>Admin Panel</h1>
                                     <hr />
@@ -113,31 +106,35 @@ class AdminPanel extends React.Component {
                                         {this.state.error && <div className="alert alert-danger m-1 p-0" role="alert">
                                             Choose valid option
                                     </div>}
-                                        <label>
-                                            Pick  lecturer:
-                                        <select
-                                                id="staffValue"
-                                                name="staffValue"
-                                                value={this.state.staffValue}
-                                                onChange={this.handleChange}
-                                            >
-                                                <option>Select Lecturer</option>
-                                                {staffcol}
-                                            </select>
-                                        </label>
-                                        <label>
-                                            Pick  class:
-                                        <select
-                                                id="classValue"
-                                                name="classValue"
-                                                value={this.state.classValue}
-                                                onChange={this.handleChange}
-                                                style={{ width: '75%' }}
-                                            >
-                                                <option>Select Class</option>
-                                                {classcol}
-                                            </select>
-                                        </label>
+                                        <div>
+                                            <label>
+                                                Pick  lecturer:
+                                                <select
+                                                    id="staffValue"
+                                                    name="staffValue"
+                                                    value={this.state.staffValue}
+                                                    onChange={this.handleChange}
+                                                >
+                                                    <option>Select Lecturer</option>
+                                                    {staffcol}
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                Pick  class:
+                                                <select
+                                                    id="classValue"
+                                                    name="classValue"
+                                                    value={this.state.classValue}
+                                                    onChange={this.handleChange}
+                                                    style={{ width: '75%' }}
+                                                >
+                                                    <option>Select Class</option>
+                                                    {classcol}
+                                                </select>
+                                            </label>
+                                        </div>
                                         <br />
                                         <button type="button" value="Submit" onClick={this.handleSubmit}>Submit</button>
                                     </form>
