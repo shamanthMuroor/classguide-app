@@ -20,12 +20,12 @@ class Login extends React.Component {
   }
 
   onAdminSubmit = (e) => {
-      e.preventDefault();
-    this.setState({error: false, logging: true})
+    e.preventDefault();
+    this.setState({ error: false, logging: true })
     auth.signInWithEmailAndPassword(this.state.adminEmail, this.state.adminPassword)
-      .then(()=> {
+      .then(() => {
         // console.log("logged in")
-        this.setState({logging: false})
+        this.setState({ logging: false })
         this.props.history.push("/admin")
       })
       .catch(err => {

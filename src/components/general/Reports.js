@@ -48,20 +48,23 @@ class Reports extends React.Component {
 
             // Student List
             db.collection("staffData").doc(jwt_decode(val.token).id).get()
-                .then(res => {
-                    this.setState({ guideClass: res.data().studentId })
-                    db.collection("students").where("_id", "==", res.data().studentId).get()
-                        .then((response) => {
-                            let arr = [];
-                            response.forEach(val => {
-                                arr.push({
-                                    id: val.id,
-                                    ...val.data()
-                                })
-                            })
-                            this.setState({ studentList: this.state.studentList.concat(arr) })
+                        .then(res => {
+                            if (res.data() != null) {
+                                this.setState({ guideClass: res.data().studentId })
+                                db.collection("students").where("_id", "==", res.data().studentId).get()
+                                    .then((response) => {
+                                        let arr = [];
+                                        response.forEach(val => {
+                                            arr.push({
+                                                id: val.id,
+                                                ...val.data()
+                                            })
+                                        })
+                                        this.setState({ studentList: this.state.studentList.concat(arr) })
+                                    })
+
+                            }
                         })
-                })
         }
         else
             this.props.history.push('/error')
