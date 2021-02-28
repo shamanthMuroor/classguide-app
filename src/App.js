@@ -36,7 +36,7 @@ class App extends React.Component {
 		user: false
 	}
 	componentWillMount = () => {
-		if (localStorage.Staffprofile) {
+		if (localStorage.staffAuth) {
 			let val = JSON.parse(localStorage.getItem("staffAuth"))
 			this.setState({ user: jwt_decode(val.token) })
 		}

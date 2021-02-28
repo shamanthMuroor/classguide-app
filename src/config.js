@@ -12,6 +12,8 @@ const firebaseConfig = {
     appId: "1:252911290527:web:c91326363afcce28"
   };
 
-  let myApp  = firebase.initializeApp(firebaseConfig);
+let myApp  = firebase.initializeApp(firebaseConfig);
 
 export default myApp;
+
+// export const API_BASE_URL = 'http://localhost:8000/api';
