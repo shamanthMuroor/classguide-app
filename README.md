@@ -1,4 +1,10 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react)
 # Class Guide System WebApp using ReactJS and Firebase Firestore
+
+Class Guide System is a webapp basically for maintaining proper database and details about the students which makes accessiblity easy for lecturers(class guides)
+
+ReactJS is the main JavaScript Library used and Firebase Firestore is used for database and login is also initialised through firebase authentication.s
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
