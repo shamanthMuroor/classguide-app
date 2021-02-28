@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 import PrivateStaffRoute from './components/PrivateStaffRoute';
-import PrivateAdminRoute from './components/PrivateAdminRoute';
+// import PrivateAdminRoute from './components/PrivateAdminRoute';
 import Login from './components/login/Login';
 import Navbar from './components/general/Navbar';
 import Footer from './components/general/Footer';
-import AdminPanel from './components/AdminPanel';
+// import AdminPanel from './components/AdminPanel';
 import Stafprofile from './components/Stafprofile';
 import Students from './components/Students';
 import StudProfile from './components/students/StudProfile';
@@ -29,21 +29,22 @@ import './styles/style.css';
 
 export let db = myApp.firestore();
 export let auth = myApp.auth();
-export let host = "https://globaldb.sionasolutions.com";
+//export let host = "https://globaldb.sionasolutions.com";
 
 class App extends React.Component {
 	state = {
-		user: false
+		// Changed user: True to fix code
+		user: true
 	}
-	componentWillMount = () => {
-		if (localStorage.staffAuth) {
-			let val = JSON.parse(localStorage.getItem("staffAuth"))
-			this.setState({ user: jwt_decode(val.token) })
-		}
-		else {
-			this.setState({ user: false })
-		}
-	}
+	// componentWillMount = () => {
+	// 	if (localStorage.staffAuth) {
+	// 		let val = JSON.parse(localStorage.getItem("staffAuth"))
+	// 		this.setState({ user: jwt_decode(val.token) })
+	// 	}
+	// 	else {
+	// 		this.setState({ user: false })
+	// 	}
+	// }
 
 	render() {
 		return (
@@ -52,7 +53,7 @@ class App extends React.Component {
 				{this.state.user && <Navbar /> }		
 					<Switch>
 						<Route path='/login' exact component={Login} />
-						<PrivateAdminRoute path='/admin' exact component={AdminPanel} />
+						{/* <PrivateAdminRoute path='/admin' exact component={AdminPanel} /> */}
 
 						<PrivateStaffRoute path='/' exact component={Stafprofile} />
 						<PrivateStaffRoute path='/students' exact component={Students} />

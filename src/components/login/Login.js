@@ -1,32 +1,48 @@
 import React from 'react';
 import logo from '../../images/logo.png';
-import axios from 'axios';
-import {host, auth} from '../../App';
+// import axios from 'axios';
+// import {host, auth} from '../../App';
+import {auth} from '../../App';
 
 class Login extends React.Component {
   state = {
     showAdmin: false,
     username: '',
     password: '',
-    adminEmail: '',
-    adminPassword: '',
+    // adminEmail: '',
+    // adminPassword: '',
     logging: false,
     error: false
   }
-  componentWillMount = () => {
-    if(localStorage.staffAuth) {
-      this.props.history.push("/")
-    }  
-  }
+  // componentWillMount = () => {
+  //   if(localStorage.staffAuth) {
+  //     this.props.history.push("/")
+  //   }  
+  // }
 
-  onAdminSubmit = (e) => {
+  // onAdminSubmit = (e) => {
+  //   e.preventDefault();
+  //   this.setState({ error: false, logging: true })
+  //   auth.signInWithEmailAndPassword(this.state.adminEmail, this.state.adminPassword)
+  //     .then(() => {
+  //       // console.log("logged in")
+  //       this.setState({ logging: false })
+  //       this.props.history.push("/admin")
+  //     })
+  //     .catch(err => {
+  //         this.setState({error: true, logging: false})
+  //           console.log(err)
+  //       } );
+  // }
+
+  onStaffSubmit = (e) => {
     e.preventDefault();
     this.setState({ error: false, logging: true })
-    auth.signInWithEmailAndPassword(this.state.adminEmail, this.state.adminPassword)
+    auth.signInWithEmailAndPassword(this.state.username, this.state.password)
       .then(() => {
         // console.log("logged in")
         this.setState({ logging: false })
-        this.props.history.push("/admin")
+        this.props.history.push("/")
       })
       .catch(err => {
           this.setState({error: true, logging: false})
@@ -34,73 +50,73 @@ class Login extends React.Component {
         } );
   }
 
-  onStaffSubmit = (e) => {
-    e.preventDefault();
-    this.setState({error: false, logging: true})
-    // console.log("came in")
-    axios.post(`${host}/staff-login`,{
-      username: this.state.username,
-      password: this.state.password
-    }).then(value =>  {
-        // console.log(value)
-        localStorage.setItem("staffAuth",JSON.stringify(value.data));
-        this.setState({logging: false})
-        this.props.history.push("/")
-      })
-    .catch(err => this.setState({error: true, logging: false}) );
-  }
+  // onStaffSubmit = (e) => {
+  //   e.preventDefault();
+  //   this.setState({error: false, logging: true})
+  //   // console.log("came in")
+  //   axios.post(`${host}/staff-login`,{
+  //     username: this.state.username,
+  //     password: this.state.password
+  //   }).then(value =>  {
+  //       // console.log(value)
+  //       localStorage.setItem("staffAuth",JSON.stringify(value.data));
+  //       this.setState({logging: false})
+  //       this.props.history.push("/")
+  //     })
+  //   .catch(err => this.setState({error: true, logging: false}) );
+  // }
 
   render() {
-    let admin = 
-      <React.Fragment>
-        <div>
-          <div className="loginBackground">
-            <div className="login-container">
-              <div className="form-container">
-                <form style={{marginBottom: '10px'}}>
-                <h4 className="text-center" style={{color:'red', margin:'15px'}}>Admin Login</h4>
-                {this.state.error && <div className="alert alert-danger" role="alert" style={{padding:'7px'}}>
-                        <i className="fas fa-exclamation-circle"></i> Invalid username or password
-                    </div>}
-                  <div className="form-group">
-                    <input 
-                      type="name" 
-                      className="form-control" 
-                      value={this.state.adminEmail} 
-                      placeholder="Username"
-                      autoFocus
-                      autoComplete="on"
-                      onChange={(e) => this.setState({ adminEmail: e.target.value })} 
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input 
-                      type="password" 
-                      className="form-control" 
-                      value={this.state.adminPassword} 
-                      placeholder="Password"
-                      autoComplete="on"
-                      onChange={(e) => this.setState({ adminPassword: e.target.value })} 
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary" onClick={this.onAdminSubmit} disabled={this.state.logging}>
-                    { this.state.logging ? "Logging in" : "Admin Login" }  
-                    </button>
-                </form>
-                <div className="text-center">
-                    <button 
-                        className="btn-sm"
-                        style={{background: 'none', border: 'none', color: 'gray'}}
-                        onClick={()=>this.setState({showAdmin: !this.state.showAdmin})}
-                    >
-                        {this.state.showAdmin && <React.Fragment><h6 className="text-white">Not an Admin? <small>Click here</small></h6></React.Fragment> }
-                    </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
+    // let admin = 
+    //   <React.Fragment>
+    //     <div>
+    //       <div className="loginBackground">
+    //         <div className="login-container">
+    //           <div className="form-container">
+    //             <form style={{marginBottom: '10px'}}>
+    //             <h4 className="text-center" style={{color:'red', margin:'15px'}}>Admin Login</h4>
+    //             {this.state.error && <div className="alert alert-danger" role="alert" style={{padding:'7px'}}>
+    //                     <i className="fas fa-exclamation-circle"></i> Invalid username or password
+    //                 </div>}
+    //               <div className="form-group">
+    //                 <input 
+    //                   type="name" 
+    //                   className="form-control" 
+    //                   value={this.state.adminEmail} 
+    //                   placeholder="Username"
+    //                   autoFocus
+    //                   autoComplete="on"
+    //                   onChange={(e) => this.setState({ adminEmail: e.target.value })} 
+    //                 />
+    //               </div>
+    //               <div className="form-group">
+    //                 <input 
+    //                   type="password" 
+    //                   className="form-control" 
+    //                   value={this.state.adminPassword} 
+    //                   placeholder="Password"
+    //                   autoComplete="on"
+    //                   onChange={(e) => this.setState({ adminPassword: e.target.value })} 
+    //                 />
+    //               </div>
+    //               <button type="submit" className="btn btn-primary" onClick={this.onAdminSubmit} disabled={this.state.logging}>
+    //                 { this.state.logging ? "Logging in" : "Admin Login" }  
+    //                 </button>
+    //             </form>
+    //             <div className="text-center">
+    //                 <button 
+    //                     className="btn-sm"
+    //                     style={{background: 'none', border: 'none', color: 'gray'}}
+    //                     onClick={()=>this.setState({showAdmin: !this.state.showAdmin})}
+    //                 >
+    //                     {this.state.showAdmin && <React.Fragment><h6 className="text-white">Not an Admin? <small>Click here</small></h6></React.Fragment> }
+    //                 </button>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </React.Fragment>
 
     let staff =
       <React.Fragment>
@@ -154,7 +170,8 @@ class Login extends React.Component {
 
     return(
       <div>
-      { this.state.showAdmin ? admin : staff }
+        {staff}
+      {/* { this.state.showAdmin ? admin : staff } */}
       </div>
     )
 }

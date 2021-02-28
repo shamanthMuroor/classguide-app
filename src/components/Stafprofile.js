@@ -2,24 +2,24 @@ import React from 'react';
 import jwt_decode from 'jwt-decode';
 
 class Stafprofile extends React.Component {
-  state = {
-    user: false
-  }
-  componentWillMount = () => {
-    if(localStorage.staffAuth) {
-      let val = JSON.parse(localStorage.getItem("staffAuth"))
-      this.setState({user: jwt_decode(val.token)})
-    }
-    else
-      this.props.history.push('/error')
-  }
+  // state = {
+  //   user: false
+  // }
+  // componentWillMount = () => {
+  //   if(localStorage.staffAuth) {
+  //     let val = JSON.parse(localStorage.getItem("staffAuth"))
+  //     this.setState({user: jwt_decode(val.token)})
+  //   }
+  //   else
+  //     this.props.history.push('/error')
+  // }
   
   getYear() {
     return new Date().getFullYear();
   }
 
   render() {
-    const { name , dob } = this.state.user;
+    // const { name , dob } = this.state.user;
 
     let html =
       <div className="container card shadow-lg p-3 mb-5 profile">
@@ -28,9 +28,9 @@ class Stafprofile extends React.Component {
             <i className="fas fa-user-circle fa-4x"></i>
           </div>
           <div className="text-center">
-            <h4>{name}</h4>
+            {/* <h4>{name}</h4> */}
             <hr/>
-            <h6>DOB: {dob}</h6>
+            {/* <h6>DOB: {dob}</h6> */}
           </div>
           <div className="text-center bg-transparent card-footer text-muted">
             {this.getYear()}-{this.getYear()+1}
