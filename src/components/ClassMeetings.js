@@ -4,22 +4,22 @@ import '../styles/style.css';
 import ViewMeeting from './classmeeting/ViewMeeting';
 import AddMeeting from './classmeeting/AddMeeting';
 import { db } from '../App';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 class ClassMeetings extends React.Component {
 	state = {
 		meetings: [],
 		loading: true,
 		isDeleting: false,
-		user: {}
+		user: {id: "5cef889e91c2fe210298755c"}
 	}
 
 	// Displaying all the meetings from the database
 	componentWillMount = () => {
-		if (localStorage.staffAuth) {
-			let val = JSON.parse(localStorage.getItem("staffAuth"))
-			this.setState({ user: jwt_decode(val.token) })
-			db.collection('general').doc(jwt_decode(val.token).id)
+		// if (localStorage.staffAuth) {
+			// let val = JSON.parse(localStorage.getItem("staffAuth"))
+			// this.setState({ user: jwt_decode(val.token) })
+			db.collection('general').doc(this.state.user.id)
 				.collection('classMeetings').orderBy("date").get()
 				.then(res => {
 					if (res.size > 0) {
@@ -37,9 +37,9 @@ class ClassMeetings extends React.Component {
 					}
 				})
 				.catch(err => console.log(err))
-		}
-		else
-			this.props.history.push('/error')
+		// }
+		// else
+		// 	this.props.history.push('/error')
 	}
 
 	componentWillUnmount = () => {

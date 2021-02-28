@@ -3,7 +3,7 @@ import {db} from '../App';
 import StudList from './students/studentList/StudList';
 import Search from './students/studentList/Search';
 import Tags from './students/studentList/Tags';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 class Students extends React.Component {
     state = { 
@@ -15,12 +15,12 @@ class Students extends React.Component {
     }
 
     componentWillMount = () => {
-        if(localStorage.staffAuth) {
-            let user = JSON.parse(localStorage.getItem("staffAuth"));
-            let value = jwt_decode(user.token);
+        // if(localStorage.staffAuth) {
+        //     let user = JSON.parse(localStorage.getItem("staffAuth"));
+        //     let value = jwt_decode(user.token);
             // console.log(value);
             // debugger;
-            db.collection("staffData").doc(value.id).get()
+            db.collection("staffData").doc("5cef889e91c2fe210298755c").get()
             .then(res => {
                 db.collection("students").where("_id","==",res.data().studentId)
                     .orderBy("regno").get()
@@ -39,7 +39,7 @@ class Students extends React.Component {
             .catch(err => {
                 this.setState({loading: false})
             })
-        }
+        // }
     }
 
 
