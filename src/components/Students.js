@@ -1,3 +1,4 @@
+// Students --> StudList --> StudItems --> StudProfile
 import React from 'react';
 import {db} from '../App';
 import StudList from './students/studentList/StudList';

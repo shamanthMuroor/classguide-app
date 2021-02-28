@@ -3,7 +3,7 @@ import AddLearnerGroups from './AddLearnerGroups';
 import Modal from 'react-modal';
 import EditForm from './EditForm';
 import { db } from '../../../App'
-import jwt_decode from 'jwt-decode'
+// import jwt_decode from 'jwt-decode'
 
 const customStyles = {
     content: {
@@ -40,7 +40,7 @@ class SlowLearners extends React.Component {
             loading: true,
             isDeleting: false,
             id: '',
-            user: {}
+            user: {id: "5cef889e91c2fe210298755c"} // {id: ""} has been added extra
         };
 
         this.openModal = this.openModal.bind(this);
@@ -48,10 +48,11 @@ class SlowLearners extends React.Component {
     }
 
     componentWillMount = () => {
-        if(localStorage.staffAuth) {
-            let val = JSON.parse(localStorage.getItem("staffAuth"))
-            this.setState({user: jwt_decode(val.token)})
-            db.collection('general').doc(jwt_decode(val.token).id)
+        // if(localStorage.staffAuth) {
+        //     let val = JSON.parse(localStorage.getItem("staffAuth"))
+        //     this.setState({user: jwt_decode(val.token)})
+        //     db.collection('general').doc(jwt_decode(val.token).id)
+            db.collection('general').doc(this.state.user.id)
                 .collection('slowLearner').orderBy('regno').get()
                 .then(val => {
                     if (val.size > 0) {
@@ -69,9 +70,9 @@ class SlowLearners extends React.Component {
                     }
                 })
                 .catch(err => console.log(err))
-        } else {
-            this.props.history.push('/error')
-        }
+        // } else {
+        //     this.props.history.push('/error')
+        // }
     }
     
     openModal(id) {

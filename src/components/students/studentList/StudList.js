@@ -1,3 +1,4 @@
+// StudList --> StudItems
 import React from 'react';
 import StudItems from './StudItems';
 

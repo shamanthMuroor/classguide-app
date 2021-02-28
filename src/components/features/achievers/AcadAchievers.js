@@ -1,7 +1,7 @@
 import React from 'react';
 import AddAcadAchievers from './AddAcadAchievers';
 import Modal from 'react-modal';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 import { db } from '../../../App'
 
 const customStyles = {
@@ -35,7 +35,7 @@ class AcadAchievers extends React.Component {
             loading: true,
             isDeleting: false,
             id: '',
-            user: {}
+            user: {id: "5cef889e91c2fe210298755c"} // {id: ""} has been added extra
         };
 
         this.openModal = this.openModal.bind(this);
@@ -43,10 +43,11 @@ class AcadAchievers extends React.Component {
     }
 
     componentWillMount = () => {
-        if(localStorage.staffAuth) {
-            let val = JSON.parse(localStorage.getItem("staffAuth"))
-            this.setState({user: jwt_decode(val.token)})
-            db.collection('general').doc(jwt_decode(val.token).id)
+        // if(localStorage.staffAuth) {
+        //     let val = JSON.parse(localStorage.getItem("staffAuth"))
+        //     this.setState({user: jwt_decode(val.token)})
+        //     db.collection('general').doc(jwt_decode(val.token).id)
+            db.collection('general').doc(this.state.user.id)
                 .collection('academic').get()
                         .then(values => {
                             if(values.size > 0) {
@@ -64,9 +65,9 @@ class AcadAchievers extends React.Component {
                             }
                         })
                         .catch(err => console.log(err))
-        } else {
-            this.props.history.push('/error')
-        }
+        // } else {
+        //     this.props.history.push('/error')
+        // }
     }
    
     openModal(id) {

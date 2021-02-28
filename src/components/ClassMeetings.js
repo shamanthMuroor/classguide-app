@@ -11,7 +11,7 @@ class ClassMeetings extends React.Component {
 		meetings: [],
 		loading: true,
 		isDeleting: false,
-		user: {id: "5cef889e91c2fe210298755c"}
+		user: {id: "5cef889e91c2fe210298755c"} // {id: ""} has been added extra
 	}
 
 	// Displaying all the meetings from the database
@@ -19,6 +19,7 @@ class ClassMeetings extends React.Component {
 		// if (localStorage.staffAuth) {
 			// let val = JSON.parse(localStorage.getItem("staffAuth"))
 			// this.setState({ user: jwt_decode(val.token) })
+            // db.collection('general').doc(jwt_decode(val.token).id)
 			db.collection('general').doc(this.state.user.id)
 				.collection('classMeetings').orderBy("date").get()
 				.then(res => {

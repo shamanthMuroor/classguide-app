@@ -3,11 +3,11 @@ import '../styles/style.css';
 import ViewParentMeeting from './parentmeeting/ViewParentMeeting';
 import AddParentMeeting from './parentmeeting/AddParentMeeting';
 import { db } from '../App';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 class ParentMeetings extends React.Component {
 	state = {
-		user: {},
+		user: {id: "5cef889e91c2fe210298755c"},
 		showParentMeetings: false,
 		parentmeetings: [],
 		id: '',
@@ -17,10 +17,10 @@ class ParentMeetings extends React.Component {
 
 	// Displaying all the meetings from the database
 	componentWillMount = () => {
-		if (localStorage.staffAuth) {
-			let val = JSON.parse(localStorage.getItem("staffAuth"))
-			this.setState({ user: jwt_decode(val.token) })
-			db.collection('general').doc(jwt_decode(val.token).id)
+		// if (localStorage.staffAuth) {
+			// let val = JSON.parse(localStorage.getItem("staffAuth"))
+			// this.setState({ user: jwt_decode(val.token) })
+			db.collection('general').doc(this.state.user.id)
 				.collection("parentMeetings").orderBy("date").get()
 				.then(res => {
 					if (res.size > 0) {
@@ -38,9 +38,9 @@ class ParentMeetings extends React.Component {
 					}
 				})
 				.catch(err => console.log(err))
-		}
-		else
-			this.props.history.push('/error')
+		// }
+		// else
+		// 	this.props.history.push('/error')
 	}
 
 	// Add Meeting
