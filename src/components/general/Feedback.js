@@ -1,6 +1,7 @@
 import React from "react";
 import { db } from '../../App';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
+import { auth } from '../../App';
 
 class Feedback extends React.Component {
 	state = {
@@ -10,15 +11,31 @@ class Feedback extends React.Component {
 		showSuccess: false
 	}
 
-	componentWillMount = () => {
-		if (localStorage.staffAuth) {
-			let val = JSON.parse(localStorage.getItem("staffAuth"))
-			this.setState({ user: jwt_decode(val.token) })
-		}
-		else {
-			this.props.history.push('/error')
-		}
-	}
+
+    componentDidMount = () => {
+        auth.onAuthStateChanged((usr) => {
+            if (usr) {
+                this.setState({ user: true })
+            }
+        })
+        db.collection("staffData").doc("5cef889e91c2fe210298755c").get()
+            .then(res => {
+                if (res.data() != null) {
+                    this.setState({ user: res.data() })
+				}
+			})
+    }
+
+
+	// componentWillMount = () => {
+	// 	if (localStorage.staffAuth) {
+	// 		let val = JSON.parse(localStorage.getItem("staffAuth"))
+	// 		this.setState({ user: jwt_decode(val.token) })
+	// 	}
+	// 	else {
+	// 		this.props.history.push('/error')
+	// 	}
+	// }
 
 	handleSubmit = () => {
 		this.setState({ submitting: true, showSuccess: false })
@@ -44,7 +61,7 @@ class Feedback extends React.Component {
 	render() {
 		let success =
 			<div className="alert alert-success alert-dismissible fade show" role="alert">
-				<strong>Success!</strong> Parent Meeting added successfully
+				<strong>Success!</strong> Feedback sent successfully
         <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.hideSuccess}>
 					<span aria-hidden="true">&times;</span>
 				</button>

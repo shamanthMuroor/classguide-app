@@ -34,8 +34,17 @@ export let auth = myApp.auth();
 class App extends React.Component {
 	state = {
 		// Changed user: True to fix code
-		user: true
+		user: false
 	}
+
+	componentDidMount = () => {
+		auth.onAuthStateChanged((usr) => {
+			if(usr) {
+				this.setState({user: true})
+			}
+		})
+	}
+
 	// componentWillMount = () => {
 	// 	if (localStorage.staffAuth) {
 	// 		let val = JSON.parse(localStorage.getItem("staffAuth"))

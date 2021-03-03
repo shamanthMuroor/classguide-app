@@ -50,8 +50,18 @@ a:hover {
 }
 
 .topnav a:hover {
-    font-size: 18px;
+    color: white;
+    /* font-size: 18px; */
   }
+
+  .dropdown span {
+      font-size: 15px;
+      color:rgba(255,255,255,.5);
+  }
+ 
+/* .dropdown  dropdown-toggle{
+    font-size: 15px;
+} */
 
 
 .dropDownLinks {

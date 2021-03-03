@@ -2,7 +2,8 @@ import React from "react";
 import { db } from '../../App';
 import logo from '../../images/aloylogo.png';
 import Modal from 'react-modal';
-import jwt_decode from 'jwt-decode';
+import { auth } from '../../App';
+// import jwt_decode from 'jwt-decode';
 
 const customStyles = {
     content: {
@@ -41,16 +42,22 @@ class Reports extends React.Component {
         casteList: []
     };
 
-    componentWillMount = () => {
-        if (localStorage.staffAuth) {
-            let val = JSON.parse(localStorage.getItem("staffAuth"))
-            this.setState({ user: jwt_decode(val.token) })
+    componentDidMount = () => {
+        auth.onAuthStateChanged((usr) => {
+            if (usr) {
+                this.setState({ user: true })
+            }
+        })
+        // if (localStorage.staffAuth) {
+        //     let val = JSON.parse(localStorage.getItem("staffAuth"))
+        //     this.setState({ user: jwt_decode(val.token) })
 
-            // Student List
-            db.collection("staffData").doc(jwt_decode(val.token).id).get()
+        //     // Student List
+            db.collection("staffData").doc("5cef889e91c2fe210298755c").get()
+        //     db.collection("staffData").doc(jwt_decode(val.token).id).get()
                         .then(res => {
                             if (res.data() != null) {
-                                this.setState({ guideClass: res.data().studentId })
+                                this.setState({ guideClass: res.data().studentId, user: res.data().name })
                                 db.collection("students").where("_id", "==", res.data().studentId).get()
                                     .then((response) => {
                                         let arr = [];
@@ -65,9 +72,9 @@ class Reports extends React.Component {
 
                             }
                         })
-        }
-        else
-            this.props.history.push('/error')
+        // }
+        // else
+        //     this.props.history.push('/error')
     }
 
     openModal = () => {
@@ -98,7 +105,8 @@ class Reports extends React.Component {
         this.setState({ generating: true })
 
         // Class Meeting
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('classMeetings').orderBy("date").get()
             .then(res => {
                 let arr = [];
@@ -112,7 +120,8 @@ class Reports extends React.Component {
             })
 
         // Parent Meeting
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('parentMeetings').orderBy("date").get()
             .then(res => {
                 let arr = [];
@@ -126,7 +135,8 @@ class Reports extends React.Component {
             })
 
         // Counselling
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('counselling').orderBy('regno').get()
             .then(val => {
                 let arr = []
@@ -140,7 +150,8 @@ class Reports extends React.Component {
             })
 
         // VE Session
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('vesession').orderBy('regno').get()
             .then(val => {
                 let arr = []
@@ -154,7 +165,8 @@ class Reports extends React.Component {
             })
 
         // Rural
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('rural').orderBy('regno').get()
             .then(val => {
                 let arr = []
@@ -168,7 +180,8 @@ class Reports extends React.Component {
             })
 
         // Slow Learner
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('slowLearner').orderBy('regno').get()
             .then(val => {
                 let arr = []
@@ -199,7 +212,8 @@ class Reports extends React.Component {
         }
 
         // Academic Achievers
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('academic').orderBy('regno').get()
             .then(val => {
                 let arr = []
@@ -213,7 +227,8 @@ class Reports extends React.Component {
             })
 
         // Achievers at Different Levels
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('level').orderBy('regno').get()
             .then(val => {
                 let arr = []
@@ -227,7 +242,8 @@ class Reports extends React.Component {
             })
 
         // Non Academic Achievers
-        db.collection('general').doc(this.state.user.id)
+        db.collection('general').doc('5cef889e91c2fe210298755c')
+        // db.collection('general').doc(this.state.user.id)
             .collection('nonacademic').orderBy('regno').get()
             .then(val => {
                 val.forEach(values => {
